@@ -1,0 +1,71 @@
+/*
+ * Decompiled with CFR 0.152.
+ * 
+ * Could not load the following classes:
+ *  ic2.api.reactor.IReactor
+ *  ic2.api.reactor.IReactorComponent
+ *  ic2.core.init.Localization
+ *  net.minecraft.client.util.ITooltipFlag
+ *  net.minecraft.item.ItemStack
+ *  net.minecraft.world.World
+ *  net.minecraftforge.fml.relauncher.Side
+ *  net.minecraftforge.fml.relauncher.SideOnly
+ */
+package com.rioutouscraft.ssp.items.itembase;
+
+import com.rioutouscraft.ssp.items.itembase.ItemGradualInt;
+import ic2.api.reactor.IReactor;
+import ic2.api.reactor.IReactorComponent;
+import ic2.core.init.Localization;
+import java.util.List;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+public abstract class AbstractDamageableReactorComponent
+extends ItemGradualInt
+implements IReactorComponent {
+    protected AbstractDamageableReactorComponent(String name, int maxDamage) {
+        super(name, maxDamage);
+    }
+
+    public void processChamber(ItemStack stack, IReactor reactor, int x, int y, boolean heatrun) {
+    }
+
+    public boolean acceptUraniumPulse(ItemStack stack, IReactor reactor, ItemStack pulsingStack, int youX, int youY, int pulseX, int pulseY, boolean heatrun) {
+        return false;
+    }
+
+    public boolean canStoreHeat(ItemStack stack, IReactor reactor, int x, int y) {
+        return false;
+    }
+
+    public int getMaxHeat(ItemStack stack, IReactor reactor, int x, int y) {
+        return 0;
+    }
+
+    public int getCurrentHeat(ItemStack stack, IReactor reactor, int x, int y) {
+        return 0;
+    }
+
+    public int alterHeat(ItemStack stack, IReactor reactor, int x, int y, int heat) {
+        return heat;
+    }
+
+    public float influenceExplosion(ItemStack stack, IReactor reactor) {
+        return 0.0f;
+    }
+
+    @SideOnly(value=Side.CLIENT)
+    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
+        super.addInformation(stack, world, tooltip, advanced);
+        tooltip.add(Localization.translate((String)"ic2.reactoritem.durability") + " " + (this.getMaxCustomDamage(stack) - this.getCustomDamage(stack)) + "/" + this.getMaxCustomDamage(stack));
+    }
+
+    public boolean canBePlacedIn(ItemStack stack, IReactor reactor) {
+        return true;
+    }
+}
+

@@ -1,25 +1,26 @@
 [
-	{
-		"authorList": [
-			 "Denfop"
-		],
-		"credits": "Created by Denfop,Artists: Rotativorotary and Hristy, Testers: Spinel, GUSI and Hristy, Youtubers of mod: Sprenger ,Kartafan, BriceFamilyBF. Thanks you,that use this mod!!!!",
-		"dependants": [],
-		"dependencies": [
-			"ic2"
-		],
-		"description": "Super solar panels is new generation of using solar power. This is addon for IndustrialCraft 2.",
-		"logoFile": "",
-		"mcversion": "1.12.2",
-		"modid": "super_solar_panels_rioutouscraft",
-		"name": "SuperSolarPanels-RioutousCraft",
-		"parent": "",
-		"requiredMods": [
-			"ic2"
-		],
-		"screenshots": [],
-		"updateUrl": "",
-		"url": "https://github.com/Rioutous/SuperSolarPanels-RioutousCraft",
-		"version": "1.3.1-RioutousCraft"
-	}
+  {
+    "authorList": [
+      "Denfop",
+      "RioutousCraft"
+    ],
+    "credits": "Created by Denfop,Artists: Rotativorotary and Hristy, Testers: Spinel, GUSI and Hristy, Youtubers of mod: Sprenger ,Kartafan, BriceFamilyBF. Thanks you,that use this mod!!!!",
+    "dependants": [],
+    "dependencies": [
+      "ic2"
+    ],
+    "description": "Super solar panels is new generation of using solar power. This is addon for IndustrialCraft 2.",
+    "logoFile": "",
+    "mcversion": "1.12.2",
+    "modid": "super_solar_panels_rioutouscraft",
+    "name": "SuperSolarPanels-RioutousCraft",
+    "parent": "",
+    "requiredMods": [
+      "ic2"
+    ],
+    "screenshots": [],
+    "updateUrl": "",
+    "url": "https://github.com/Xnidada/SuperSolarPanels-RioutousCraft",
+    "version": "1.3.1-RioutousCraft"
+  }
 ]
