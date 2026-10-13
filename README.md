@@ -2,7 +2,7 @@
 
 A source reconstruction of Super Solar Panels 1.3.1 for Minecraft 1.12.2, rebuilt against IndustrialCraft 2 `2.8.222-ex112`.
 
-The standalone mod id is `super_solar_panels_rioutouscraft` so it can coexist with the original addon. Its display name is `SuperSolarPanels-RioutousCraft`; registry names and resource namespaces use the new id.
+The standalone mod id is `super_solar_panels_rioutouscraft` so it can coexist with the original addon. Its display name is `SuperSolarPanels-RioutousCraft`; registry names and resource namespaces use the new id. Because the id and registry namespace are new, existing blocks from the original mod are not automatically migrated in old saves.
 
 ## Compatibility change
 
@@ -16,7 +16,7 @@ Use Java 8 and run:
 ./gradlew build
 ```
 
-The rebuilt jar is in `build/libs/`.
+The rebuilt jar is in `build/libs/`. ForgeGradle 2.3 and Java 8 are required for the 1.12.2 toolchain.
 
 ## Attribution
 
