@@ -34,3 +34,11 @@ This rebuild includes a standalone modular solar panel system. It does not depen
 The panel stores its configuration and internal EU buffer in NBT. Existing fixed solar panels are unchanged.
 
 The modular component artwork is adapted from the IndustrialUpgrade reference repository. The copied third-party license text is kept under `third_party/industrialupgrade/LICENSE`; the runtime mod does not depend on IndustrialUpgrade.
+
+## Local item catalogue
+
+item-catalog.html is a self-contained local item catalogue. It embeds the current item/block textures, names, categories, and source-derived performance parameters, so it can be opened directly in a browser without a web server or external dependency.
+
+After changing item registrations, language files, models, or configuration defaults, regenerate it with:
+
+    python3 tools/build_item_catalog.py
