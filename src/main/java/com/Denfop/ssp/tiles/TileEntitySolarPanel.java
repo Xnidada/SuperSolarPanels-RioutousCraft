@@ -207,19 +207,19 @@ IGuiValueProvider {
     }
 
     public String getMaxOutput() {
-        return String.format("%s %.0f %s", Localization.translate((String)"super_solar_panels.gui.maxOutput"), EnergyNet.instance.getPowerFromTier(this.tier + 1), Localization.translate((String)"ic2.generic.text.EUt"));
+        return String.format("%s %.0f %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.maxOutput"), EnergyNet.instance.getPowerFromTier(this.tier + 1), Localization.translate((String)"ic2.generic.text.EUt"));
     }
 
     public String getOutput() {
         switch (this.active) {
             case DAY: {
-                return String.format("%s %d %s", Localization.translate((String)"super_solar_panels.gui.generating"), this.dayPower, Localization.translate((String)"ic2.generic.text.EUt"));
+                return String.format("%s %d %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.generating"), this.dayPower, Localization.translate((String)"ic2.generic.text.EUt"));
             }
             case NIGHT: {
-                return String.format("%s %d %s", Localization.translate((String)"super_solar_panels.gui.generating"), this.nightPower, Localization.translate((String)"ic2.generic.text.EUt"));
+                return String.format("%s %d %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.generating"), this.nightPower, Localization.translate((String)"ic2.generic.text.EUt"));
             }
         }
-        return String.format("%s 0 %s", Localization.translate((String)"super_solar_panels.gui.generating"), Localization.translate((String)"ic2.generic.text.EUt"));
+        return String.format("%s 0 %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.generating"), Localization.translate((String)"ic2.generic.text.EUt"));
     }
 
     public static final class SolarConfig {

@@ -106,14 +106,14 @@ IItemHudProvider {
 
     public ItemArmorQuantumHelmet(SolarHelmetTypes type) {
         super(ItemArmor.ArmorMaterial.DIAMOND, -1, EntityEquipmentSlot.HEAD);
-        ((ItemArmorQuantumHelmet)BlocksItems.registerItem((Item)this, (ResourceLocation)new ResourceLocation("super_solar_panels", type.getName()))).func_77655_b(type.getLocalisedName());
+        ((ItemArmorQuantumHelmet)BlocksItems.registerItem((Item)this, (ResourceLocation)new ResourceLocation("super_solar_panels_rioutouscraft", type.getName()))).func_77655_b(type.getLocalisedName());
         this.func_77637_a((CreativeTabs)IC2.tabIC2);
         this.func_77656_e(27);
         this.type = type;
     }
 
     public String func_77658_a() {
-        return "super_solar_panels." + super.func_77658_a().substring(5);
+        return "super_solar_panels_rioutouscraft." + super.func_77658_a().substring(5);
     }
 
     public String func_77667_c(ItemStack stack) {
@@ -130,11 +130,11 @@ IItemHudProvider {
 
     @SideOnly(value=Side.CLIENT)
     public void registerModels(ItemName name) {
-        ModelLoader.setCustomModelResourceLocation((Item)this, (int)0, (ModelResourceLocation)new ModelResourceLocation("super_solar_panels:" + CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, this.type.getName()), (String)null));
+        ModelLoader.setCustomModelResourceLocation((Item)this, (int)0, (ModelResourceLocation)new ModelResourceLocation("super_solar_panels_rioutouscraft:" + CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, this.type.getName()), (String)null));
     }
 
     public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
-        return "super_solar_panels:textures/armour/" + this.type.getName() + (type != null ? "Overlay" : "") + ".png";
+        return "super_solar_panels_rioutouscraft:textures/armour/" + this.type.getName() + (type != null ? "Overlay" : "") + ".png";
     }
 
     public boolean canBeDyed() {

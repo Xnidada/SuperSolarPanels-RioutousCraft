@@ -114,9 +114,9 @@ public enum SSP_Items {
         HYBRID_SOLAR_HELMET.setInstance(new ItemArmourSolarHelmet(ItemArmourSolarHelmet.SolarHelmetTypes.HYBRID));
         ULTIMATE_HYBRID_SOLAR_HELMET.setInstance(new ItemArmourSolarHelmet(ItemArmourSolarHelmet.SolarHelmetTypes.ULTIMATE));
         drill.setInstance(new ItemUltDrill());
-        iridium.setInstance(new ItemWindRotor("rotor_carbon1", Configs.Radius, Configs.rotor_carbon1, Configs.coefficient, Configs.minWindStrength, Configs.maxWindStrength, new ResourceLocation("super_solar_panels", "textures/items/carbon_rotor_model1.png")));
-        compressiridium.setInstance(new ItemWindRotor("rotor_carbon2", Configs.Radius1, Configs.rotor_carbon2, Configs.coefficient1, Configs.minWindStrength1, Configs.maxWindStrength1, new ResourceLocation("super_solar_panels", "textures/items/carbon_rotor_model2.png")));
-        spectral.setInstance(new ItemWindRotor("rotor_carbon3", Configs.Radius2, Configs.rotor_carbon3, Configs.coefficient2, Configs.minWindStrength2, Configs.maxWindStrength2, new ResourceLocation("super_solar_panels", "textures/items/carbon_rotor_model3.png")));
+        iridium.setInstance(new ItemWindRotor("rotor_carbon1", Configs.Radius, Configs.rotor_carbon1, Configs.coefficient, Configs.minWindStrength, Configs.maxWindStrength, new ResourceLocation("super_solar_panels_rioutouscraft", "textures/items/carbon_rotor_model1.png")));
+        compressiridium.setInstance(new ItemWindRotor("rotor_carbon2", Configs.Radius1, Configs.rotor_carbon2, Configs.coefficient1, Configs.minWindStrength1, Configs.maxWindStrength1, new ResourceLocation("super_solar_panels_rioutouscraft", "textures/items/carbon_rotor_model2.png")));
+        spectral.setInstance(new ItemWindRotor("rotor_carbon3", Configs.Radius2, Configs.rotor_carbon3, Configs.coefficient2, Configs.minWindStrength2, Configs.maxWindStrength2, new ResourceLocation("super_solar_panels_rioutouscraft", "textures/items/carbon_rotor_model3.png")));
         if (side == Side.CLIENT) {
             SSP_Items.doModelGuf();
         }

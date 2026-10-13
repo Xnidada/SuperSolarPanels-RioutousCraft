@@ -90,9 +90,9 @@ implements IModPlugin {
                 SuperSolarPanels.log.warn("Unexpected empty recipe input: " + input + " (" + input.getClass() + ')');
                 inputText = "Empty " + input.getClass().getSimpleName();
             }
-            this.input = Localization.translate((String)"super_solar_panels.gui.input") + ' ' + inputText;
-            this.output = Localization.translate((String)"super_solar_panels.gui.output") + ' ' + ((ItemStack)container.getOutput()).func_82833_r();
-            this.totalEU = String.format("%s %,d %s", Localization.translate((String)"super_solar_panels.gui.energyPerOperation"), ((IMolecularTransformerRecipeManager.Input)container.getInput()).totalEU, Localization.translate((String)"ic2.generic.text.EU"));
+            this.input = Localization.translate((String)"super_solar_panels_rioutouscraft.gui.input") + ' ' + inputText;
+            this.output = Localization.translate((String)"super_solar_panels_rioutouscraft.gui.output") + ' ' + ((ItemStack)container.getOutput()).func_82833_r();
+            this.totalEU = String.format("%s %,d %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.energyPerOperation"), ((IMolecularTransformerRecipeManager.Input)container.getInput()).totalEU, Localization.translate((String)"ic2.generic.text.EU"));
         }
 
         public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {

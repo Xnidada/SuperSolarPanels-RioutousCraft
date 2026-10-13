@@ -87,12 +87,12 @@ extends ItemDrill {
 
     public ItemUltDrill() {
         super(null, Configs.operationEnergyCost, HarvestLevel.Iridium, Configs.maxChargedrill, Configs.transferLimitdrill, Configs.tierdrill, DrillMode.NORMAL.drillSpeed);
-        ((ItemUltDrill)BlocksItems.registerItem((Item)this, (ResourceLocation)new ResourceLocation("super_solar_panels", NAME))).func_77655_b(NAME);
+        ((ItemUltDrill)BlocksItems.registerItem((Item)this, (ResourceLocation)new ResourceLocation("super_solar_panels_rioutouscraft", NAME))).func_77655_b(NAME);
     }
 
     @SideOnly(value=Side.CLIENT)
     public void registerModels(ItemName name) {
-        ModelLoader.setCustomModelResourceLocation((Item)this, (int)0, (ModelResourceLocation)new ModelResourceLocation("super_solar_panels:" + CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, NAME), null));
+        ModelLoader.setCustomModelResourceLocation((Item)this, (int)0, (ModelResourceLocation)new ModelResourceLocation("super_solar_panels_rioutouscraft:" + CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, NAME), null));
     }
 
     public static DrillMode readDrillMode(ItemStack stack) {
@@ -108,7 +108,7 @@ extends ItemDrill {
     }
 
     public String func_77658_a() {
-        return "super_solar_panels." + super.func_77658_a().substring(4);
+        return "super_solar_panels_rioutouscraft." + super.func_77658_a().substring(4);
     }
 
     public ActionResult<ItemStack> func_77659_a(World world, EntityPlayer player, EnumHand hand) {
@@ -117,7 +117,7 @@ extends ItemDrill {
             if (!world.field_72995_K) {
                 DrillMode mode = ItemUltDrill.readNextDrillMode(stack);
                 ItemUltDrill.saveDrillMode(stack, mode);
-                IC2.platform.messagePlayer(player, "super_solar_panels.ItemUltDrill.mode", new Object[]{mode.colour, new Object[]{mode.translationName}});
+                IC2.platform.messagePlayer(player, "super_solar_panels_rioutouscraft.ItemUltDrill.mode", new Object[]{mode.colour, new Object[]{mode.translationName}});
                 this.field_77864_a = mode.drillSpeed;
                 this.operationEnergyCost = mode.energyCost;
             }
@@ -217,7 +217,7 @@ extends ItemDrill {
                     ((EntityPlayerMP)player).field_71135_a.func_147359_a((Packet)new SPacketBlockChange(world, blockPos));
                 }
                 if (powerRanOut) {
-                    IC2.platform.messagePlayer(player, "super_solar_panels.advancedDrill.ranOut", new Object[0]);
+                    IC2.platform.messagePlayer(player, "super_solar_panels_rioutouscraft.advancedDrill.ranOut", new Object[0]);
                 }
                 return true;
             }
@@ -262,7 +262,7 @@ extends ItemDrill {
                     ((EntityPlayerMP)player).field_71135_a.func_147359_a((Packet)new SPacketBlockChange(world, blockPos));
                 }
                 if (powerRanOut) {
-                    IC2.platform.messagePlayer(player, "super_solar_panels.ItemUltDrill.ranOut", new Object[0]);
+                    IC2.platform.messagePlayer(player, "super_solar_panels_rioutouscraft.ItemUltDrill.ranOut", new Object[0]);
                 }
                 return true;
             }
@@ -312,7 +312,7 @@ extends ItemDrill {
 
     @SideOnly(value=Side.CLIENT)
     public void func_77624_a(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-        tooltip.add(TextFormatting.GOLD + Localization.translate((String)"super_solar_panels.ItemUltDrill.mode", (Object[])new Object[]{TextFormatting.WHITE + Localization.translate((String)ItemUltDrill.readDrillMode((ItemStack)stack).translationName)}));
+        tooltip.add(TextFormatting.GOLD + Localization.translate((String)"super_solar_panels_rioutouscraft.ItemUltDrill.mode", (Object[])new Object[]{TextFormatting.WHITE + Localization.translate((String)ItemUltDrill.readDrillMode((ItemStack)stack).translationName)}));
     }
 
     public static enum DrillMode {
@@ -324,7 +324,7 @@ extends ItemDrill {
         public final float drillSpeed;
         public final double energyCost;
         public final TextFormatting colour;
-        public final String translationName = "super_solar_panels.ItemUltDrill." + CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, this.name());
+        public final String translationName = "super_solar_panels_rioutouscraft.ItemUltDrill." + CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, this.name());
 
         private DrillMode(TextFormatting colour, float speed, double energyCost) {
             this.energyCost = energyCost;

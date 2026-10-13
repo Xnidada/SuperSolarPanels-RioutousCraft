@@ -41,18 +41,18 @@ extends AbstractDamageableReactorComponent {
     public ItemReactorHeatStorage(String name, int heatStorage) {
         super(name, heatStorage);
         this.name = name;
-        ((ItemReactorHeatStorage)BlocksItems.registerItem((Item)this, (ResourceLocation)new ResourceLocation("super_solar_panels", this.name))).func_77655_b(name);
+        ((ItemReactorHeatStorage)BlocksItems.registerItem((Item)this, (ResourceLocation)new ResourceLocation("super_solar_panels_rioutouscraft", this.name))).func_77655_b(name);
     }
 
     @Override
     public String func_77658_a() {
-        return "super_solar_panels." + super.func_77658_a().substring(4);
+        return "super_solar_panels_rioutouscraft." + super.func_77658_a().substring(4);
     }
 
     @Override
     @SideOnly(value=Side.CLIENT)
     public void registerModels(ItemName name) {
-        ModelLoader.setCustomModelResourceLocation((Item)this, (int)0, (ModelResourceLocation)new ModelResourceLocation("super_solar_panels:" + CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, this.name), null));
+        ModelLoader.setCustomModelResourceLocation((Item)this, (int)0, (ModelResourceLocation)new ModelResourceLocation("super_solar_panels_rioutouscraft:" + CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, this.name), null));
     }
 
     @Override

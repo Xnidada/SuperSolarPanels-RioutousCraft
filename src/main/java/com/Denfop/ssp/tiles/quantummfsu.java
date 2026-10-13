@@ -100,7 +100,7 @@ IHasGui {
 
     public ContainerBase<?> getGuiContainer(EntityPlayer player) {
         try {
-            return DynamicContainer.create((IInventory)this, (EntityPlayer)player, (GuiParser.GuiNode)GuiParser.parse((ResourceLocation)new ResourceLocation("super_solar_panels", "guidef/quantummfsu.xml"), (Class)this.teBlock.getTeClass()));
+            return DynamicContainer.create((IInventory)this, (EntityPlayer)player, (GuiParser.GuiNode)GuiParser.parse((ResourceLocation)new ResourceLocation("super_solar_panels_rioutouscraft", "guidef/quantummfsu.xml"), (Class)this.teBlock.getTeClass()));
         }
         catch (Exception exception) {
             return null;
@@ -110,7 +110,7 @@ IHasGui {
     @SideOnly(value=Side.CLIENT)
     public GuiScreen getGui(EntityPlayer player, boolean b) {
         try {
-            return DynamicGui.create((IInventory)this, (EntityPlayer)player, (GuiParser.GuiNode)GuiParser.parse((ResourceLocation)new ResourceLocation("super_solar_panels", "guidef/quantummfsu.xml"), (Class)this.teBlock.getTeClass()));
+            return DynamicGui.create((IInventory)this, (EntityPlayer)player, (GuiParser.GuiNode)GuiParser.parse((ResourceLocation)new ResourceLocation("super_solar_panels_rioutouscraft", "guidef/quantummfsu.xml"), (Class)this.teBlock.getTeClass()));
         }
         catch (Exception exception) {
             return null;

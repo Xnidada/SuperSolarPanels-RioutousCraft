@@ -33,16 +33,16 @@ extends ItemMulti {
 
     public CraftingThings() {
         super((ItemName)null, CraftingTypes.class);
-        ((CraftingThings)BlocksItems.registerItem((Item)this, (ResourceLocation)new ResourceLocation("super_solar_panels", NAME))).func_77655_b(NAME);
+        ((CraftingThings)BlocksItems.registerItem((Item)this, (ResourceLocation)new ResourceLocation("super_solar_panels_rioutouscraft", NAME))).func_77655_b(NAME);
     }
 
     @SideOnly(value=Side.CLIENT)
     protected void registerModel(int meta, ItemName name, String extraName) {
-        ModelLoader.setCustomModelResourceLocation((Item)this, (int)meta, (ModelResourceLocation)new ModelResourceLocation("super_solar_panels:crafting/" + CraftingTypes.getFromID(meta).getName(), (String)null));
+        ModelLoader.setCustomModelResourceLocation((Item)this, (int)meta, (ModelResourceLocation)new ModelResourceLocation("super_solar_panels_rioutouscraft:crafting/" + CraftingTypes.getFromID(meta).getName(), (String)null));
     }
 
     public String func_77658_a() {
-        return "super_solar_panels." + super.func_77658_a().substring(4);
+        return "super_solar_panels_rioutouscraft." + super.func_77658_a().substring(4);
     }
 
     public static enum CraftingTypes implements IIdProvider

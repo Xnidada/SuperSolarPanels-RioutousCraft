@@ -2,11 +2,11 @@
 
 A source reconstruction of Super Solar Panels 1.3.1 for Minecraft 1.12.2, rebuilt against IndustrialCraft 2 `2.8.222-ex112`.
 
-The mod id and registry names remain `super_solar_panels` for save and pack compatibility. The display name is `SuperSolarPanels-RioutousCraft`.
+The standalone mod id is `super_solar_panels_rioutouscraft` so it can coexist with the original addon. Its display name is `SuperSolarPanels-RioutousCraft`; registry names and resource namespaces use the new id.
 
 ## Compatibility change
 
-The original addon calls the pre-2.8.222 `InvSlot` constructor. IC2 2.8.222 uses `IInventorySlotHolder<?>`; `InvSlotMultiCharge` now passes the same holder through that API. Gameplay content, recipes, registry names, and assets are retained from 1.3.1.
+The original addon calls the pre-2.8.222 `InvSlot` constructor. This standalone rebuild targets IC2 2.8.222 directly and uses `IInventorySlotHolder<?>`. Gameplay content, recipes, machine behavior, power values, and assets are retained from 1.3.1.
 
 ## Build
 

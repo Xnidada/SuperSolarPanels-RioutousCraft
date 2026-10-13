@@ -55,17 +55,17 @@ extends AbstractDamageableReactorComponent {
 
     @Override
     public String func_77658_a() {
-        return "super_solar_panels." + super.func_77658_a().substring(4);
+        return "super_solar_panels_rioutouscraft." + super.func_77658_a().substring(4);
     }
 
     @Override
     @SideOnly(value=Side.CLIENT)
     public void registerModels(ItemName name) {
-        ModelLoader.setCustomModelResourceLocation((Item)this, (int)0, (ModelResourceLocation)new ModelResourceLocation("super_solar_panels:" + CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, this.name), null));
+        ModelLoader.setCustomModelResourceLocation((Item)this, (int)0, (ModelResourceLocation)new ModelResourceLocation("super_solar_panels_rioutouscraft:" + CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, this.name), null));
     }
 
     public String setUnlocalizedName() {
-        return "super_solar_panels." + super.func_77658_a().substring(4);
+        return "super_solar_panels_rioutouscraft." + super.func_77658_a().substring(4);
     }
 
     protected ItemReactorUranium(String name, int cells, int duration) {
@@ -73,7 +73,7 @@ extends AbstractDamageableReactorComponent {
         this.func_77625_d(64);
         this.numberOfCells = cells;
         this.name = name;
-        ((ItemReactorUranium)BlocksItems.registerItem((Item)this, (ResourceLocation)new ResourceLocation("super_solar_panels", this.name))).func_77655_b(name);
+        ((ItemReactorUranium)BlocksItems.registerItem((Item)this, (ResourceLocation)new ResourceLocation("super_solar_panels_rioutouscraft", this.name))).func_77655_b(name);
     }
 
     public int getMetadata(ItemStack stack) {

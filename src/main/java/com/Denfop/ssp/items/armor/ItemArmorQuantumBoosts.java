@@ -54,7 +54,7 @@ extends ItemBoosts {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
-        return "super_solar_panels:textures/armour/" + this.name + (type != null ? "Overlay" : "") + ".png";
+        return "super_solar_panels_rioutouscraft:textures/armour/" + this.name + (type != null ? "Overlay" : "") + ".png";
     }
 
     public void func_82813_b(ItemStack stack, int colour) {

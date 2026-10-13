@@ -53,9 +53,9 @@ import org.lwjgl.opengl.GL11;
 @SideOnly(value=Side.CLIENT)
 public class PrettyMolecularTransformerTESR
 extends TileEntitySpecialRenderer<TileEntityMolecularAssembler> {
-    private static final ResourceLocation transfTextloc = new ResourceLocation("super_solar_panels", "textures/models/textureMolecularTransformer.png");
-    private static final ResourceLocation plazmaTextloc = new ResourceLocation("super_solar_panels", "textures/models/plazma.png");
-    private static final ResourceLocation particlesTextloc = new ResourceLocation("super_solar_panels", "textures/models/particles.png");
+    private static final ResourceLocation transfTextloc = new ResourceLocation("super_solar_panels_rioutouscraft", "textures/models/textureMolecularTransformer.png");
+    private static final ResourceLocation plazmaTextloc = new ResourceLocation("super_solar_panels_rioutouscraft", "textures/models/plazma.png");
+    private static final ResourceLocation particlesTextloc = new ResourceLocation("super_solar_panels_rioutouscraft", "textures/models/particles.png");
     public static final PrettyMolecularTransformerModel model = new PrettyMolecularTransformerModel();
     private static final TObjectIntMap<List<Serializable>> textureSizeCache = new TObjectIntHashMap();
     private static final IResourceManager resources = Minecraft.func_71410_x().func_110442_L();

@@ -377,8 +377,8 @@ public final class Configs {
             Configs.write(writer, "minecraft:sand@*; minecraft:gravel; 30000");
             Configs.write(writer, "minecraft:dirt@*; minecraft:clay; 30000");
             Configs.write(writer, "minecraft:coal@1; minecraft:coal@0; 40000");
-            Configs.write(writer, "minecraft:glowstone_dust@*; super_solar_panels:crafting@2; 800000");
-            Configs.write(writer, "minecraft:glowstone@*; super_solar_panels:crafting@1; 4500000");
+            Configs.write(writer, "minecraft:glowstone_dust@*; super_solar_panels_rioutouscraft:crafting@2; 800000");
+            Configs.write(writer, "minecraft:glowstone@*; super_solar_panels_rioutouscraft:crafting@1; 4500000");
             Configs.write(writer, "minecraft:wool@4; minecraft:glowstone; 350000");
             Configs.write(writer, "minecraft:wool@11; minecraft:lapis_block; 350000");
             Configs.write(writer, "minecraft:wool@14; minecraft:redstone_block; 350000");
@@ -393,9 +393,9 @@ public final class Configs {
             Configs.write(writer, "OreDict:ingotTin; OreDict:ingotSilver; 350000");
             Configs.write(writer, "OreDict:ingotSilver; OreDict:ingotGold; 350000");
             Configs.write(writer, "OreDict:ingotGold; OreDict:ingotPlatinum; 4000000");
-            Configs.write(writer, "super_solar_panels:crafting@5; super_solar_panels:crafting@48; 15000000");
-            Configs.write(writer, "super_solar_panels:crafting@6; super_solar_panels:crafting@49; 15000000");
-            Configs.write(writer, "ic2:misc_resource#iridium_ore; super_solar_panels:crafting@52; 25000000");
+            Configs.write(writer, "super_solar_panels_rioutouscraft:crafting@5; super_solar_panels_rioutouscraft:crafting@48; 15000000");
+            Configs.write(writer, "super_solar_panels_rioutouscraft:crafting@6; super_solar_panels_rioutouscraft:crafting@49; 15000000");
+            Configs.write(writer, "ic2:misc_resource#iridium_ore; super_solar_panels_rioutouscraft:crafting@52; 25000000");
         }
         catch (IOException e) {
             try {

@@ -63,7 +63,7 @@ implements IItemModelProvider {
 
     @SideOnly(value=Side.CLIENT)
     public void registerModels(ItemName name) {
-        ModelLoader.setCustomModelResourceLocation((Item)this, (int)0, (ModelResourceLocation)new ModelResourceLocation("super_solar_panels:" + CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, this.name), null));
+        ModelLoader.setCustomModelResourceLocation((Item)this, (int)0, (ModelResourceLocation)new ModelResourceLocation("super_solar_panels_rioutouscraft:" + CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, this.name), null));
     }
 
     @SideOnly(value=Side.CLIENT)
@@ -84,7 +84,7 @@ implements IItemModelProvider {
     @SideOnly(value=Side.CLIENT)
     public static ModelResourceLocation getModelLocation(ItemName name, String string) {
         StringBuilder loc = new StringBuilder();
-        loc.append("super_solar_panels");
+        loc.append("super_solar_panels_rioutouscraft");
         loc.append(':');
         return new ModelResourceLocation(loc.toString(), null);
     }

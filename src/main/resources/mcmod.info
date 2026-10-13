@@ -11,7 +11,7 @@
 		"description": "Super solar panels is new generation of using solar power. This is addon for IndustrialCraft 2.",
 		"logoFile": "",
 		"mcversion": "1.12.2",
-		"modid": "super_solar_panels",
+		"modid": "super_solar_panels_rioutouscraft",
 		"name": "SuperSolarPanels-RioutousCraft",
 		"parent": "",
 		"requiredMods": [

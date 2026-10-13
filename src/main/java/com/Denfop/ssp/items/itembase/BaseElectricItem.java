@@ -74,16 +74,16 @@ IItemHudInfo {
         this.func_77625_d(1);
         this.setNoRepair();
         BaseElectricItem.name = name;
-        ((BaseElectricItem)BlocksItems.registerItem((Item)this, (ResourceLocation)new ResourceLocation("super_solar_panels", BaseElectricItem.name))).func_77655_b(name);
+        ((BaseElectricItem)BlocksItems.registerItem((Item)this, (ResourceLocation)new ResourceLocation("super_solar_panels_rioutouscraft", BaseElectricItem.name))).func_77655_b(name);
     }
 
     public String func_77658_a() {
-        return "super_solar_panels." + super.func_77658_a().substring(4);
+        return "super_solar_panels_rioutouscraft." + super.func_77658_a().substring(4);
     }
 
     @SideOnly(value=Side.CLIENT)
     public void registerModels(ItemName name) {
-        ModelLoader.setCustomModelResourceLocation((Item)this, (int)0, (ModelResourceLocation)new ModelResourceLocation("super_solar_panels:" + CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, BaseElectricItem.name), null));
+        ModelLoader.setCustomModelResourceLocation((Item)this, (int)0, (ModelResourceLocation)new ModelResourceLocation("super_solar_panels_rioutouscraft:" + CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, BaseElectricItem.name), null));
     }
 
     public boolean canProvideEnergy(ItemStack stack) {

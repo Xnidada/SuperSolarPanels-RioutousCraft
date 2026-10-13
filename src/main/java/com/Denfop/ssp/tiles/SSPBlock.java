@@ -144,7 +144,7 @@ public enum SSPBlock implements ITeBlock
         this.teClass = teClass;
         this.itemMeta = itemMeta;
         this.rarity = rarity;
-        GameRegistry.registerTileEntity(teClass, (String)("super_solar_panels:" + this.getName()));
+        GameRegistry.registerTileEntity(teClass, (String)("super_solar_panels_rioutouscraft:" + this.getName()));
     }
 
     public boolean hasItem() {
@@ -197,7 +197,7 @@ public enum SSPBlock implements ITeBlock
 
     public static void buildDummies() {
         ModContainer mc = Loader.instance().activeModContainer();
-        if (mc == null || !"super_solar_panels".equals(mc.getModId())) {
+        if (mc == null || !"super_solar_panels_rioutouscraft".equals(mc.getModId())) {
             throw new IllegalAccessError("Don't mess with this please.");
         }
         for (SSPBlock block : VALUES) {
@@ -222,7 +222,7 @@ public enum SSPBlock implements ITeBlock
 
     static {
         VALUES = SSPBlock.values();
-        IDENTITY = new ResourceLocation("super_solar_panels", "machines");
+        IDENTITY = new ResourceLocation("super_solar_panels_rioutouscraft", "machines");
     }
 }
 

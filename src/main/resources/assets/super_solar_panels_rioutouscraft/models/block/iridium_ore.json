@@ -1,0 +1,6 @@
+{
+    "parent": "block/cube_all",
+    "textures": {
+        "all": "super_solar_panels_rioutouscraft:blocks/iridiumore"
+    }
+}

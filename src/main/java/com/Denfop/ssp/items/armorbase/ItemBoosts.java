@@ -72,7 +72,7 @@ implements IBoostingJetpack {
     protected ItemBoosts(String name, double maxCharge, double transferLimit, int tier) {
         super((ItemName)null, (String)null, EntityEquipmentSlot.FEET, maxCharge, transferLimit, tier);
         this.name = name;
-        ((ItemBoosts)BlocksItems.registerItem((Item)this, (ResourceLocation)new ResourceLocation("super_solar_panels", this.name))).func_77655_b(name);
+        ((ItemBoosts)BlocksItems.registerItem((Item)this, (ResourceLocation)new ResourceLocation("super_solar_panels_rioutouscraft", this.name))).func_77655_b(name);
         this.func_77656_e(27);
         this.func_77625_d(1);
         this.setNoRepair();
@@ -80,15 +80,15 @@ implements IBoostingJetpack {
 
     @SideOnly(value=Side.CLIENT)
     public void registerModels(ItemName name) {
-        ModelLoader.setCustomModelResourceLocation((Item)this, (int)0, (ModelResourceLocation)new ModelResourceLocation("super_solar_panels:" + CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, this.name), (String)null));
+        ModelLoader.setCustomModelResourceLocation((Item)this, (int)0, (ModelResourceLocation)new ModelResourceLocation("super_solar_panels_rioutouscraft:" + CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, this.name), (String)null));
     }
 
     public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
-        return "super_solar_panels:textures/armour/" + this.name + ".png";
+        return "super_solar_panels_rioutouscraft:textures/armour/" + this.name + ".png";
     }
 
     public String func_77658_a() {
-        return "super_solar_panels." + super.func_77658_a().substring(4);
+        return "super_solar_panels_rioutouscraft." + super.func_77658_a().substring(4);
     }
 
     public EnumRarity func_77613_e(ItemStack stack) {
