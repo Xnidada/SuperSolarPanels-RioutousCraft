@@ -43,6 +43,7 @@ import com.rioutouscraft.ssp.tiles.Transformer.TileEntityTransformerEV2;
 import com.rioutouscraft.ssp.tiles.Transformer.TileEntityTransformerEV3;
 import com.rioutouscraft.ssp.tiles.advancedmfsu;
 import com.rioutouscraft.ssp.tiles.neutronfabricator.TileEntityMassFabricator;
+import com.rioutouscraft.ssp.tiles.modular.TileEntityModularSolarPanel;
 import com.rioutouscraft.ssp.tiles.overtimepanel.TileEntityAdmin;
 import com.rioutouscraft.ssp.tiles.overtimepanel.TileEntityAdvancedSolar;
 import com.rioutouscraft.ssp.tiles.overtimepanel.TileEntityHybridSolar;
@@ -127,7 +128,8 @@ public enum SSPBlock implements ITeBlock
     neutronium_solar_panelrain(TileEntityneutronrain.class, 44, EnumRarity.EPIC),
     advancedmfsu(advancedmfsu.class, 45, EnumRarity.EPIC),
     ultimatemfsu(ultimatemfsu.class, 46, EnumRarity.EPIC),
-    quantummfsu(quantummfsu.class, 47, EnumRarity.EPIC);
+    quantummfsu(quantummfsu.class, 47, EnumRarity.EPIC),
+    modular_solar_panel(TileEntityModularSolarPanel.class, 51, EnumRarity.RARE);
 
     private final Class<? extends TileEntityBlock> teClass;
     private final int itemMeta;

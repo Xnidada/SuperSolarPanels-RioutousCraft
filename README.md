@@ -21,3 +21,14 @@ The rebuilt jar is in `build/libs/`. ForgeGradle 2.3 and Java 8 are required for
 ## Attribution
 
 Original addon: Super Solar Panels 1.3.1 by Denfop and contributors. This repository contains a compatibility-focused source reconstruction for IC2 2.8.222.
+
+## Modular solar panel (phase 1)
+
+This rebuild includes a standalone modular solar panel system. It does not depend on IndustrialUpgrade and does not add recipes. The new items are registered under the `super_solar_panels_rioutouscraft` namespace so pack authors can add recipes later.
+
+- `solar_panel_glass`: day, night, and day/night glass profiles;
+- `solar_panel_battery`: basic, advanced, and quantum storage modules;
+- `solar_panel_output`: basic, advanced, and quantum output modules;
+- `modular_solar_panel`: one glass slot, one battery slot, and one output slot.
+
+The panel stores its configuration and internal EU buffer in NBT. Existing fixed solar panels are unchanged.

@@ -29,6 +29,7 @@ import com.rioutouscraft.ssp.items.reactors.ItemReactorProton;
 import com.rioutouscraft.ssp.items.resource.CraftingThings;
 import com.rioutouscraft.ssp.items.tools.ItemNanoSaber;
 import com.rioutouscraft.ssp.items.tools.ItemUltDrill;
+import com.rioutouscraft.ssp.items.modular.ModularPanelItems;
 import ic2.core.block.state.IIdProvider;
 import ic2.core.item.tool.HarvestLevel;
 import ic2.core.item.tool.ToolClass;
@@ -117,6 +118,7 @@ public enum SSP_Items {
         iridium.setInstance(new ItemWindRotor("rotor_carbon1", Configs.Radius, Configs.rotor_carbon1, Configs.coefficient, Configs.minWindStrength, Configs.maxWindStrength, new ResourceLocation("super_solar_panels_rioutouscraft", "textures/items/carbon_rotor_model1.png")));
         compressiridium.setInstance(new ItemWindRotor("rotor_carbon2", Configs.Radius1, Configs.rotor_carbon2, Configs.coefficient1, Configs.minWindStrength1, Configs.maxWindStrength1, new ResourceLocation("super_solar_panels_rioutouscraft", "textures/items/carbon_rotor_model2.png")));
         spectral.setInstance(new ItemWindRotor("rotor_carbon3", Configs.Radius2, Configs.rotor_carbon3, Configs.coefficient2, Configs.minWindStrength2, Configs.maxWindStrength2, new ResourceLocation("super_solar_panels_rioutouscraft", "textures/items/carbon_rotor_model3.png")));
+        ModularPanelItems.register(side);
         if (side == Side.CLIENT) {
             SSP_Items.doModelGuf();
         }
