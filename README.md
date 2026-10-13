@@ -32,3 +32,5 @@ This rebuild includes a standalone modular solar panel system. It does not depen
 - `modular_solar_panel`: one glass slot, one battery slot, and one output slot.
 
 The panel stores its configuration and internal EU buffer in NBT. Existing fixed solar panels are unchanged.
+
+The modular component artwork is adapted from the IndustrialUpgrade reference repository. The copied third-party license text is kept under `third_party/industrialupgrade/LICENSE`; the runtime mod does not depend on IndustrialUpgrade.
