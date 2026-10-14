@@ -1,17 +1,17 @@
 # SuperSolarPanels-RioutousCraft 变更记录
 
-本文记录原版 **Super Solar Panels 1.3.1** 与当前 **SuperSolarPanels-RioutousCraft 1.4.2** 的差异。参数表使用源码中的默认配置；服务器可以通过配置文件覆盖这些默认值。
+本文记录原版 **Super Solar Panels 1.3.1** 与当前 **SuperSolarPanels-RioutousCraft 1.4.3** 的差异。参数表使用源码中的默认配置；服务器可以通过配置文件覆盖这些默认值。
 
 ## 版本和兼容目标
 
-| 项目 | 原版 1.3.1 | RioutousCraft 1.4.2 |
+| 项目 | 原版 1.3.1 | RioutousCraft 1.4.3 |
 |---|---|---|
 | Minecraft | 1.12.2 | 1.12.2 |
 | IC2 | 面向旧版 IC2 API | IC2 `2.8.222-ex112` |
 | Mod ID | `super_solar_panels` | `super_solar_panels_rioutouscraft` |
 | 代码包 | `com.Denfop.ssp` | `com.rioutouscraft.ssp` |
 | 显示名称 | Super Solar Panels | SuperSolarPanels-RioutousCraft |
-| 当前版本 | 1.3.1 | 1.4.2-RioutousCraft |
+| 当前版本 | 1.3.1 | 1.4.3-RioutousCraft |
 
 RioutousCraft 使用独立的 Mod ID、注册名和资源命名空间，因此可以在注册层面与原版区分开。原版方块不会自动转换为 RioutousCraft 方块；更换版本前应备份存档。
 
@@ -35,7 +35,7 @@ RioutousCraft 使用独立的 Mod ID、注册名和资源命名空间，因此�
 
 这些方块分别拥有独立的 TileEntity、GUI、模型、配置和部分合成配方。
 
-### RioutousCraft 1.4.2
+### RioutousCraft 1.4.2–1.4.3
 
 - 移除独立的白昼、月能和降雨太阳能方块。
 - 保留一套统一的 14 级常规太阳能方块。
@@ -88,7 +88,7 @@ RioutousCraft 1.3.3 起加入了 IndustrialUpgrade 中的完整 14 级常规太�
 | 月光玻璃 | +0% | +35% | 不额外增加 |
 | 降雨玻璃 | 不额外增加 | 不额外增加 | 在雨天把基础 65% 倍率提升到 100% |
 
-1.4.2 直接删除日光玻璃和昼夜玻璃物品及其模型、贴图、语言键；当前只保留月光玻璃和降雨玻璃。月光玻璃会把夜间发电设为原基础夜间发电的 135%。
+1.4.2 直接删除日光玻璃和昼夜玻璃物品及其模型、贴图、语言键；当前只保留月光玻璃和降雨玻璃。1.4.3 移除三个模块物品类对 IC2 `ItemMulti` 禁止覆盖的 `getTranslationKey(ItemStack)` 方法，改用安全的显示名称入口，修复 IC2 2.8.222 客户端启动时的 `VerifyError`。月光玻璃会把夜间发电设为原基础夜间发电的 135%。
 
 ### 储能与输出模块
 
@@ -130,7 +130,7 @@ RioutousCraft 1.3.3 起加入了 IndustrialUpgrade 中的完整 14 级常规太�
 
 ## 本地目录和验证
 
-- `item-catalog.html` 已改为当前 1.4.2 内容，共收录 111 个条目。
+- `item-catalog.html` 已改为当前 1.4.3 内容，共收录 111 个条目。
 - 当前目录中包含 14 个常规太阳能方块以及保留的月光玻璃、降雨玻璃。
 - 已通过 Java 8 + ForgeGradle 构建：`gradle clean build`。
 - 已检查 GUI XML、方块模型、blockstate JSON 和最终 jar 资源。
@@ -138,5 +138,5 @@ RioutousCraft 1.3.3 起加入了 IndustrialUpgrade 中的完整 14 级常规太�
 
 ## 当前产物
 
-- `build/libs/SuperSolarPanels-RioutousCraft-1.4.2-RioutousCraft.jar`
+- `build/libs/SuperSolarPanels-RioutousCraft-1.4.3-RioutousCraft.jar`
 - Git commit：由本次变更生成

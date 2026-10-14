@@ -33,8 +33,8 @@ public final class ModularPanelOutput extends ItemMulti<ModularPanelOutput.Type>
     }
 
     @Override
-    public String getTranslationKey(ItemStack stack) {
-        return SuperSolarPanels.MODID + "." + NAME + "." + getPanelType(stack).getName();
+    public String getItemStackDisplayName(ItemStack stack) {
+        return Localization.translate(SuperSolarPanels.MODID + "." + NAME + "." + getPanelType(stack).getName());
     }
 
     @Override
