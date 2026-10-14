@@ -37,8 +37,12 @@ import com.rioutouscraft.ssp.tiles.TileEntitySolarPanel;
 import com.rioutouscraft.ssp.tiles.TileEntitySolarPanelsun;
 import com.rioutouscraft.ssp.tiles.overtimepanel.TileEntityAdmin;
 import com.rioutouscraft.ssp.tiles.overtimepanel.TileEntityAdvancedSolar;
+import com.rioutouscraft.ssp.tiles.overtimepanel.TileEntityBarion;
+import com.rioutouscraft.ssp.tiles.overtimepanel.TileEntityGraviton;
 import com.rioutouscraft.ssp.tiles.overtimepanel.TileEntityHybridSolar;
+import com.rioutouscraft.ssp.tiles.overtimepanel.TileEntityHadron;
 import com.rioutouscraft.ssp.tiles.overtimepanel.TileEntityQuantumSolar;
+import com.rioutouscraft.ssp.tiles.overtimepanel.TileEntityQuark;
 import com.rioutouscraft.ssp.tiles.overtimepanel.TileEntitySingular;
 import com.rioutouscraft.ssp.tiles.overtimepanel.TileEntitySpectral;
 import com.rioutouscraft.ssp.tiles.overtimepanel.TileEntityUltimateHybridSolar;
@@ -180,16 +184,20 @@ public final class Configs {
         Configuration config = new Configuration(configFile);
         try {
             config.load();
-            TileEntityneutron.settings = new TileEntitySolarPanel.SolarConfig(config.get("Neutron solar panels", "NeutronGenDay", 0xA00000).getInt(0xA00000), config.get("Neutron solar panels", "NeutronGenNight", 0xA00000).getInt(0xA00000), config.get("Neutron solar panels", "NeutronStorage", 800000000).getInt(800000000), config.get("Neutron solar panels", "NeutronTier", 10).getInt(10));
-            TileEntityproton.settings = new TileEntitySolarPanel.SolarConfig(config.get("Proton solar panels", "ProtonGenDay", 32768).getInt(32768), config.get("Proton solar panels", "ProtonGenNight", 20000).getInt(20000), config.get("Proton solar panels", "ProtonStorage", 999999999).getInt(999999999), config.get("Proton solar panels", "ProtonTier", 6).getInt(6));
-            TileEntityAdvancedSolar.settings = new TileEntitySolarPanel.SolarConfig(config.get("Advanced solar panels", "AdvancedSPGenDay", 4).getInt(4), config.get("Advanced solar panels", "AdvancedSPGenNight", 4).getInt(4), config.get("Advanced solar panels", "AdvancedSPStorage", 16000).getInt(16000), config.get("Advanced solar panels", "AdvancedSPTier", 1).getInt(1));
-            TileEntityHybridSolar.settings = new TileEntitySolarPanel.SolarConfig(config.get("Hybrid solar panels", "HybrydSPGenDay", 32).getInt(32), config.get("Hybrid solar panels", "HybrydSPGenNight", 8).getInt(8), config.get("Hybrid solar panels", "HybrydSPStorage", 50000).getInt(50000), config.get("Hybrid solar panels", "HybrydSPTier", 2).getInt(2));
-            TileEntityUltimateHybridSolar.settings = new TileEntitySolarPanel.SolarConfig(config.get("Ultimate solar panels", "UltimateHSPGenDay", 256).getInt(256), config.get("Ultimate solar panels", "UltimateHSPGenNight", 64).getInt(64), config.get("Ultimate solar panels", "UltimateHSPStorage", 500000).getInt(500000), config.get("Ultimate solar panels", "UltimateHSPTier", 3).getInt(3));
-            TileEntityQuantumSolar.settings = new TileEntitySolarPanel.SolarConfig(config.get("Quantum solar panels", "QuantumSPGenDay", 2048).getInt(2048), config.get("Quantum solar panels", "QuantumSPGenNight", 1024).getInt(1024), config.get("Quantum solar panels", "QuantumSPStorage", 5000000).getInt(5000000), config.get("Quantum solar panels", "QuantumSPTier", 4).getInt(4));
-            TileEntitySpectral.settings = new TileEntitySolarPanel.SolarConfig(config.get("Spectral solar panels", "SpecrtalGenDay", 8192).getInt(8192), config.get("Spectral solar panels", "SpecrtalGenNight", 5000).getInt(5000), config.get("Spectral solar panels", "SpecrtalStorage", 10000000).getInt(10000000), config.get("Spectral solar panels", "SpecrtalTier", 5).getInt(5));
-            TileEntitySingular.settings = new TileEntitySolarPanel.SolarConfig(config.get("Singular solar panels", "SingularGenDay", 131072).getInt(131072), config.get("Singular solar panels", "SingularGenNight", 104857).getInt(104857), config.get("Singular solar panels", "SingularStorage", 50000000).getInt(50000000), config.get("Singular solar panels", "SingularTier", 7).getInt(7));
-            TileEntityAdmin.settings = new TileEntitySolarPanel.SolarConfig(config.get("Light-Absord solar panels", "Light-AbsordGenDay", 554288).getInt(554288), config.get("Light-Absord solar panels", "Light-AbsordGenNight", 554288).getInt(554288), config.get("Light-Absord solar panels", "Light-AbsordStorage", 100000000).getInt(100000000), config.get("Light-Absord solar panels", "Light-AbsordTier", 8).getInt(8));
-            TileEntityphotonic.settings = new TileEntitySolarPanel.SolarConfig(config.get("Photonic solar panels", "PhotonicGenDay", 0x280000).getInt(0x280000), config.get("Photonic solar panels", "PhotonicGenNight", 0x280000).getInt(0x280000), config.get("Photonic solar panels", "PhotonicStorage", 400000000).getInt(400000000), config.get("Photonic solar panels", "PhotonicTier", 9).getInt(9));
+            TileEntityAdvancedSolar.settings = new TileEntitySolarPanel.SolarConfig(getDouble(config, "Advanced solar panels", "AdvancedSPGenDay", 5D), getDouble(config, "Advanced solar panels", "AdvancedSPGenNight", 2.5D), getDouble(config, "Advanced solar panels", "AdvancedSPStorage", 3200D), 1, getDouble(config, "Advanced solar panels", "AdvancedSPOutput", 10D));
+            TileEntityHybridSolar.settings = new TileEntitySolarPanel.SolarConfig(getDouble(config, "Hybrid solar panels", "HybrydSPGenDay", 20D), getDouble(config, "Hybrid solar panels", "HybrydSPGenNight", 10D), getDouble(config, "Hybrid solar panels", "HybrydSPStorage", 20000D), 2, getDouble(config, "Hybrid solar panels", "HybrydSPOutput", 40D));
+            TileEntityUltimateHybridSolar.settings = new TileEntitySolarPanel.SolarConfig(getDouble(config, "Ultimate solar panels", "UltimateHSPGenDay", 80D), getDouble(config, "Ultimate solar panels", "UltimateHSPGenNight", 40D), getDouble(config, "Ultimate solar panels", "UltimateHSPStorage", 200000D), 3, getDouble(config, "Ultimate solar panels", "UltimateHSPOutput", 160D));
+            TileEntityQuantumSolar.settings = new TileEntitySolarPanel.SolarConfig(getDouble(config, "Quantum solar panels", "QuantumSPGenDay", 320D), getDouble(config, "Quantum solar panels", "QuantumSPGenNight", 160D), getDouble(config, "Quantum solar panels", "QuantumSPStorage", 1000000D), 4, getDouble(config, "Quantum solar panels", "QuantumSPOutput", 640D));
+            TileEntitySpectral.settings = new TileEntitySolarPanel.SolarConfig(getDouble(config, "Spectral solar panels", "SpecrtalGenDay", 1280D), getDouble(config, "Spectral solar panels", "SpecrtalGenNight", 640D), getDouble(config, "Spectral solar panels", "SpecrtalStorage", 5000000D), 5, getDouble(config, "Spectral solar panels", "SpecrtalOutput", 2560D));
+            TileEntityproton.settings = new TileEntitySolarPanel.SolarConfig(getDouble(config, "Proton solar panels", "ProtonGenDay", 5120D), getDouble(config, "Proton solar panels", "ProtonGenNight", 2560D), getDouble(config, "Proton solar panels", "ProtonStorage", 50000000D), 6, getDouble(config, "Proton solar panels", "ProtonOutput", 10240D));
+            TileEntitySingular.settings = new TileEntitySolarPanel.SolarConfig(getDouble(config, "Singular solar panels", "SingularGenDay", 20480D), getDouble(config, "Singular solar panels", "SingularGenNight", 10240D), getDouble(config, "Singular solar panels", "SingularStorage", 1000000000D), 7, getDouble(config, "Singular solar panels", "SingularOutput", 40960D));
+            TileEntityAdmin.settings = new TileEntitySolarPanel.SolarConfig(getDouble(config, "Diffraction solar panels", "DiffractionGenDay", 81920D), getDouble(config, "Diffraction solar panels", "DiffractionGenNight", 40960D), getDouble(config, "Diffraction solar panels", "DiffractionStorage", 1500000000D), 8, getDouble(config, "Diffraction solar panels", "DiffractionOutput", 163840D));
+            TileEntityphotonic.settings = new TileEntitySolarPanel.SolarConfig(getDouble(config, "Photonic solar panels", "PhotonicGenDay", 327680D), getDouble(config, "Photonic solar panels", "PhotonicGenNight", 163840D), getDouble(config, "Photonic solar panels", "PhotonicStorage", 5000000000D), 9, getDouble(config, "Photonic solar panels", "PhotonicOutput", 655360D));
+            TileEntityneutron.settings = new TileEntitySolarPanel.SolarConfig(getDouble(config, "Neutron solar panels", "NeutronGenDay", 1310720D), getDouble(config, "Neutron solar panels", "NeutronGenNight", 655360D), getDouble(config, "Neutron solar panels", "NeutronStorage", 6500000000D), 10, getDouble(config, "Neutron solar panels", "NeutronOutput", 2621440D));
+            TileEntityBarion.settings = new TileEntitySolarPanel.SolarConfig(getDouble(config, "Barion solar panels", "BarionGenDay", 5242880D), getDouble(config, "Barion solar panels", "BarionGenNight", 2621440D), getDouble(config, "Barion solar panels", "BarionStorage", 10000000000D), 11, getDouble(config, "Barion solar panels", "BarionOutput", 10485760D));
+            TileEntityHadron.settings = new TileEntitySolarPanel.SolarConfig(getDouble(config, "Hadron solar panels", "HadronGenDay", 20971520D), getDouble(config, "Hadron solar panels", "HadronGenNight", 10485760D), getDouble(config, "Hadron solar panels", "HadronStorage", 25000000000D), 12, getDouble(config, "Hadron solar panels", "HadronOutput", 41943040D));
+            TileEntityGraviton.settings = new TileEntitySolarPanel.SolarConfig(getDouble(config, "Graviton solar panels", "GravitonGenDay", 83886080D), getDouble(config, "Graviton solar panels", "GravitonGenNight", 41943040D), getDouble(config, "Graviton solar panels", "GravitonStorage", 250000000000D), 13, getDouble(config, "Graviton solar panels", "GravitonOutput", 167772160D));
+            TileEntityQuark.settings = new TileEntitySolarPanel.SolarConfig(getDouble(config, "Quark solar panels", "QuarkGenDay", 335544320D), getDouble(config, "Quark solar panels", "QuarkGenNight", 167772160D), getDouble(config, "Quark solar panels", "QuarkStorage", 2500000000000D), 14, getDouble(config, "Quark solar panels", "QuarkOutput", 671088640D));
             damage1 = config.get("Settings quantum saber", "Damage quantum saber(not right click)+1 ", 11).getInt(11);
             damage2 = config.get("Settings quantum saber", "Damage quantum saber(right click)+1", 29).getInt(29);
             damage3 = config.get("Settings spectral saber", "Damage quantum saber(not right click)+1 ", 14).getInt(14);
@@ -304,6 +312,14 @@ public final class Configs {
                 config.save();
             }
         }
+    }
+
+    private static int getInt(Configuration config, String category, String key, int defaultValue) {
+        return config.get(category, key, defaultValue).getInt(defaultValue);
+    }
+
+    private static double getDouble(Configuration config, String category, String key, double defaultValue) {
+        return config.get(category, key, defaultValue).getDouble(defaultValue);
     }
 
     private static void loadMolecularTransformerConfig(File configFolder, String configFile) throws ParseException {

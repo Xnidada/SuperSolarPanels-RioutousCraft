@@ -214,16 +214,20 @@ def item_details(rel):
 
 
 PANEL_SPECS = {
-    "advanced": (4, 4, 16000, 1),
-    "hybrid": (32, 8, 50000, 2),
-    "ultimate": (256, 64, 500000, 3),
-    "quantum": (2048, 1024, 5000000, 4),
-    "spectral": (8192, 5000, 10000000, 5),
-    "singular": (131072, 104857, 50000000, 7),
-    "admin": (554288, 554288, 100000000, 8),
-    "photonic": (0x280000, 0x280000, 400000000, 9),
-    "neutronium": (0xA00000, 0xA00000, 800000000, 10),
-    "proton": (32768, 20000, 999999999, 6),
+    "advanced": (5, 2.5, 3200, 1, 10),
+    "hybrid": (20, 10, 20000, 2, 40),
+    "ultimate": (80, 40, 200000, 3, 160),
+    "quantum": (320, 160, 1000000, 4, 640),
+    "spectral": (1280, 640, 5000000, 5, 2560),
+    "proton": (5120, 2560, 50000000, 6, 10240),
+    "singular": (20480, 10240, 1000000000, 7, 40960),
+    "admin": (81920, 40960, 1500000000, 8, 163840),
+    "photonic": (327680, 163840, 5000000000, 9, 655360),
+    "neutronium": (1310720, 655360, 6500000000, 10, 2621440),
+    "barion": (5242880, 2621440, 10000000000, 11, 10485760),
+    "hadron": (20971520, 10485760, 25000000000, 12, 41943040),
+    "graviton": (83886080, 41943040, 250000000000, 13, 167772160),
+    "quark": (335544320, 167772160, 2500000000000, 14, 671088640),
 }
 ALT_POWER = {"advanced": 6, "hybrid": 48, "ultimate": 384, "quantum": 3072, "spectral": 12288, "singular": 196608, "admin": 831432, "photonic": 0x3C0000, "neutronium": 0xF00000, "proton": 49152}
 ALT_STORAGE = {"advanced": 32000, "hybrid": 100000, "ultimate": 1000000, "quantum": 10000000, "spectral": 100000000, "singular": 100000, "admin": 1000000, "photonic": 999999999, "neutronium": 999999999, "proton": 999999999}
@@ -237,9 +241,9 @@ def panel_info(name):
         tier_name = name[:-len(suffix)]
         if tier_name not in PANEL_SPECS:
             continue
-        day, night, storage, tier = PANEL_SPECS[tier_name]
+        day, night, storage, tier, output = PANEL_SPECS[tier_name]
         if mode == "常规":
-            details = [metric("白昼发电", f"{day:,} EU/t"), metric("夜间发电", f"{night:,} EU/t"), metric("储能", f"{storage:,} EU"), metric("IC2等级", str(tier))]
+            details = [metric("白昼发电", f"{day:,} EU/t"), metric("夜间发电", f"{night:,} EU/t"), metric("最大输出", f"{output:,} EU/t"), metric("储能", f"{storage:,} EU"), metric("IC2等级", str(tier))]
         else:
             details = [metric(mode + "发电", f"{ALT_POWER[tier_name]:,} EU/t"), metric("条件", {"白昼": "露天白昼；下雨时停止", "夜间": "露天夜间；下雨时停止", "降雨": "有天空且正在下雨"}[mode]), metric("储能", f"{ALT_STORAGE[tier_name]:,} EU"), metric("IC2等级", str(tier))]
         return "太阳能板 · " + mode, details

@@ -24,7 +24,7 @@ Original addon: Super Solar Panels 1.3.1 by Denfop and contributors. This reposi
 
 ## Existing panel module slots
 
-Version 1.3.2 adds the modular component slots directly to every existing solar, daylight, moonlight, and rain panel. The standalone modular solar panel block has been removed. The module items remain registered under the `super_solar_panels_rioutouscraft` namespace, and no recipes are added so pack authors can define them later.
+Version 1.3.2 adds the modular component slots directly to every existing solar, daylight, moonlight, and rain panel; version 1.3.3 extends the normal solar series to 14 IndustrialUpgrade-aligned tiers. It includes the same 14 tiers as IndustrialUpgrade, including Barion, Hadron, Graviton, and Quark, with matching default generation, output, storage, and tier values. The standalone modular solar panel block has been removed. The module items remain registered under the `super_solar_panels_rioutouscraft` namespace, and no recipes are added so pack authors can define them later.
 
 - `solar_panel_glass`: day, night, and day/night generation bonuses;
 - `solar_panel_battery`: basic, advanced, and quantum storage capacity;
@@ -32,7 +32,7 @@ Version 1.3.2 adds the modular component slots directly to every existing solar,
 
 Each existing panel GUI now exposes three dedicated module slots beside its original charge slots. Modules are saved with the panel, and the original weather/day/night generation rules remain active.
 
-The modular component artwork is adapted from the IndustrialUpgrade reference repository. The copied third-party license text is kept under `third_party/industrialupgrade/LICENSE`; the runtime mod does not depend on IndustrialUpgrade.
+The modular component and high-tier solar panel artwork is adapted from the IndustrialUpgrade reference repository. The copied third-party license text is kept under `third_party/industrialupgrade/LICENSE`; the runtime mod does not depend on IndustrialUpgrade.
 
 ## Local item catalogue
 

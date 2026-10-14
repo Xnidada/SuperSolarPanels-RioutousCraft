@@ -45,8 +45,12 @@ import com.rioutouscraft.ssp.tiles.advancedmfsu;
 import com.rioutouscraft.ssp.tiles.neutronfabricator.TileEntityMassFabricator;
 import com.rioutouscraft.ssp.tiles.overtimepanel.TileEntityAdmin;
 import com.rioutouscraft.ssp.tiles.overtimepanel.TileEntityAdvancedSolar;
+import com.rioutouscraft.ssp.tiles.overtimepanel.TileEntityBarion;
+import com.rioutouscraft.ssp.tiles.overtimepanel.TileEntityGraviton;
 import com.rioutouscraft.ssp.tiles.overtimepanel.TileEntityHybridSolar;
+import com.rioutouscraft.ssp.tiles.overtimepanel.TileEntityHadron;
 import com.rioutouscraft.ssp.tiles.overtimepanel.TileEntityQuantumSolar;
+import com.rioutouscraft.ssp.tiles.overtimepanel.TileEntityQuark;
 import com.rioutouscraft.ssp.tiles.overtimepanel.TileEntitySingular;
 import com.rioutouscraft.ssp.tiles.overtimepanel.TileEntitySpectral;
 import com.rioutouscraft.ssp.tiles.overtimepanel.TileEntityUltimateHybridSolar;
@@ -88,6 +92,10 @@ public enum SSPBlock implements ITeBlock
     admin_solar_panel(TileEntityAdmin.class, 7, EnumRarity.EPIC),
     photonic_solar_panel(TileEntityphotonic.class, 8, EnumRarity.EPIC),
     neutronium_solar_panel(TileEntityneutron.class, 9, EnumRarity.EPIC),
+    barion_solar_panel(TileEntityBarion.class, 52, EnumRarity.EPIC),
+    hadron_solar_panel(TileEntityHadron.class, 53, EnumRarity.EPIC),
+    graviton_solar_panel(TileEntityGraviton.class, 54, EnumRarity.EPIC),
+    quark_solar_panel(TileEntityQuark.class, 55, EnumRarity.EPIC),
     nutronfabricator(TileEntityMassFabricator.class, 10),
     proton_solar_panel(TileEntityproton.class, 11, EnumRarity.EPIC),
     transformator(TileEntityTransformerEV.class, 12),

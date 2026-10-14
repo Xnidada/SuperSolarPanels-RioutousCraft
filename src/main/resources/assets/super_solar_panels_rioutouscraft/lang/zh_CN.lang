@@ -193,3 +193,7 @@ super_solar_panels_rioutouscraft.module.dayBonus=日间发电加成: +%s
 super_solar_panels_rioutouscraft.module.nightBonus=夜间发电加成: +%s
 super_solar_panels_rioutouscraft.module.capacity=额外储能: +%s EU
 super_solar_panels_rioutouscraft.module.output=额外输出: +%s EU/t
+super_solar_panels_rioutouscraft.machines.barion_solar_panel=重子太阳能
+super_solar_panels_rioutouscraft.machines.hadron_solar_panel=强子太阳能
+super_solar_panels_rioutouscraft.machines.graviton_solar_panel=引力太阳能
+super_solar_panels_rioutouscraft.machines.quark_solar_panel=夸克太阳能

@@ -193,3 +193,7 @@ super_solar_panels_rioutouscraft.module.dayBonus=Day generation bonus: +%s
 super_solar_panels_rioutouscraft.module.nightBonus=Night generation bonus: +%s
 super_solar_panels_rioutouscraft.module.capacity=Extra capacity: +%s EU
 super_solar_panels_rioutouscraft.module.output=Extra output: +%s EU/t
+super_solar_panels_rioutouscraft.machines.barion_solar_panel=Baryon Solar Panel
+super_solar_panels_rioutouscraft.machines.hadron_solar_panel=Hadron Solar Panel
+super_solar_panels_rioutouscraft.machines.graviton_solar_panel=Graviton Solar Panel
+super_solar_panels_rioutouscraft.machines.quark_solar_panel=Quark Solar Panel

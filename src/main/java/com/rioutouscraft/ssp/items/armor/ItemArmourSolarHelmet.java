@@ -222,7 +222,7 @@ IItemHudProvider {
                 ElectricItem.manager.use(stack, 1000.0, (EntityLivingBase)player);
             }
         }
-        int output = 0;
+        double output = 0.0;
         switch (this.state) {
             case DAY: {
                 output = this.type.dayEU;
@@ -237,16 +237,16 @@ IItemHudProvider {
             }
         }
         for (ItemStack playerStack : player.inventory.armorInventory.subList(0, player.inventory.armorInventory.size() - 1)) {
-            if (StackUtil.isEmpty((ItemStack)playerStack) || !(playerStack.getItem() instanceof IElectricItem) || (output -= (int)ElectricItem.manager.charge(playerStack, (double)output, this.type.tier, false, false)) > 0) continue;
+            if (StackUtil.isEmpty((ItemStack)playerStack) || !(playerStack.getItem() instanceof IElectricItem) || (output -= ElectricItem.manager.charge(playerStack, output, this.type.tier, false, false)) > 0) continue;
             return;
         }
         if (chargeWholeInventory) {
             for (ItemStack playerStack : player.inventory.offHandInventory) {
-                if (StackUtil.isEmpty((ItemStack)playerStack) || !(playerStack.getItem() instanceof IElectricItem) || (output -= (int)ElectricItem.manager.charge(playerStack, (double)output, this.type.tier, false, false)) > 0) continue;
+                if (StackUtil.isEmpty((ItemStack)playerStack) || !(playerStack.getItem() instanceof IElectricItem) || (output -= ElectricItem.manager.charge(playerStack, output, this.type.tier, false, false)) > 0) continue;
                 return;
             }
             for (ItemStack playerStack : player.inventory.mainInventory) {
-                if (StackUtil.isEmpty((ItemStack)playerStack) || !(playerStack.getItem() instanceof IElectricItem) || (output -= (int)ElectricItem.manager.charge(playerStack, (double)output, this.type.tier, false, false)) > 0) continue;
+                if (StackUtil.isEmpty((ItemStack)playerStack) || !(playerStack.getItem() instanceof IElectricItem) || (output -= ElectricItem.manager.charge(playerStack, output, this.type.tier, false, false)) > 0) continue;
                 return;
             }
         }
@@ -435,14 +435,14 @@ IItemHudProvider {
         public final double maxCharge;
         public final double transferLimit;
         public final double damageAbsorptionRatio;
-        public final int dayEU;
-        public final int nightEU;
+        public final double dayEU;
+        public final double nightEU;
         public final int tier;
         public final int energyPerDamage;
         public final EnumRarity rarity;
         private final String name = name().toLowerCase(Locale.ENGLISH);
 
-        SolarHelmetTypes(EnumRarity rarity, int dayEU, int nightEU, int tier, double maxCharge, double transferLimit, int energyPerDamage, double damageAbsorptionRatio) {
+        SolarHelmetTypes(EnumRarity rarity, double dayEU, double nightEU, int tier, double maxCharge, double transferLimit, int energyPerDamage, double damageAbsorptionRatio) {
             this.rarity = rarity;
             this.dayEU = dayEU;
             this.nightEU = nightEU;

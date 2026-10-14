@@ -55,6 +55,7 @@ import ic2.core.gui.dynamic.IGuiValueProvider;
 import ic2.core.init.Localization;
 import ic2.core.network.GuiSynced;
 import java.util.List;
+import java.util.Locale;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
@@ -72,17 +73,18 @@ extends TileEntityInventory
 implements IEnergySource,
 IHasGui,
 IGuiValueProvider {
-    public final int maxStorage;
+    public final double maxStorage;
     public final InvSlotPanelComponent glassSlot = new InvSlotPanelComponent(this, "glass", InvSlotPanelComponent.Kind.GLASS);
     public final InvSlotPanelComponent batterySlot = new InvSlotPanelComponent(this, "battery", InvSlotPanelComponent.Kind.BATTERY);
     public final InvSlotPanelComponent outputSlot = new InvSlotPanelComponent(this, "output", InvSlotPanelComponent.Kind.OUTPUT);
     public final PanelModules modules = new PanelModules(glassSlot, batterySlot, outputSlot);
-    protected final int dayPower;
-    protected final int nightPower;
+    protected final double dayPower;
+    protected final double nightPower;
     protected final int tier;
+    protected final double output;
     protected final InvSlotMultiCharge chargeSlots;
     @GuiSynced
-    public int storage;
+    public double storage;
     @GuiSynced
     protected GenerationState active = GenerationState.NONE;
     protected int ticker;
@@ -91,14 +93,15 @@ IGuiValueProvider {
     private boolean addedToEnet;
 
     public TileEntitySolarPanel(SolarConfig config) {
-        this(config.dayPower, config.nightPower, config.storage, config.tier);
+        this(config.dayPower, config.nightPower, config.storage, config.tier, config.output);
     }
 
-    public TileEntitySolarPanel(int dayPower, int nightPower, int storage, int tier) {
+    public TileEntitySolarPanel(double dayPower, double nightPower, double storage, int tier, double output) {
         this.dayPower = dayPower;
         this.nightPower = nightPower;
         this.maxStorage = storage;
         this.tier = tier;
+        this.output = output;
         this.chargeSlots = new InvSlotMultiCharge(this, tier, 4, InvSlot.Access.IO);
     }
 
@@ -120,12 +123,18 @@ IGuiValueProvider {
 
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
-        this.storage = Math.max(0, nbt.getInteger("storage"));
+        if (nbt.hasKey("storage", 6)) {
+            this.storage = Math.max(0.0, nbt.getDouble("storage"));
+        } else if (nbt.hasKey("storage", 4)) {
+            this.storage = Math.max(0.0, nbt.getLong("storage"));
+        } else {
+            this.storage = Math.max(0.0, nbt.getInteger("storage"));
+        }
     }
 
     public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
         super.writeToNBT(nbt);
-        nbt.setInteger("storage", this.storage);
+        nbt.setDouble("storage", this.storage);
         return nbt;
     }
 
@@ -144,7 +153,7 @@ IGuiValueProvider {
             }
         }
         if (this.storage > 0) {
-            this.storage = (int)((double)this.storage - this.chargeSlots.charge(this.storage));
+            this.storage = Math.max(0.0, this.storage - this.chargeSlots.charge(this.storage));
         }
     }
 
@@ -156,7 +165,7 @@ IGuiValueProvider {
         this.active = this.hasSky && this.world.canBlockSeeSky(this.pos.up()) ? (this.world.isDaytime() && (!this.canRain || !this.world.isRaining() && !this.world.isThundering()) ? GenerationState.DAY : GenerationState.NIGHT) : GenerationState.NONE;
     }
 
-    public void tryGenerateEnergy(int amount) {
+    public void tryGenerateEnergy(double amount) {
         this.storage = PanelModuleMath.store(this.storage, this.modules.generation(amount, this.world.isDaytime()), this.getMaxStorage());
     }
 
@@ -173,7 +182,7 @@ IGuiValueProvider {
     }
 
     public void drawEnergy(double amount) {
-        this.storage = Math.max(0, (int)(this.storage - amount));
+        this.storage = Math.max(0.0, this.storage - amount);
     }
 
     @SideOnly(value=Side.CLIENT)
@@ -211,41 +220,50 @@ IGuiValueProvider {
         return super.getGuiState(name);
     }
 
-    public int getMaxStorage() {
+    public double getMaxStorage() {
         return this.modules.capacity(this.maxStorage);
     }
 
     public double getOutputLimit() {
-        return this.modules.outputLimit(this.tier);
+        return this.modules.outputLimit(this.output, this.tier);
     }
 
     public String getMaxOutput() {
-        return String.format("%s %.0f %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.maxOutput"), this.getOutputLimit(), Localization.translate((String)"ic2.generic.text.EUt"));
+        return String.format(Locale.ROOT, "%s %s %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.maxOutput"), formatEnergy(this.getOutputLimit()), Localization.translate((String)"ic2.generic.text.EUt"));
     }
 
     public String getOutput() {
         switch (this.active) {
             case DAY: {
-                return String.format("%s %d %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.generating"), this.modules.generation(this.dayPower, this.world.isDaytime()), Localization.translate((String)"ic2.generic.text.EUt"));
+                return String.format(Locale.ROOT, "%s %s %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.generating"), formatEnergy(this.modules.generation(this.dayPower, this.world.isDaytime())), Localization.translate((String)"ic2.generic.text.EUt"));
             }
             case NIGHT: {
-                return String.format("%s %d %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.generating"), this.modules.generation(this.nightPower, this.world.isDaytime()), Localization.translate((String)"ic2.generic.text.EUt"));
+                return String.format(Locale.ROOT, "%s %s %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.generating"), formatEnergy(this.modules.generation(this.nightPower, this.world.isDaytime())), Localization.translate((String)"ic2.generic.text.EUt"));
             }
         }
-        return String.format("%s 0 %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.generating"), Localization.translate((String)"ic2.generic.text.EUt"));
+        return String.format(Locale.ROOT, "%s 0 %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.generating"), Localization.translate((String)"ic2.generic.text.EUt"));
+    }
+
+    private static String formatEnergy(double value) {
+        if (value == Math.rint(value)) {
+            return String.format(Locale.ROOT, "%.0f", value);
+        }
+        return String.format(Locale.ROOT, "%.2f", value).replaceAll("0+$", "").replaceAll("\\.$", "");
     }
 
     public static final class SolarConfig {
-        public final int dayPower;
-        public final int nightPower;
-        final int storage;
+        public final double dayPower;
+        public final double nightPower;
+        final double storage;
         final int tier;
+        final double output;
 
-        public SolarConfig(int dayPower, int nightPower, int storage, int tier) {
+        public SolarConfig(double dayPower, double nightPower, double storage, int tier, double output) {
             this.dayPower = dayPower;
             this.nightPower = nightPower;
             this.storage = storage;
             this.tier = tier;
+            this.output = output;
         }
     }
 
