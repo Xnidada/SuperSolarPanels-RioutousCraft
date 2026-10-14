@@ -1,17 +1,17 @@
 # SuperSolarPanels-RioutousCraft 变更记录
 
-本文记录原版 **Super Solar Panels 1.3.1** 与当前 **SuperSolarPanels-RioutousCraft 1.4.0** 的差异。参数表使用源码中的默认配置；服务器可以通过配置文件覆盖这些默认值。
+本文记录原版 **Super Solar Panels 1.3.1** 与当前 **SuperSolarPanels-RioutousCraft 1.4.2** 的差异。参数表使用源码中的默认配置；服务器可以通过配置文件覆盖这些默认值。
 
 ## 版本和兼容目标
 
-| 项目 | 原版 1.3.1 | RioutousCraft 1.4.0 |
+| 项目 | 原版 1.3.1 | RioutousCraft 1.4.2 |
 |---|---|---|
 | Minecraft | 1.12.2 | 1.12.2 |
 | IC2 | 面向旧版 IC2 API | IC2 `2.8.222-ex112` |
 | Mod ID | `super_solar_panels` | `super_solar_panels_rioutouscraft` |
 | 代码包 | `com.Denfop.ssp` | `com.rioutouscraft.ssp` |
 | 显示名称 | Super Solar Panels | SuperSolarPanels-RioutousCraft |
-| 当前版本 | 1.3.1 | 1.4.0-RioutousCraft |
+| 当前版本 | 1.3.1 | 1.4.2-RioutousCraft |
 
 RioutousCraft 使用独立的 Mod ID、注册名和资源命名空间，因此可以在注册层面与原版区分开。原版方块不会自动转换为 RioutousCraft 方块；更换版本前应备份存档。
 
@@ -35,7 +35,7 @@ RioutousCraft 使用独立的 Mod ID、注册名和资源命名空间，因此�
 
 这些方块分别拥有独立的 TileEntity、GUI、模型、配置和部分合成配方。
 
-### RioutousCraft 1.4.0
+### RioutousCraft 1.4.2
 
 - 移除独立的白昼、月能和降雨太阳能方块。
 - 保留一套统一的 14 级常规太阳能方块。
@@ -43,11 +43,11 @@ RioutousCraft 使用独立的 Mod ID、注册名和资源命名空间，因此�
 - 太阳能 GUI 中保留三个模块槽：玻璃、储能、输出；另有原有的 IC2 充电槽。
 - 旧白昼/月能/降雨方块的 TileEntity、GUI XML、模型、注册和配方已删除。
 
-这是 1.4.0 的结构性变化。旧世界中已经放置的独立白昼、月能或降雨方块不会由 1.4.0 继续注册，升级前需要拆除或备份相关区块。
+这是 1.4.0 的结构性变化。旧世界中已经放置的独立白昼、月能或降雨方块不会由 1.4.2 继续注册，升级前需要拆除或备份相关区块。
 
 ## 14 级常规太阳能
 
-RioutousCraft 1.3.3 起加入了 IndustrialUpgrade 中的完整 14 级常规太阳能序列。1.4.0 继续使用这套统一方块体系。
+RioutousCraft 1.3.3 起加入了 IndustrialUpgrade 中的完整 14 级常规太阳能序列。1.4.2 继续使用这套统一方块体系。
 
 下表中的“白昼/夜间”是基础发电，“最大输出”是基础输出上限；玻璃和输出模块可以在此基础上增加效果。
 
@@ -85,10 +85,10 @@ RioutousCraft 1.3.3 起加入了 IndustrialUpgrade 中的完整 14 级常规太�
 
 | 玻璃 | 白昼效果 | 夜间效果 | 雨天效果 |
 |---|---:|---:|---:|
-| 日光玻璃 | +100% | +0% | 不额外增加 |
 | 月光玻璃 | +0% | +35% | 不额外增加 |
-| 昼夜玻璃 | +65% | +45% | 不额外增加 |
 | 降雨玻璃 | 不额外增加 | 不额外增加 | 在雨天把基础 65% 倍率提升到 100% |
+
+1.4.2 直接删除日光玻璃和昼夜玻璃物品及其模型、贴图、语言键；当前只保留月光玻璃和降雨玻璃。月光玻璃会把夜间发电设为原基础夜间发电的 135%。
 
 ### 储能与输出模块
 
@@ -108,9 +108,9 @@ RioutousCraft 1.3.3 起加入了 IndustrialUpgrade 中的完整 14 级常规太�
 - 无法看到天空或处于无天空维度：停止发电。
 - 晴朗白昼：使用白昼基础发电。
 - 晴朗夜间：使用夜间基础发电。
-- 雨天或雷暴：使用对应的白昼/夜间基础发电，并应用 65% 的雨天倍率。
-- 装入降雨玻璃后，雨天倍率提升至 100%。
-- 玻璃的白昼、夜间加成和雨天倍率会写入方块实体并随方块保存。
+- 雨天或雷暴：使用对应的白昼/夜间基础发电，并应用 65% 的雨天倍率。也就是雨天基础发电量为对应白昼或夜间基础发电量的 65%。
+- 装入降雨玻璃后，雨天倍率提升至 100%，即恢复为对应的完整白昼或夜间基础发电量；相对于无玻璃雨天，增加 35 个百分点。
+- 玻璃的夜间加成和雨天倍率会写入方块实体并随方块保存。
 
 ## 资源与视觉内容
 
@@ -130,13 +130,13 @@ RioutousCraft 1.3.3 起加入了 IndustrialUpgrade 中的完整 14 级常规太�
 
 ## 本地目录和验证
 
-- `item-catalog.html` 已改为当前 1.4.0 内容，共收录 113 个条目。
-- 当前目录中包含 14 个常规太阳能方块以及新增的降雨玻璃。
+- `item-catalog.html` 已改为当前 1.4.2 内容，共收录 111 个条目。
+- 当前目录中包含 14 个常规太阳能方块以及保留的月光玻璃、降雨玻璃。
 - 已通过 Java 8 + ForgeGradle 构建：`gradle clean build`。
 - 已检查 GUI XML、方块模型、blockstate JSON 和最终 jar 资源。
 - 当前环境未完成完整游戏内客户端启动验证，原因是运行环境缺少旧版 Log4j 2.0-beta9 缓存依赖。
 
 ## 当前产物
 
-- `build/libs/SuperSolarPanels-RioutousCraft-1.4.0-RioutousCraft.jar`
-- Git commit：`8af9d48`（`Unify solar panels with glass modules`）
+- `build/libs/SuperSolarPanels-RioutousCraft-1.4.2-RioutousCraft.jar`
+- Git commit：由本次变更生成

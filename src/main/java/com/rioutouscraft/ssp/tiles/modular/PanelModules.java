@@ -19,18 +19,16 @@ public final class PanelModules {
 
     public int generation(int base, boolean daylight) {
         double bonus = 0.0;
-        if (!glassSlot.isEmpty()) {
-            ModularPanelGlass.Type glass = ModularPanelGlass.getPanelType(glassSlot.get());
-            bonus = daylight ? glass.dayMultiplier : glass.nightMultiplier;
+        if (!daylight && !glassSlot.isEmpty()) {
+            bonus = ModularPanelGlass.getPanelType(glassSlot.get()).nightMultiplier;
         }
         return PanelModuleMath.generation(base, bonus);
     }
 
     public double generation(double base, boolean daylight) {
         double bonus = 0.0;
-        if (!glassSlot.isEmpty()) {
-            ModularPanelGlass.Type glass = ModularPanelGlass.getPanelType(glassSlot.get());
-            bonus = daylight ? glass.dayMultiplier : glass.nightMultiplier;
+        if (!daylight && !glassSlot.isEmpty()) {
+            bonus = ModularPanelGlass.getPanelType(glassSlot.get()).nightMultiplier;
         }
         return PanelModuleMath.generation(base, bonus);
     }

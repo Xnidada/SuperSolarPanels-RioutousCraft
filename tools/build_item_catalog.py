@@ -159,9 +159,7 @@ def item_details(rel):
     stem = Path(rel).stem
     if rel.startswith("solar_panel_glass/"):
         return {
-            "day": [metric("白昼发电倍率", "+100%"), metric("夜间发电倍率", "+0%"), metric("插槽", "玻璃组件")],
             "night": [metric("白昼发电倍率", "+0%"), metric("夜间发电倍率", "+35%"), metric("插槽", "玻璃组件")],
-            "day_night": [metric("白昼发电倍率", "+65%"), metric("夜间发电倍率", "+45%"), metric("插槽", "玻璃组件")],
             "rain": [metric("降雨发电倍率", "+35%（雨天基础倍率为65%）"), metric("插槽", "玻璃组件")],
         }[stem]
     if rel.startswith("solar_panel_battery/"):

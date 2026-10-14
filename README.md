@@ -24,9 +24,9 @@ Original addon: Super Solar Panels 1.3.1 by Denfop and contributors. This reposi
 
 ## Existing panel module slots
 
-Version 1.3.2 added module slots to the original panel families; version 1.3.3 added the IndustrialUpgrade-aligned 14-tier normal series. Version 1.4.0 removes the separate daylight, moonlight, and rain blocks. The 14 normal panels now use one shared weather-aware implementation, with day, night, day/night, and rain glass plus storage and output modules in their GUIs. No recipes are added for the modules, so pack authors can define them later.
+Version 1.3.2 added module slots to the original panel families; version 1.3.3 added the IndustrialUpgrade-aligned 14-tier normal series. Version 1.4.0 removes the separate daylight, moonlight, and rain blocks. Version 1.4.2 removes the unused daylight and day/night glass variants, leaving moonlight glass as the night-generation upgrade and rain glass as the rain multiplier upgrade. The 14 normal panels use one shared weather-aware implementation with storage and output modules in their GUIs. No recipes are added for the modules, so pack authors can define them later.
 
-- `solar_panel_glass`: day, night, day/night, and rain generation bonuses;
+- `solar_panel_glass`: moonlight night-generation bonus and rain multiplier upgrade;
 - `solar_panel_battery`: basic, advanced, and quantum storage capacity;
 - `solar_panel_output`: basic, advanced, and quantum output limits.
 
