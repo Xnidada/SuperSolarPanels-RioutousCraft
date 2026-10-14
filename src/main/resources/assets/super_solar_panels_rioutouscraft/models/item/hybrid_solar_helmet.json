@@ -1,7 +1,7 @@
 {
-	"parent": "ic2:item/default",
-	"textures": {
-		"layer0": "super_solar_panels_rioutouscraft:items/HybridSolarHelmet",
-		"layer1": "super_solar_panels_rioutouscraft:items/HybridSolarHelmetOverlay"
-	}
+  "parent": "ic2:item/default",
+  "textures": {
+    "layer0": "super_solar_panels_rioutouscraft:items/hybridsolarhelmet",
+    "layer1": "super_solar_panels_rioutouscraft:items/hybridsolarhelmetoverlay"
+  }
 }

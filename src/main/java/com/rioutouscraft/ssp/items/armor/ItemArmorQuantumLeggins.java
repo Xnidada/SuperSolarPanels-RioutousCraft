@@ -36,6 +36,7 @@ import ic2.core.init.MainConfig;
 import ic2.core.util.Config;
 import ic2.core.util.ConfigUtil;
 import ic2.core.util.StackUtil;
+import java.util.Locale;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -59,7 +60,7 @@ extends ItemLeggins {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
-        return "super_solar_panels_rioutouscraft:textures/armour/" + this.name + (type != null ? "Overlay" : "") + ".png";
+        return "super_solar_panels_rioutouscraft:textures/armour/" + (this.name + (type != null ? "Overlay" : "")).toLowerCase(Locale.ROOT) + ".png";
     }
 
     public void setColor(ItemStack stack, int colour) {

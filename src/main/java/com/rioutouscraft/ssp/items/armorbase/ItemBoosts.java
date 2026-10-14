@@ -39,6 +39,7 @@ import ic2.core.item.armor.ItemArmorElectric;
 import ic2.core.item.armor.jetpack.IBoostingJetpack;
 import ic2.core.ref.ItemName;
 import ic2.core.util.StackUtil;
+import java.util.Locale;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -84,7 +85,7 @@ implements IBoostingJetpack {
     }
 
     public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
-        return "super_solar_panels_rioutouscraft:textures/armour/" + this.name + ".png";
+        return "super_solar_panels_rioutouscraft:textures/armour/" + this.name.toLowerCase(Locale.ROOT) + ".png";
     }
 
     public String getTranslationKey() {

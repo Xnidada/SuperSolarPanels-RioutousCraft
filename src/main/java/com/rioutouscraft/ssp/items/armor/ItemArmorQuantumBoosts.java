@@ -30,6 +30,7 @@ import ic2.api.item.HudMode;
 import ic2.core.IC2;
 import ic2.core.init.Localization;
 import ic2.core.util.StackUtil;
+import java.util.Locale;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -54,7 +55,7 @@ extends ItemBoosts {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
-        return "super_solar_panels_rioutouscraft:textures/armour/" + this.name + (type != null ? "Overlay" : "") + ".png";
+        return "super_solar_panels_rioutouscraft:textures/armour/" + (this.name + (type != null ? "Overlay" : "")).toLowerCase(Locale.ROOT) + ".png";
     }
 
     public void setColor(ItemStack stack, int colour) {

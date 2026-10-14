@@ -53,7 +53,7 @@ import org.lwjgl.opengl.GL11;
 @SideOnly(value=Side.CLIENT)
 public class PrettyMolecularTransformerTESR
 extends TileEntitySpecialRenderer<TileEntityMolecularAssembler> {
-    private static final ResourceLocation transfTextloc = new ResourceLocation("super_solar_panels_rioutouscraft", "textures/models/textureMolecularTransformer.png");
+    private static final ResourceLocation transfTextloc = new ResourceLocation("super_solar_panels_rioutouscraft", "textures/models/texturemoleculartransformer.png");
     private static final ResourceLocation plazmaTextloc = new ResourceLocation("super_solar_panels_rioutouscraft", "textures/models/plazma.png");
     private static final ResourceLocation particlesTextloc = new ResourceLocation("super_solar_panels_rioutouscraft", "textures/models/particles.png");
     public static final PrettyMolecularTransformerModel model = new PrettyMolecularTransformerModel();

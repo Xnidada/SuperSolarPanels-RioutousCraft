@@ -19,6 +19,7 @@ import com.rioutouscraft.ssp.Configs;
 import com.rioutouscraft.ssp.items.armorbase.ItemAdvancedElectricJetpack;
 import ic2.api.item.ElectricItem;
 import ic2.core.IC2;
+import java.util.Locale;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -38,7 +39,7 @@ extends ItemAdvancedElectricJetpack {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
-        return "super_solar_panels_rioutouscraft:textures/armour/" + this.name + (type != null ? "Overlay" : "") + ".png";
+        return "super_solar_panels_rioutouscraft:textures/armour/" + (this.name + (type != null ? "Overlay" : "")).toLowerCase(Locale.ROOT) + ".png";
     }
 
     public void setColor(ItemStack stack, int colour) {

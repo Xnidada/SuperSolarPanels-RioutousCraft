@@ -1,12 +1,12 @@
 {
-	"parent": "block/cube",
-	"textures": {
-		"particle": "super_solar_panels_rioutouscraft:blocks/Advanced Solar Side",
-		"down": "super_solar_panels_rioutouscraft:blocks/Advanced Solar Bottom",
-		"up": "super_solar_panels_rioutouscraft:blocks/Advanced Solar Topmoon",
-		"north": "super_solar_panels_rioutouscraft:blocks/Advanced Solar Side",
-		"east": "super_solar_panels_rioutouscraft:blocks/Advanced Solar Side",
-		"south": "super_solar_panels_rioutouscraft:blocks/Advanced Solar Side",
-		"west": "super_solar_panels_rioutouscraft:blocks/Advanced Solar Side"
-	}
+  "parent": "block/cube",
+  "textures": {
+    "particle": "super_solar_panels_rioutouscraft:blocks/advanced_solar_side",
+    "down": "super_solar_panels_rioutouscraft:blocks/advanced_solar_bottom",
+    "up": "super_solar_panels_rioutouscraft:blocks/advanced_solar_topmoon",
+    "north": "super_solar_panels_rioutouscraft:blocks/advanced_solar_side",
+    "east": "super_solar_panels_rioutouscraft:blocks/advanced_solar_side",
+    "south": "super_solar_panels_rioutouscraft:blocks/advanced_solar_side",
+    "west": "super_solar_panels_rioutouscraft:blocks/advanced_solar_side"
+  }
 }

@@ -151,7 +151,7 @@ IItemHudProvider {
     }
 
     public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
-        return "super_solar_panels_rioutouscraft:textures/armour/" + this.type.getName() + (type != null ? "Overlay" : "") + ".png";
+        return "super_solar_panels_rioutouscraft:textures/armour/" + (this.type.getName() + (type != null ? "Overlay" : "")).toLowerCase(Locale.ROOT) + ".png";
     }
 
     public boolean canBeDyed() {
