@@ -36,6 +36,8 @@ The modular component and high-tier solar panel artwork is adapted from the Indu
 
 ## Local item catalogue
 
+For a detailed comparison with the original Super Solar Panels 1.3.1, see [RIOUTOUSCRAFT_CHANGES.md](RIOUTOUSCRAFT_CHANGES.md).
+
 item-catalog.html is a self-contained local item catalogue. It embeds the current item/block textures, names, categories, and source-derived performance parameters, so it can be opened directly in a browser without a web server or external dependency.
 
 After changing item registrations, language files, models, or configuration defaults, regenerate it with:
