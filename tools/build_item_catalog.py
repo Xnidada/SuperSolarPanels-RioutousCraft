@@ -194,9 +194,10 @@ def item_details(rel):
     if stem == "item_ult_drill":
         return [metric("IC2等级", "8"), metric("普通模式", "35速度 / 160 EU"), metric("3×3模式", "12速度 / 160 EU"), metric("5×5模式", "16速度 / 160 EU")]
     if stem in {"spectral_solar_helmet", "singular_solar_helmet", "advanced_solar_helmet", "hybrid_solar_helmet", "ultimate_solar_helmet"}:
+        if stem in {"spectral_solar_helmet", "singular_solar_helmet"}:
+            day, capacity = (5000, 10000) if stem == "spectral_solar_helmet" else (105000, 20000)
+            return [metric("白昼产能", f"{day:,} EU/t"), metric("夜间产能", "0 EU/t"), metric("电量", f"{capacity:,} EU"), metric("传输", f"{capacity:,} EU/t"), metric("IC2等级", "9"), metric("护甲耗能", "2,000 EU / 伤害"), metric("充电顺序", "先充满自身，再为护甲、副手和背包电力物品充电"), metric("发电条件", "仅白昼且可见天空；夜间或遮挡时停止发电")]
         specs = {
-            "spectral_solar_helmet": (8192, 5000, 0, 0, 9),
-            "singular_solar_helmet": (131072, 104857, 0, 0, 9),
             "advanced_solar_helmet": (4, 4, 300000, 0, 3),
             "hybrid_solar_helmet": (32, 8, 600000, 0, 4),
             "ultimate_solar_helmet": (256, 64, 600000, 0, 4),

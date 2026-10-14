@@ -214,7 +214,8 @@ IItemHudProvider {
         if (this.HUDstuff(world.isRemote, player, stack)) {
             return;
         }
-        if (this.ticker++ % this.tickRate() == 0) {
+        if (this.type == SolarHelmetTypes.Spectral || this.type == SolarHelmetTypes.Singular
+                || this.ticker++ % this.tickRate() == 0) {
             this.checkTheSky(world, player.getPosition());
         }
         if (this.type != SolarHelmetTypes.Spectral) {
@@ -460,8 +461,8 @@ IItemHudProvider {
     }
 
     public enum SolarHelmetTypes {
-        Spectral(EnumRarity.EPIC, 5000, 5000, 9, 10000, 10000, 2000, 9.0),
-        Singular(EnumRarity.EPIC, 105000, 105000, 9, 20000, 20000, 2000, 9.0),
+        Spectral(EnumRarity.EPIC, 5000, 0, 9, 10000, 10000, 2000, 9.0),
+        Singular(EnumRarity.EPIC, 105000, 0, 9, 20000, 20000, 2000, 9.0),
         ADVANCED(EnumRarity.UNCOMMON, TileEntityAdvancedSolar.settings.dayPower, TileEntityAdvancedSolar.settings.nightPower, 3, Configs.maxCharge10, Configs.transferLimit10, 800, 0.9),
         HYBRID(EnumRarity.RARE, TileEntityHybridSolar.settings.dayPower, TileEntityHybridSolar.settings.nightPower, 4, Configs.maxCharge11, Configs.transferLimit11, 2000, 1.0),
         ULTIMATE(EnumRarity.EPIC, TileEntityUltimateHybridSolar.settings.dayPower, TileEntityUltimateHybridSolar.settings.nightPower, 4, Configs.maxCharge11, Configs.transferLimit11, 2000, 1.0);

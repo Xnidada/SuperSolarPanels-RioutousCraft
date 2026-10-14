@@ -1,10 +1,10 @@
-# SuperSolarPanels-RioutousCraft 1.5.0 变更记录
+# SuperSolarPanels-RioutousCraft 1.5.1 变更记录
 
-本文只比较当前 **SuperSolarPanels-RioutousCraft 1.5.0** 与原版 **Super Solar Panels 1.3.1**。参数使用当前源码默认值；服务器配置可以覆盖这些默认值。
+本文只比较当前 **SuperSolarPanels-RioutousCraft 1.5.1** 与原版 **Super Solar Panels 1.3.1**。参数使用当前源码默认值；服务器配置可以覆盖这些默认值。
 
 ## 版本和兼容目标
 
-| 项目 | 原版 Super Solar Panels 1.3.1 | 当前 RioutousCraft 1.5.0 |
+| 项目 | 原版 Super Solar Panels 1.3.1 | 当前 RioutousCraft 1.5.1 |
 |---|---|---|
 | Minecraft | 1.12.2 | 1.12.2 |
 | IC2 | 旧版 IC2 API | `2.8.222-ex112` |
@@ -108,8 +108,8 @@
 - 光谱太阳能头盔的最大储电量为 `10,000 EU`。
 - 奇异太阳能头盔的最大储电量为 `20,000 EU`。
 - 两者的抗伤耗电均为 `2,000 EU/伤害`，与混合太阳能头盔一致；头盔可以使用自身太阳能发电为电量充能。
-- 光谱头盔白昼/夜间均发电 `5,000 EU/t`；奇异头盔白昼/夜间均发电 `105,000 EU/t`。
-- 头盔先为自身充电，只有自身达到最大储电量后，才把剩余发电量传给护甲、手持物和背包中的电力物品；无法看到天空时不发电。
+- 光谱头盔白昼发电 `5,000 EU/t`；奇异头盔白昼发电 `105,000 EU/t`；两者夜间发电均为 `0 EU/t`。
+- 头盔先为自身充电，只有自身达到最大储电量后，才把剩余发电量传给护甲、手持物和背包中的电力物品；夜间或无法看到天空时不发电。光谱/奇异头盔每 tick 检查昼夜和天空遮挡，以当前玩家所在环境为准。
 
 ## 物品分类和太阳能信息
 
@@ -134,5 +134,5 @@
 
 ## 当前产物
 
-- `build/libs/SuperSolarPanels-RioutousCraft-1.5.0-RioutousCraft.jar`
+- `build/libs/SuperSolarPanels-RioutousCraft-1.5.1-RioutousCraft.jar`
 - Git commit：由本次变更生成
