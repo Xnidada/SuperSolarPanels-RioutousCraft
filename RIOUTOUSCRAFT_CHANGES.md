@@ -1,16 +1,16 @@
-# SuperSolarPanels-RioutousCraft 1.4.9 变更记录
+# SuperSolarPanels-RioutousCraft 1.5.0 变更记录
 
-本文只比较当前 **SuperSolarPanels-RioutousCraft 1.4.9** 与原版 **Super Solar Panels 1.3.1**。参数使用当前源码默认值；服务器配置可以覆盖这些默认值。
+本文只比较当前 **SuperSolarPanels-RioutousCraft 1.5.0** 与原版 **Super Solar Panels 1.3.1**。参数使用当前源码默认值；服务器配置可以覆盖这些默认值。
 
 ## 版本和兼容目标
 
-| 项目 | 原版 Super Solar Panels 1.3.1 | 当前 RioutousCraft 1.4.9 |
+| 项目 | 原版 Super Solar Panels 1.3.1 | 当前 RioutousCraft 1.5.0 |
 |---|---|---|
 | Minecraft | 1.12.2 | 1.12.2 |
 | IC2 | 旧版 IC2 API | `2.8.222-ex112` |
 | Mod ID | `super_solar_panels` | `super_solar_panels_rioutouscraft` |
 | 代码包 | `com.Denfop.ssp` | `com.rioutouscraft.ssp` |
-| 创造物品栏 | IC2 工业 | 独立的“超级太阳能”分类 |
+| 创造物品栏 | IC2 工业 | 独立物品使用“超级太阳能”；IC2 多类型机器仍在 IC2 |
 | 显示名称 | Super Solar Panels | SuperSolarPanels-RioutousCraft |
 
 当前版本使用独立 Mod ID、注册名和资源命名空间，可以与原版并存；原版方块和物品不会自动转换为当前版本的注册对象。
@@ -20,7 +20,7 @@
 - 将旧版 `InvSlot` 构造方式改为 IC2 2.8.222 要求的 `IInventorySlotHolder<?>`。
 - 重写充电槽持有者传递方式，使太阳能方块可以在 IC2 2.8.222 下编译和运行。
 - 修复 `ItemMulti` 模块物品覆盖 `getTranslationKey(ItemStack)` 导致的客户端 `VerifyError`。
-- 所有注册物品、太阳能方块、资源方块和流体物品统一放入独立的“超级太阳能”创造标签，不再混入 IC2 创造标签。
+- 显式设置独立分类的物品、太阳能方块、资源方块和流体物品使用“超级太阳能”创造标签；IC2 多类型机器物品暂不调整。
 
 ## 太阳能方块结构
 
@@ -96,6 +96,7 @@
 - 装备强化量子靴时按默认 **K** 键即可切换跳跃提升；服务器检测按键按下瞬间并同步状态，按住按键不会重复切换。
 - 物品提示会显示“跳跃提升：开启/关闭”，切换时玩家也会收到状态提示。
 - 水下呼吸和生命恢复仍按各自配置项控制；关闭跳跃提升不会影响这两种效果。
+- 关闭跳跃提升时会立即移除已经存在的跳跃提升效果，避免旧药水时长继续生效。
 
 ## 月光玻璃与太阳能发电
 
@@ -107,6 +108,8 @@
 - 光谱太阳能头盔的最大储电量为 `10,000 EU`。
 - 奇异太阳能头盔的最大储电量为 `20,000 EU`。
 - 两者的抗伤耗电均为 `2,000 EU/伤害`，与混合太阳能头盔一致；头盔可以使用自身太阳能发电为电量充能。
+- 光谱头盔白昼/夜间均发电 `5,000 EU/t`；奇异头盔白昼/夜间均发电 `105,000 EU/t`。
+- 头盔先为自身充电，只有自身达到最大储电量后，才把剩余发电量传给护甲、手持物和背包中的电力物品；无法看到天空时不发电。
 
 ## 物品分类和太阳能信息
 
@@ -131,5 +134,5 @@
 
 ## 当前产物
 
-- `build/libs/SuperSolarPanels-RioutousCraft-1.4.9-RioutousCraft.jar`
+- `build/libs/SuperSolarPanels-RioutousCraft-1.5.0-RioutousCraft.jar`
 - Git commit：由本次变更生成

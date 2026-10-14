@@ -210,14 +210,20 @@ extends ItemBoosts {
             toggleTimer = (byte)(toggleTimer - 1);
             nbtTagCompound.setByte("toggleTimer", toggleTimer);
         }
+        boolean jumpBoostEnabled = isJumpBoostEnabled(stack);
+        if (!jumpBoostEnabled && IC2.platform.isSimulating()) {
+            player.removePotionEffect(MobEffects.JUMP_BOOST);
+        }
         if (!Nightvision) return;
         if (!IC2.platform.isSimulating()) return;
         if (!ElectricItem.manager.use(stack, 1.0, (EntityLivingBase)player)) return;
         if (Configs.canCraftMT) {
             player.addPotionEffect(new PotionEffect(MobEffects.WATER_BREATHING, 300, 0, true, true));
         }
-        if (isJumpBoostEnabled(stack)) {
+        if (jumpBoostEnabled) {
             player.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 300, 0, true, true));
+        } else {
+            player.removePotionEffect(MobEffects.JUMP_BOOST);
         }
         if (Configs.canCraftASH) {
             player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 300, 4, true, true));

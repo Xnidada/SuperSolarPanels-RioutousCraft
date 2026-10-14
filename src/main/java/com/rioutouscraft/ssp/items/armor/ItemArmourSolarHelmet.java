@@ -115,7 +115,7 @@ IItemHudProvider {
     protected static final int DEFAULT_COLOUR = -1;
     protected final SolarHelmetTypes type;
     public static boolean chargeWholeInventory = false;
-    protected TileEntitySolarPanel.GenerationState state;
+    protected TileEntitySolarPanel.GenerationState state = TileEntitySolarPanel.GenerationState.NONE;
     protected int ticker;
     protected static final Map<Potion, Integer> potionRemovalCost = new IdentityHashMap<Potion, Integer>();
 
@@ -238,18 +238,22 @@ IItemHudProvider {
                 return;
             }
         }
-        for (ItemStack playerStack : player.inventory.armorInventory.subList(0, player.inventory.armorInventory.size() - 1)) {
-            if (StackUtil.isEmpty((ItemStack)playerStack) || !(playerStack.getItem() instanceof IElectricItem) || (output -= ElectricItem.manager.charge(playerStack, output, this.type.tier, false, false)) > 0) continue;
-            return;
-        }
-        if (chargeWholeInventory) {
-            for (ItemStack playerStack : player.inventory.offHandInventory) {
+        if (this.type == SolarHelmetTypes.Spectral || this.type == SolarHelmetTypes.Singular) {
+            output = this.chargeSelfThenInventory(player, stack, output);
+        } else {
+            for (ItemStack playerStack : player.inventory.armorInventory.subList(0, player.inventory.armorInventory.size() - 1)) {
                 if (StackUtil.isEmpty((ItemStack)playerStack) || !(playerStack.getItem() instanceof IElectricItem) || (output -= ElectricItem.manager.charge(playerStack, output, this.type.tier, false, false)) > 0) continue;
                 return;
             }
-            for (ItemStack playerStack : player.inventory.mainInventory) {
-                if (StackUtil.isEmpty((ItemStack)playerStack) || !(playerStack.getItem() instanceof IElectricItem) || (output -= ElectricItem.manager.charge(playerStack, output, this.type.tier, false, false)) > 0) continue;
-                return;
+            if (chargeWholeInventory) {
+                for (ItemStack playerStack : player.inventory.offHandInventory) {
+                    if (StackUtil.isEmpty((ItemStack)playerStack) || !(playerStack.getItem() instanceof IElectricItem) || (output -= ElectricItem.manager.charge(playerStack, output, this.type.tier, false, false)) > 0) continue;
+                    return;
+                }
+                for (ItemStack playerStack : player.inventory.mainInventory) {
+                    if (StackUtil.isEmpty((ItemStack)playerStack) || !(playerStack.getItem() instanceof IElectricItem) || (output -= ElectricItem.manager.charge(playerStack, output, this.type.tier, false, false)) > 0) continue;
+                    return;
+                }
             }
         }
         NBTTagCompound nbtData = StackUtil.getOrCreateNbtData((ItemStack)stack);
@@ -359,8 +363,36 @@ IItemHudProvider {
         return 128;
     }
 
+    private double chargeSelfThenInventory(EntityPlayer player, ItemStack stack, double output) {
+        if (output <= 0.0) return 0.0;
+        output -= ElectricItem.manager.charge(stack, output, Integer.MAX_VALUE, true, false);
+        if (ElectricItem.manager.getCharge(stack) < this.type.maxCharge || output <= 0.0) {
+            return output;
+        }
+        for (ItemStack playerStack : player.inventory.armorInventory.subList(0, player.inventory.armorInventory.size() - 1)) {
+            if (StackUtil.isEmpty((ItemStack)playerStack) || !(playerStack.getItem() instanceof IElectricItem)) continue;
+            output -= ElectricItem.manager.charge(playerStack, output, this.type.tier, false, false);
+            if (output <= 0.0) return 0.0;
+        }
+        for (ItemStack playerStack : player.inventory.offHandInventory) {
+            if (StackUtil.isEmpty((ItemStack)playerStack) || !(playerStack.getItem() instanceof IElectricItem)) continue;
+            output -= ElectricItem.manager.charge(playerStack, output, this.type.tier, false, false);
+            if (output <= 0.0) return 0.0;
+        }
+        for (ItemStack playerStack : player.inventory.mainInventory) {
+            if (StackUtil.isEmpty((ItemStack)playerStack) || !(playerStack.getItem() instanceof IElectricItem)) continue;
+            output -= ElectricItem.manager.charge(playerStack, output, this.type.tier, false, false);
+            if (output <= 0.0) return 0.0;
+        }
+        return output;
+    }
+
     public void checkTheSky(World world, BlockPos pos) {
-        this.state = !world.provider.hasSkyLight() && world.canBlockSeeSky(pos) ? (world.isDaytime() && (!world.getBiome(pos).canRain() && world.getBiome(pos).getRainfall() <= 0.0f || !world.isRaining() && !world.isThundering()) ? TileEntitySolarPanel.GenerationState.DAY : TileEntitySolarPanel.GenerationState.NIGHT) : TileEntitySolarPanel.GenerationState.NIGHT;
+        if (!world.provider.hasSkyLight() || !world.canBlockSeeSky(pos)) {
+            this.state = TileEntitySolarPanel.GenerationState.NONE;
+        } else {
+            this.state = world.isDaytime() ? TileEntitySolarPanel.GenerationState.DAY : TileEntitySolarPanel.GenerationState.NIGHT;
+        }
     }
 
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
@@ -428,8 +460,8 @@ IItemHudProvider {
     }
 
     public enum SolarHelmetTypes {
-        Spectral(EnumRarity.EPIC, TileEntitySpectral.settings.dayPower, TileEntitySpectral.settings.nightPower, 9, 10000, 10000, 2000, 9.0),
-        Singular(EnumRarity.EPIC, TileEntitySingular.settings.dayPower, TileEntitySingular.settings.nightPower, 9, 20000, 20000, 2000, 9.0),
+        Spectral(EnumRarity.EPIC, 5000, 5000, 9, 10000, 10000, 2000, 9.0),
+        Singular(EnumRarity.EPIC, 105000, 105000, 9, 20000, 20000, 2000, 9.0),
         ADVANCED(EnumRarity.UNCOMMON, TileEntityAdvancedSolar.settings.dayPower, TileEntityAdvancedSolar.settings.nightPower, 3, Configs.maxCharge10, Configs.transferLimit10, 800, 0.9),
         HYBRID(EnumRarity.RARE, TileEntityHybridSolar.settings.dayPower, TileEntityHybridSolar.settings.nightPower, 4, Configs.maxCharge11, Configs.transferLimit11, 2000, 1.0),
         ULTIMATE(EnumRarity.EPIC, TileEntityUltimateHybridSolar.settings.dayPower, TileEntityUltimateHybridSolar.settings.nightPower, 4, Configs.maxCharge11, Configs.transferLimit11, 2000, 1.0);
