@@ -52,7 +52,6 @@ public final class Configs {
     static boolean easyASPRecipe;
     public static boolean canCraftDoubleSlabs;
     public static boolean canCraftMT;
-    public static boolean canCraftASP;
     public static boolean canCraftHSP;
     public static boolean canCraftUHSP;
     public static boolean canCraftQSP;
@@ -187,7 +186,6 @@ public final class Configs {
             transferLimit6 = config.get("Settings Quantum Chestplater", "transferLimit", 100000).getInt(100000);
             canCraftDoubleSlabs = !config.get("settings Quantum chestplate", "Disable Effect FIRE RESISTANCE ", false).getBoolean(false);
             canCraftMT = !config.get("settings Quantum Boosts", "Disable Effect WATER BREATHING ", false).getBoolean(false);
-            canCraftASP = !config.get("settings Quantum Boosts", "Disable Effect JUMP BOOST", false).getBoolean(false);
             canCraftASH = !config.get("settings Quantum Boosts", "Disable Effect REGENERATION ", false).getBoolean(false);
             canCraftHSP = !config.get("settings Quantum Leggins", "Disable Effect SPEED ", false).getBoolean(false);
             canCraftHSH = !config.get("settings Quantum Leggins", "Disable Effect LUCK", false).getBoolean(false);

@@ -1,10 +1,10 @@
-# SuperSolarPanels-RioutousCraft 1.4.6 变更记录
+# SuperSolarPanels-RioutousCraft 1.4.7 变更记录
 
-本文只比较当前 **SuperSolarPanels-RioutousCraft 1.4.6** 与原版 **Super Solar Panels 1.3.1**。参数使用当前源码默认值；服务器配置可以覆盖这些默认值。
+本文只比较当前 **SuperSolarPanels-RioutousCraft 1.4.7** 与原版 **Super Solar Panels 1.3.1**。参数使用当前源码默认值；服务器配置可以覆盖这些默认值。
 
 ## 版本和兼容目标
 
-| 项目 | 原版 Super Solar Panels 1.3.1 | 当前 RioutousCraft 1.4.6 |
+| 项目 | 原版 Super Solar Panels 1.3.1 | 当前 RioutousCraft 1.4.7 |
 |---|---|---|
 | Minecraft | 1.12.2 | 1.12.2 |
 | IC2 | 旧版 IC2 API | `2.8.222-ex112` |
@@ -90,6 +90,13 @@
 - 雨天或雷暴使用对应白昼/夜间基础发电的 65%。
 - 装入降雨玻璃后，雨天倍率提升到 100%。
 
+## 强化量子靴跳跃提升开关
+
+- 强化量子靴的跳跃提升默认开启，状态保存在靴子自己的物品 NBT 中，不再读取或依赖 `settings Quantum Boosts` 下的 `Disable Effect JUMP BOOST` 配置项。
+- 装备强化量子靴时按默认 **K** 键即可切换跳跃提升；服务器检测按键按下瞬间并同步状态，按住按键不会重复切换。
+- 物品提示会显示“跳跃提升：开启/关闭”，切换时玩家也会收到状态提示。
+- 水下呼吸和生命恢复仍按各自配置项控制；关闭跳跃提升不会影响这两种效果。
+
 ## 资源和创造标签
 
 - 所有当前 Mod 注册的物品、方块物品和流体物品都归入“超级太阳能”创造分类。
@@ -107,5 +114,5 @@
 
 ## 当前产物
 
-- `build/libs/SuperSolarPanels-RioutousCraft-1.4.6-RioutousCraft.jar`
+- `build/libs/SuperSolarPanels-RioutousCraft-1.4.7-RioutousCraft.jar`
 - Git commit：由本次变更生成

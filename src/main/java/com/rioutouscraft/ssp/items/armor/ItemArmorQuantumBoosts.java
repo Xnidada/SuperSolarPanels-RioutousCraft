@@ -32,6 +32,7 @@ import ic2.api.item.HudMode;
 import ic2.core.IC2;
 import ic2.core.init.Localization;
 import ic2.core.util.StackUtil;
+import java.util.List;
 import java.util.Locale;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -43,12 +44,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.world.World;
 
 public class ItemArmorQuantumBoosts
 extends ItemBoosts {
     protected static final int DEFAULT_COLOUR = -1;
+    private static final String JUMP_BOOST_ENABLED = "jumpBoostEnabled";
+    private static final String JUMP_BOOST_KEY_DOWN = "jumpBoostKeyDown";
     private float jumpCharge;
 
     public ItemArmorQuantumBoosts() {
@@ -116,6 +119,23 @@ extends ItemBoosts {
         return EnumRarity.EPIC;
     }
 
+    private static boolean isJumpBoostEnabled(ItemStack stack) {
+        NBTTagCompound nbt = stack.getTagCompound();
+        return nbt == null || !nbt.hasKey(JUMP_BOOST_ENABLED) || nbt.getBoolean(JUMP_BOOST_ENABLED);
+    }
+
+    private static void setJumpBoostEnabled(ItemStack stack, boolean enabled) {
+        StackUtil.getOrCreateNbtData(stack).setBoolean(JUMP_BOOST_ENABLED, enabled);
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
+        super.addInformation(stack, world, tooltip, flag);
+        boolean enabled = isJumpBoostEnabled(stack);
+        String state = Localization.translate(SuperSolarPanels.MODID + ".quantum_boost." + (enabled ? "enabled" : "disabled"));
+        tooltip.add(Localization.translate(SuperSolarPanels.MODID + ".quantum_boost.jump_boost", state));
+    }
+
     /*
      * Enabled force condition propagation
      * Lifted jumps to return sites
@@ -127,6 +147,18 @@ extends ItemBoosts {
         NBTTagCompound nbtData = StackUtil.getOrCreateNbtData((ItemStack)stack);
         byte toggleTimer = nbtData.getByte("toggleTimer");
         boolean ret = false;
+        if (IC2.platform.isSimulating()) {
+            boolean jumpKeyDown = SSPKeys.isQuantumBoostJumpKeyDown(player);
+            boolean previousJumpKeyDown = nbtData.getBoolean(JUMP_BOOST_KEY_DOWN);
+            if (jumpKeyDown && !previousJumpKeyDown && toggleTimer == 0) {
+                boolean enabled = !isJumpBoostEnabled(stack);
+                setJumpBoostEnabled(stack, enabled);
+                toggleTimer = 10;
+                nbtData.setByte("toggleTimer", toggleTimer);
+                IC2.platform.messagePlayer(player, Localization.translate(SuperSolarPanels.MODID + ".quantum_boost.status." + (enabled ? "enabled" : "disabled")), new Object[0]);
+            }
+            nbtData.setBoolean(JUMP_BOOST_KEY_DOWN, jumpKeyDown);
+        }
         if (IC2.platform.isSimulating()) {
             boolean wasOnGround;
             boolean bl = wasOnGround = !nbtData.hasKey("wasOnGround") || nbtData.getBoolean("wasOnGround");
@@ -183,22 +215,13 @@ extends ItemBoosts {
         if (!Nightvision) return;
         if (!IC2.platform.isSimulating()) return;
         if (!ElectricItem.manager.use(stack, 1.0, (EntityLivingBase)player)) return;
-        BlockPos pos = new BlockPos((int)Math.floor(player.posX), (int)Math.floor(player.posY), (int)Math.floor(player.posZ));
-        int skylight = player.getEntityWorld().getLightFromNeighbors(pos);
-        if (skylight > 8) {
-            if (!Configs.canCraftMT) return;
+        if (Configs.canCraftMT) {
             player.addPotionEffect(new PotionEffect(MobEffects.WATER_BREATHING, 300, 0, true, true));
-            if (!Configs.canCraftASP) return;
+        }
+        if (isJumpBoostEnabled(stack)) {
             player.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 300, 0, true, true));
-            if (!Configs.canCraftASH) return;
-            player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 300, 4, true, true));
-            return;
-        } else {
-            if (!Configs.canCraftMT) return;
-            player.addPotionEffect(new PotionEffect(MobEffects.WATER_BREATHING, 300, 0, true, true));
-            if (!Configs.canCraftASP) return;
-            player.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 300, 0, true, true));
-            if (!Configs.canCraftASH) return;
+        }
+        if (Configs.canCraftASH) {
             player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 300, 4, true, true));
         }
     }

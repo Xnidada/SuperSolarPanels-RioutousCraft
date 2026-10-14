@@ -39,12 +39,14 @@ extends Keyboard {
     public static final Keyboard.IKeyWatcher poison1;
     public static final Keyboard.IKeyWatcher poison;
     public static final Keyboard.IKeyWatcher poison2;
+    public static final Keyboard.IKeyWatcher quantumBoostJump;
 
     public static void addFlyKey() {
         IC2.keyboard.addKeyWatcher(FLY_KEY);
         IC2.keyboard.addKeyWatcher(poison1);
         IC2.keyboard.addKeyWatcher(poison2);
         IC2.keyboard.addKeyWatcher(poison);
+        IC2.keyboard.addKeyWatcher(quantumBoostJump);
     }
 
     public static boolean Isremovepoison(EntityPlayer player) {
@@ -63,10 +65,15 @@ extends Keyboard {
         return IC2.keyboard.isKeyDown(player, FLY_KEY);
     }
 
+    public static boolean isQuantumBoostJumpKeyDown(EntityPlayer player) {
+        return IC2.keyboard.isKeyDown(player, quantumBoostJump);
+    }
+
     static {
         poison = new KeyWatcher(SSPKey.poison);
         poison1 = new KeyWatcher(SSPKey.poison1);
         poison2 = new KeyWatcher(SSPKey.poison2);
+        quantumBoostJump = new KeyWatcher(SSPKey.quantumBoostJump);
     }
 
     public static class KeyWatcher
@@ -93,7 +100,8 @@ extends Keyboard {
         fly(33, "Fly Key"),
         poison(34, "Poison Leggings"),
         poison1(35, "Poison Boots"),
-        poison2(36, "Poison Chestplate");
+        poison2(36, "Poison Chestplate"),
+        quantumBoostJump(37, "key.quantum_boost_jump");
 
         public final Keyboard.Key key = this.addKey(this.name());
         @SideOnly(value=Side.CLIENT)
