@@ -36,11 +36,14 @@ public final class PanelModules {
     /** IndustrialUpgrade-style weather coefficient: normal rain is 65% output. */
     public double generation(double base, boolean daylight, boolean raining) {
         if (!raining) return generation(base, daylight);
-        double rainBonus = 0.0;
+        double weatherMultiplier = 0.65;
         if (!glassSlot.isEmpty()) {
-            rainBonus = ModularPanelGlass.getPanelType(glassSlot.get()).rainMultiplier;
+            ModularPanelGlass.Type glass = ModularPanelGlass.getPanelType(glassSlot.get());
+            weatherMultiplier += glass.rainMultiplier;
+            // Night generation remains a separate modifier when it rains at night.
+            weatherMultiplier *= daylight ? 1.0 : 1.0 + glass.nightMultiplier;
         }
-        return PanelModuleMath.generation(base, -0.35 + rainBonus);
+        return PanelModuleMath.generation(base, weatherMultiplier - 1.0);
     }
 
     public int capacity(int base) {

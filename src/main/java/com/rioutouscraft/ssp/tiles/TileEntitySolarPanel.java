@@ -179,7 +179,9 @@ IGuiValueProvider {
     }
 
     public void tryGenerateEnergy(double amount, boolean raining) {
-        this.storage = PanelModuleMath.store(this.storage, this.modules.generation(amount, this.world.isDaytime(), raining), this.getMaxStorage());
+        boolean daylight = this.active == GenerationState.DAY
+                || this.active == GenerationState.RAIN && this.world.isDaytime();
+        this.storage = PanelModuleMath.store(this.storage, this.modules.generation(amount, daylight, raining), this.getMaxStorage());
     }
 
     public boolean emitsEnergyTo(IEnergyAcceptor receiver, EnumFacing side) {
@@ -203,6 +205,10 @@ IGuiValueProvider {
     public void addInformation(ItemStack stack, List<String> tooltip, ITooltipFlag advanced) {
         super.addInformation(stack, tooltip, advanced);
         tooltip.add(Localization.translate((String)"ic2.item.tooltip.PowerTier", (Object[])new Object[]{this.tier}));
+        tooltip.add(Localization.translate((String)"super_solar_panels_rioutouscraft.item.dayGeneration", (Object[])new Object[]{formatEnergy(this.dayPower)}));
+        tooltip.add(Localization.translate((String)"super_solar_panels_rioutouscraft.item.nightGeneration", (Object[])new Object[]{formatEnergy(this.nightPower)}));
+        tooltip.add(Localization.translate((String)"super_solar_panels_rioutouscraft.item.maxOutput", (Object[])new Object[]{formatEnergy(this.output)}));
+        tooltip.add(Localization.translate((String)"super_solar_panels_rioutouscraft.item.storage", (Object[])new Object[]{formatEnergy(this.maxStorage)}));
     }
 
     public ContainerBase<? extends TileEntitySolarPanel> getGuiContainer(EntityPlayer player) {
@@ -260,15 +266,17 @@ IGuiValueProvider {
     }
 
     public String getOutput() {
+        boolean daylight = this.active == GenerationState.DAY
+                || this.active == GenerationState.RAIN && this.world.isDaytime();
         switch (this.active) {
             case DAY: {
-                return String.format(Locale.ROOT, "%s %s %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.generating"), formatEnergy(this.modules.generation(this.dayPower, this.world.isDaytime())), Localization.translate((String)"ic2.generic.text.EUt"));
+                return String.format(Locale.ROOT, "%s %s %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.generating"), formatEnergy(this.modules.generation(this.dayPower, daylight, false)), Localization.translate((String)"ic2.generic.text.EUt"));
             }
             case NIGHT: {
-                return String.format(Locale.ROOT, "%s %s %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.generating"), formatEnergy(this.modules.generation(this.nightPower, this.world.isDaytime())), Localization.translate((String)"ic2.generic.text.EUt"));
+                return String.format(Locale.ROOT, "%s %s %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.generating"), formatEnergy(this.modules.generation(this.nightPower, daylight, false)), Localization.translate((String)"ic2.generic.text.EUt"));
             }
             case RAIN: {
-                return String.format(Locale.ROOT, "%s %s %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.generating"), formatEnergy(this.modules.generation(this.world.isDaytime() ? this.dayPower : this.nightPower, this.world.isDaytime(), true)), Localization.translate((String)"ic2.generic.text.EUt"));
+                return String.format(Locale.ROOT, "%s %s %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.generating"), formatEnergy(this.modules.generation(this.world.isDaytime() ? this.dayPower : this.nightPower, daylight, true)), Localization.translate((String)"ic2.generic.text.EUt"));
             }
         }
         return String.format(Locale.ROOT, "%s 0 %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.generating"), Localization.translate((String)"ic2.generic.text.EUt"));
