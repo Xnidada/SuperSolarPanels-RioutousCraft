@@ -48,9 +48,7 @@ public class BlocksRegister {
 
     private static void setRegister(Block block) {
         ForgeRegistries.BLOCKS.register(block);
-        ItemBlock itemBlock = new ItemBlock(block);
-        itemBlock.setCreativeTab(SuperSolarPanels.SSPtab);
-        ForgeRegistries.ITEMS.register(itemBlock.setRegistryName(block.getRegistryName()));
+        ForgeRegistries.ITEMS.register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
     }
 
     private static void setRender(Block block) {
