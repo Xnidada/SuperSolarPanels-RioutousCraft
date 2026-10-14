@@ -24,13 +24,13 @@ Original addon: Super Solar Panels 1.3.1 by Denfop and contributors. This reposi
 
 ## Existing panel module slots
 
-Version 1.3.2 adds the modular component slots directly to every existing solar, daylight, moonlight, and rain panel; version 1.3.3 extends the normal solar series to 14 IndustrialUpgrade-aligned tiers. It includes the same 14 tiers as IndustrialUpgrade, including Barion, Hadron, Graviton, and Quark, with matching default generation, output, storage, and tier values. The standalone modular solar panel block has been removed. The module items remain registered under the `super_solar_panels_rioutouscraft` namespace, and no recipes are added so pack authors can define them later.
+Version 1.3.2 added module slots to the original panel families; version 1.3.3 added the IndustrialUpgrade-aligned 14-tier normal series. Version 1.4.0 removes the separate daylight, moonlight, and rain blocks. The 14 normal panels now use one shared weather-aware implementation, with day, night, day/night, and rain glass plus storage and output modules in their GUIs. No recipes are added for the modules, so pack authors can define them later.
 
-- `solar_panel_glass`: day, night, and day/night generation bonuses;
+- `solar_panel_glass`: day, night, day/night, and rain generation bonuses;
 - `solar_panel_battery`: basic, advanced, and quantum storage capacity;
 - `solar_panel_output`: basic, advanced, and quantum output limits.
 
-Each existing panel GUI now exposes three dedicated module slots beside its original charge slots. Modules are saved with the panel, and the original weather/day/night generation rules remain active.
+Each normal panel GUI exposes three dedicated module slots beside its original charge slots. Modules are saved with the panel; rain produces 65% of the normal generation by default, and rain glass raises that weather coefficient to 100%.
 
 The modular component and high-tier solar panel artwork is adapted from the IndustrialUpgrade reference repository. The copied third-party license text is kept under `third_party/industrialupgrade/LICENSE`; the runtime mod does not depend on IndustrialUpgrade.
 

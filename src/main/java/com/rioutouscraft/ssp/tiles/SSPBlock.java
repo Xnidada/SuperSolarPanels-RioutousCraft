@@ -16,26 +16,6 @@
  */
 package com.rioutouscraft.ssp.tiles;
 
-import com.rioutouscraft.ssp.tiles.Moonpanel.TileEntityAdminmoon;
-import com.rioutouscraft.ssp.tiles.Moonpanel.TileEntityAdvancedSolarmoon;
-import com.rioutouscraft.ssp.tiles.Moonpanel.TileEntityHybridSolarmoon;
-import com.rioutouscraft.ssp.tiles.Moonpanel.TileEntityQuantumSolarmoon;
-import com.rioutouscraft.ssp.tiles.Moonpanel.TileEntitySingularmoon;
-import com.rioutouscraft.ssp.tiles.Moonpanel.TileEntitySpectralmoon;
-import com.rioutouscraft.ssp.tiles.Moonpanel.TileEntityUltimateHybridSolarmoon;
-import com.rioutouscraft.ssp.tiles.Moonpanel.TileEntityneutronmoon;
-import com.rioutouscraft.ssp.tiles.Moonpanel.TileEntityphotonicmoon;
-import com.rioutouscraft.ssp.tiles.Moonpanel.TileEntityprotonmoon;
-import com.rioutouscraft.ssp.tiles.Sunpanel.TileEntityAdminsun;
-import com.rioutouscraft.ssp.tiles.Sunpanel.TileEntityAdvancedSolarsun;
-import com.rioutouscraft.ssp.tiles.Sunpanel.TileEntityHybridSolarsun;
-import com.rioutouscraft.ssp.tiles.Sunpanel.TileEntityQuantumSolarsun;
-import com.rioutouscraft.ssp.tiles.Sunpanel.TileEntitySingularsun;
-import com.rioutouscraft.ssp.tiles.Sunpanel.TileEntitySpectralsun;
-import com.rioutouscraft.ssp.tiles.Sunpanel.TileEntityUltimateHybridSolarsun;
-import com.rioutouscraft.ssp.tiles.Sunpanel.TileEntityneutronsun;
-import com.rioutouscraft.ssp.tiles.Sunpanel.TileEntityphotonicsun;
-import com.rioutouscraft.ssp.tiles.Sunpanel.TileEntityprotonsun;
 import com.rioutouscraft.ssp.tiles.TileEntityMolecularAssembler;
 import com.rioutouscraft.ssp.tiles.Transformer.TileEntityTransformerEV;
 import com.rioutouscraft.ssp.tiles.Transformer.TileEntityTransformerEV1;
@@ -58,16 +38,6 @@ import com.rioutouscraft.ssp.tiles.overtimepanel.TileEntityneutron;
 import com.rioutouscraft.ssp.tiles.overtimepanel.TileEntityphotonic;
 import com.rioutouscraft.ssp.tiles.overtimepanel.TileEntityproton;
 import com.rioutouscraft.ssp.tiles.quantummfsu;
-import com.rioutouscraft.ssp.tiles.rainpanels.TileEntityAdminrain;
-import com.rioutouscraft.ssp.tiles.rainpanels.TileEntityAdvancedSolarrain;
-import com.rioutouscraft.ssp.tiles.rainpanels.TileEntityHybridSolarrain;
-import com.rioutouscraft.ssp.tiles.rainpanels.TileEntityQuantumSolarrain;
-import com.rioutouscraft.ssp.tiles.rainpanels.TileEntitySingularrain;
-import com.rioutouscraft.ssp.tiles.rainpanels.TileEntitySpectralrain;
-import com.rioutouscraft.ssp.tiles.rainpanels.TileEntityUltimateHybridSolarrain;
-import com.rioutouscraft.ssp.tiles.rainpanels.TileEntityneutronrain;
-import com.rioutouscraft.ssp.tiles.rainpanels.TileEntityphotonicrain;
-import com.rioutouscraft.ssp.tiles.rainpanels.TileEntityprotonrain;
 import com.rioutouscraft.ssp.tiles.ultimatemfsu;
 import ic2.core.block.ITeBlock;
 import ic2.core.block.TileEntityBlock;
@@ -102,37 +72,7 @@ public enum SSPBlock implements ITeBlock
     transformator1(TileEntityTransformerEV1.class, 13),
     transformator2(TileEntityTransformerEV2.class, 14),
     transformator3(TileEntityTransformerEV3.class, 15),
-    advanced_solar_panelsun(TileEntityAdvancedSolarsun.class, 16),
-    hybrid_solar_panelsun(TileEntityHybridSolarsun.class, 17, EnumRarity.RARE),
-    ultimate_solar_panelsun(TileEntityUltimateHybridSolarsun.class, 18, EnumRarity.EPIC),
-    quantum_solar_panelsun(TileEntityQuantumSolarsun.class, 19, EnumRarity.EPIC),
-    spectral_solar_panelsun(TileEntitySpectralsun.class, 20),
-    proton_solar_panelsun(TileEntityprotonsun.class, 50),
-    singular_solar_panelsun(TileEntitySingularsun.class, 21, EnumRarity.RARE),
-    admin_solar_panelsun(TileEntityAdminsun.class, 22, EnumRarity.EPIC),
-    photonic_solar_panelsun(TileEntityphotonicsun.class, 23, EnumRarity.EPIC),
-    neutronium_solar_panelsun(TileEntityneutronsun.class, 24, EnumRarity.EPIC),
-    advanced_solar_panelmoon(TileEntityAdvancedSolarmoon.class, 26),
-    hybrid_solar_panelmoon(TileEntityHybridSolarmoon.class, 27, EnumRarity.RARE),
-    ultimate_solar_panelmoon(TileEntityUltimateHybridSolarmoon.class, 28, EnumRarity.EPIC),
-    quantum_solar_panelmoon(TileEntityQuantumSolarmoon.class, 29, EnumRarity.EPIC),
-    spectral_solar_panelmoon(TileEntitySpectralmoon.class, 30),
-    singular_solar_panelmoon(TileEntitySingularmoon.class, 31, EnumRarity.RARE),
-    admin_solar_panelmoon(TileEntityAdminmoon.class, 32, EnumRarity.EPIC),
-    photonic_solar_panelmoon(TileEntityphotonicmoon.class, 33, EnumRarity.EPIC),
-    neutronium_solar_panelmoon(TileEntityneutronmoon.class, 34, EnumRarity.EPIC),
-    proton_solar_panelmoon(TileEntityprotonmoon.class, 48, EnumRarity.EPIC),
-    proton_solar_panelrain(TileEntityprotonrain.class, 49, EnumRarity.EPIC),
     molecular_transformer(TileEntityMolecularAssembler.class, 25, EnumRarity.RARE),
-    advanced_solar_panelrain(TileEntityAdvancedSolarrain.class, 36),
-    hybrid_solar_panelrain(TileEntityHybridSolarrain.class, 37, EnumRarity.RARE),
-    ultimate_solar_panelrain(TileEntityUltimateHybridSolarrain.class, 38, EnumRarity.EPIC),
-    quantum_solar_panelrain(TileEntityQuantumSolarrain.class, 39, EnumRarity.EPIC),
-    spectral_solar_panelrain(TileEntitySpectralrain.class, 40),
-    singular_solar_panelrain(TileEntitySingularrain.class, 41, EnumRarity.RARE),
-    admin_solar_panelrain(TileEntityAdminrain.class, 42, EnumRarity.EPIC),
-    photonic_solar_panelrain(TileEntityphotonicrain.class, 43, EnumRarity.EPIC),
-    neutronium_solar_panelrain(TileEntityneutronrain.class, 44, EnumRarity.EPIC),
     advancedmfsu(advancedmfsu.class, 45, EnumRarity.EPIC),
     ultimatemfsu(ultimatemfsu.class, 46, EnumRarity.EPIC),
     quantummfsu(quantummfsu.class, 47, EnumRarity.EPIC);

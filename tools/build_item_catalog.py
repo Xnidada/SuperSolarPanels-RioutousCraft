@@ -162,6 +162,7 @@ def item_details(rel):
             "day": [metric("白昼发电倍率", "+100%"), metric("夜间发电倍率", "+0%"), metric("插槽", "玻璃组件")],
             "night": [metric("白昼发电倍率", "+0%"), metric("夜间发电倍率", "+35%"), metric("插槽", "玻璃组件")],
             "day_night": [metric("白昼发电倍率", "+65%"), metric("夜间发电倍率", "+45%"), metric("插槽", "玻璃组件")],
+            "rain": [metric("降雨发电倍率", "+35%（雨天基础倍率为65%）"), metric("插槽", "玻璃组件")],
         }[stem]
     if rel.startswith("solar_panel_battery/"):
         return {
@@ -229,12 +230,8 @@ PANEL_SPECS = {
     "graviton": (83886080, 41943040, 250000000000, 13, 167772160),
     "quark": (335544320, 167772160, 2500000000000, 14, 671088640),
 }
-ALT_POWER = {"advanced": 6, "hybrid": 48, "ultimate": 384, "quantum": 3072, "spectral": 12288, "singular": 196608, "admin": 831432, "photonic": 0x3C0000, "neutronium": 0xF00000, "proton": 49152}
-ALT_STORAGE = {"advanced": 32000, "hybrid": 100000, "ultimate": 1000000, "quantum": 10000000, "spectral": 100000000, "singular": 100000, "admin": 1000000, "photonic": 999999999, "neutronium": 999999999, "proton": 999999999}
-
-
 def panel_info(name):
-    modes = [("_solar_panelsun", "白昼"), ("_solar_panelmoon", "夜间"), ("_solar_panelrain", "降雨"), ("_solar_panel", "常规")]
+    modes = [("_solar_panel", "常规")]
     for suffix, mode in modes:
         if not name.endswith(suffix):
             continue
@@ -242,10 +239,7 @@ def panel_info(name):
         if tier_name not in PANEL_SPECS:
             continue
         day, night, storage, tier, output = PANEL_SPECS[tier_name]
-        if mode == "常规":
-            details = [metric("白昼发电", f"{day:,} EU/t"), metric("夜间发电", f"{night:,} EU/t"), metric("最大输出", f"{output:,} EU/t"), metric("储能", f"{storage:,} EU"), metric("IC2等级", str(tier))]
-        else:
-            details = [metric(mode + "发电", f"{ALT_POWER[tier_name]:,} EU/t"), metric("条件", {"白昼": "露天白昼；下雨时停止", "夜间": "露天夜间；下雨时停止", "降雨": "有天空且正在下雨"}[mode]), metric("储能", f"{ALT_STORAGE[tier_name]:,} EU"), metric("IC2等级", str(tier))]
+        details = [metric("白昼发电", f"{day:,} EU/t"), metric("夜间发电", f"{night:,} EU/t"), metric("最大输出", f"{output:,} EU/t"), metric("储能", f"{storage:,} EU"), metric("IC2等级", str(tier))]
         return "太阳能板 · " + mode, details
     return None
 

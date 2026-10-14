@@ -35,6 +35,16 @@ public final class PanelModules {
         return PanelModuleMath.generation(base, bonus);
     }
 
+    /** IndustrialUpgrade-style weather coefficient: normal rain is 65% output. */
+    public double generation(double base, boolean daylight, boolean raining) {
+        if (!raining) return generation(base, daylight);
+        double rainBonus = 0.0;
+        if (!glassSlot.isEmpty()) {
+            rainBonus = ModularPanelGlass.getPanelType(glassSlot.get()).rainMultiplier;
+        }
+        return PanelModuleMath.generation(base, -0.35 + rainBonus);
+    }
+
     public int capacity(int base) {
         int extra = batterySlot.isEmpty() ? 0 : ModularPanelBattery.getPanelType(batterySlot.get()).capacity;
         return PanelModuleMath.capacity(base, extra);

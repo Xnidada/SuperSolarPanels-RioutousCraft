@@ -145,11 +145,15 @@ IGuiValueProvider {
         }
         switch (this.active) {
             case DAY: {
-                this.tryGenerateEnergy(this.dayPower);
+                this.tryGenerateEnergy(this.dayPower, false);
                 break;
             }
             case NIGHT: {
-                this.tryGenerateEnergy(this.nightPower);
+                this.tryGenerateEnergy(this.nightPower, false);
+                break;
+            }
+            case RAIN: {
+                this.tryGenerateEnergy(this.world.isDaytime() ? this.dayPower : this.nightPower, true);
             }
         }
         if (this.storage > 0) {
@@ -162,11 +166,17 @@ IGuiValueProvider {
     }
 
     public void checkTheSky() {
-        this.active = this.hasSky && this.world.canBlockSeeSky(this.pos.up()) ? (this.world.isDaytime() && (!this.canRain || !this.world.isRaining() && !this.world.isThundering()) ? GenerationState.DAY : GenerationState.NIGHT) : GenerationState.NONE;
+        if (!this.hasSky || !this.world.canBlockSeeSky(this.pos.up())) {
+            this.active = GenerationState.NONE;
+        } else if (this.canRain && (this.world.isRaining() || this.world.isThundering())) {
+            this.active = GenerationState.RAIN;
+        } else {
+            this.active = this.world.isDaytime() ? GenerationState.DAY : GenerationState.NIGHT;
+        }
     }
 
-    public void tryGenerateEnergy(double amount) {
-        this.storage = PanelModuleMath.store(this.storage, this.modules.generation(amount, this.world.isDaytime()), this.getMaxStorage());
+    public void tryGenerateEnergy(double amount, boolean raining) {
+        this.storage = PanelModuleMath.store(this.storage, this.modules.generation(amount, this.world.isDaytime(), raining), this.getMaxStorage());
     }
 
     public boolean emitsEnergyTo(IEnergyAcceptor receiver, EnumFacing side) {
@@ -217,6 +227,9 @@ IGuiValueProvider {
         if ("moonlight".equals(name)) {
             return this.active == GenerationState.NIGHT;
         }
+        if ("rainlight".equals(name)) {
+            return this.active == GenerationState.RAIN;
+        }
         return super.getGuiState(name);
     }
 
@@ -239,6 +252,9 @@ IGuiValueProvider {
             }
             case NIGHT: {
                 return String.format(Locale.ROOT, "%s %s %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.generating"), formatEnergy(this.modules.generation(this.nightPower, this.world.isDaytime())), Localization.translate((String)"ic2.generic.text.EUt"));
+            }
+            case RAIN: {
+                return String.format(Locale.ROOT, "%s %s %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.generating"), formatEnergy(this.modules.generation(this.world.isDaytime() ? this.dayPower : this.nightPower, this.world.isDaytime(), true)), Localization.translate((String)"ic2.generic.text.EUt"));
             }
         }
         return String.format(Locale.ROOT, "%s 0 %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.generating"), Localization.translate((String)"ic2.generic.text.EUt"));
@@ -270,7 +286,8 @@ IGuiValueProvider {
     public static enum GenerationState {
         NONE,
         NIGHT,
-        DAY;
+        DAY,
+        RAIN;
 
     }
 }

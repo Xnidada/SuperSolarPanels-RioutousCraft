@@ -55,6 +55,7 @@ public final class ModularPanelGlass extends ItemMulti<ModularPanelGlass.Type> {
     public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
         tooltip.add(Localization.translate(SuperSolarPanels.MODID + ".module.dayBonus", format(getPanelType(stack).dayMultiplier)));
         tooltip.add(Localization.translate(SuperSolarPanels.MODID + ".module.nightBonus", format(getPanelType(stack).nightMultiplier)));
+        tooltip.add(Localization.translate(SuperSolarPanels.MODID + ".module.rainBonus", format(getPanelType(stack).rainMultiplier)));
     }
 
     private static String format(double value) {
@@ -62,20 +63,23 @@ public final class ModularPanelGlass extends ItemMulti<ModularPanelGlass.Type> {
     }
 
     public enum Type implements IIdProvider {
-        DAY(0, "day", 1.0, 0.0),
-        NIGHT(1, "night", 0.0, 0.35),
-        DAY_NIGHT(2, "day_night", 0.65, 0.45);
+        DAY(0, "day", 1.0, 0.0, 0.0),
+        NIGHT(1, "night", 0.0, 0.35, 0.0),
+        DAY_NIGHT(2, "day_night", 0.65, 0.45, 0.0),
+        RAIN(3, "rain", 0.0, 0.0, 0.35);
 
         private final int id;
         private final String name;
         public final double dayMultiplier;
         public final double nightMultiplier;
+        public final double rainMultiplier;
 
-        Type(int id, String name, double dayMultiplier, double nightMultiplier) {
+        Type(int id, String name, double dayMultiplier, double nightMultiplier, double rainMultiplier) {
             this.id = id;
             this.name = name;
             this.dayMultiplier = dayMultiplier;
             this.nightMultiplier = nightMultiplier;
+            this.rainMultiplier = rainMultiplier;
         }
 
         public static Type getFromID(int id) {
