@@ -3,6 +3,7 @@ package com.rioutouscraft.ssp.items.modular;
 import com.rioutouscraft.ssp.SuperSolarPanels;
 import ic2.core.block.state.IIdProvider;
 import ic2.core.init.BlocksItems;
+import ic2.core.init.Localization;
 import ic2.core.item.ItemMulti;
 import ic2.core.ref.ItemName;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -29,7 +30,7 @@ public final class ModularPanelGlass extends ItemMulti<ModularPanelGlass.Type> {
 
     public static Type getPanelType(ItemStack stack) {
         return stack == null || stack.isEmpty() || !(stack.getItem() instanceof ModularPanelGlass)
-                ? Type.DAY_NIGHT : ((ModularPanelGlass) stack.getItem()).getPanelType(stack);
+                ? Type.DAY_NIGHT : Type.getFromID(stack.getMetadata());
     }
 
     @Override
@@ -52,8 +53,8 @@ public final class ModularPanelGlass extends ItemMulti<ModularPanelGlass.Type> {
 
     @Override
     public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-        tooltip.add("Day: " + format(getPanelType(stack).dayMultiplier));
-        tooltip.add("Night: " + format(getPanelType(stack).nightMultiplier));
+        tooltip.add(Localization.translate(SuperSolarPanels.MODID + ".module.dayBonus", format(getPanelType(stack).dayMultiplier)));
+        tooltip.add(Localization.translate(SuperSolarPanels.MODID + ".module.nightBonus", format(getPanelType(stack).nightMultiplier)));
     }
 
     private static String format(double value) {

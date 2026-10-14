@@ -83,7 +83,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.Logger;
 
 @Mod.EventBusSubscriber
-@Mod(modid="super_solar_panels_rioutouscraft", name="SuperSolarPanels-RioutousCraft", dependencies="required-after:ic2@[2.8.222-ex112];", version="1.3.1-RioutousCraft", acceptedMinecraftVersions="[1.12.2]")
+@Mod(modid="super_solar_panels_rioutouscraft", name="SuperSolarPanels-RioutousCraft", dependencies="required-after:ic2@[2.8.222-ex112];", version="1.3.2-RioutousCraft", acceptedMinecraftVersions="[1.12.2]")
 public final class SuperSolarPanels {
     public static boolean seasonal = false;
     public static final String MODID = "super_solar_panels_rioutouscraft";

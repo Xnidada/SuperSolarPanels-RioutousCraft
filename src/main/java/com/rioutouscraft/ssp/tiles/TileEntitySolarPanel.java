@@ -34,6 +34,9 @@
 package com.rioutouscraft.ssp.tiles;
 
 import com.rioutouscraft.ssp.gui.BackgroundlessDynamicGUI;
+import com.rioutouscraft.ssp.tiles.modular.PanelModules;
+import com.rioutouscraft.ssp.tiles.modular.PanelModuleMath;
+import com.rioutouscraft.ssp.tiles.modular.InvSlotPanelComponent;
 import com.rioutouscraft.ssp.tiles.InvSlotMultiCharge;
 import ic2.api.energy.EnergyNet;
 import ic2.api.energy.event.EnergyTileLoadEvent;
@@ -70,11 +73,14 @@ implements IEnergySource,
 IHasGui,
 IGuiValueProvider {
     public final int maxStorage;
+    public final InvSlotPanelComponent glassSlot = new InvSlotPanelComponent(this, "glass", InvSlotPanelComponent.Kind.GLASS);
+    public final InvSlotPanelComponent batterySlot = new InvSlotPanelComponent(this, "battery", InvSlotPanelComponent.Kind.BATTERY);
+    public final InvSlotPanelComponent outputSlot = new InvSlotPanelComponent(this, "output", InvSlotPanelComponent.Kind.OUTPUT);
+    public final PanelModules modules = new PanelModules(glassSlot, batterySlot, outputSlot);
     protected final int dayPower;
     protected final int nightPower;
     protected final int tier;
     protected final InvSlotMultiCharge chargeSlots;
-    private final double tierPower;
     @GuiSynced
     public int storage;
     @GuiSynced
@@ -93,7 +99,6 @@ IGuiValueProvider {
         this.nightPower = nightPower;
         this.maxStorage = storage;
         this.tier = tier;
-        this.tierPower = EnergyNet.instance.getPowerFromTier(tier);
         this.chargeSlots = new InvSlotMultiCharge(this, tier, 4, InvSlot.Access.IO);
     }
 
@@ -115,7 +120,7 @@ IGuiValueProvider {
 
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
-        this.storage = nbt.getInteger("storage");
+        this.storage = Math.max(0, nbt.getInteger("storage"));
     }
 
     public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
@@ -152,7 +157,7 @@ IGuiValueProvider {
     }
 
     public void tryGenerateEnergy(int amount) {
-        this.storage = this.storage + amount <= this.maxStorage ? (this.storage += amount) : this.maxStorage;
+        this.storage = PanelModuleMath.store(this.storage, this.modules.generation(amount, this.world.isDaytime()), this.getMaxStorage());
     }
 
     public boolean emitsEnergyTo(IEnergyAcceptor receiver, EnumFacing side) {
@@ -160,15 +165,15 @@ IGuiValueProvider {
     }
 
     public int getSourceTier() {
-        return this.tier;
+        return this.modules.sourceTier(this.tier);
     }
 
     public double getOfferedEnergy() {
-        return (double)this.storage < this.tierPower ? (double)this.storage : this.tierPower;
+        return Math.min(this.storage, this.getOutputLimit());
     }
 
     public void drawEnergy(double amount) {
-        this.storage = (int)((double)this.storage - amount);
+        this.storage = Math.max(0, (int)(this.storage - amount));
     }
 
     @SideOnly(value=Side.CLIENT)
@@ -191,7 +196,7 @@ IGuiValueProvider {
 
     public double getGuiValue(String name) {
         if ("progress".equals(name)) {
-            return this.storage / this.maxStorage;
+            return this.getMaxStorage() == 0 ? 0.0 : Math.min(1.0, (double) this.storage / this.getMaxStorage());
         }
         throw new IllegalArgumentException("Unexpected GUI value requested: " + name);
     }
@@ -206,17 +211,25 @@ IGuiValueProvider {
         return super.getGuiState(name);
     }
 
+    public int getMaxStorage() {
+        return this.modules.capacity(this.maxStorage);
+    }
+
+    public double getOutputLimit() {
+        return this.modules.outputLimit(this.tier);
+    }
+
     public String getMaxOutput() {
-        return String.format("%s %.0f %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.maxOutput"), EnergyNet.instance.getPowerFromTier(this.tier + 1), Localization.translate((String)"ic2.generic.text.EUt"));
+        return String.format("%s %.0f %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.maxOutput"), this.getOutputLimit(), Localization.translate((String)"ic2.generic.text.EUt"));
     }
 
     public String getOutput() {
         switch (this.active) {
             case DAY: {
-                return String.format("%s %d %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.generating"), this.dayPower, Localization.translate((String)"ic2.generic.text.EUt"));
+                return String.format("%s %d %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.generating"), this.modules.generation(this.dayPower, this.world.isDaytime()), Localization.translate((String)"ic2.generic.text.EUt"));
             }
             case NIGHT: {
-                return String.format("%s %d %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.generating"), this.nightPower, Localization.translate((String)"ic2.generic.text.EUt"));
+                return String.format("%s %d %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.generating"), this.modules.generation(this.nightPower, this.world.isDaytime()), Localization.translate((String)"ic2.generic.text.EUt"));
             }
         }
         return String.format("%s 0 %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.generating"), Localization.translate((String)"ic2.generic.text.EUt"));

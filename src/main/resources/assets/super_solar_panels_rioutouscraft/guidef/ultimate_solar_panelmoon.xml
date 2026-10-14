@@ -11,9 +11,16 @@
 	</only>
 	
 	
-	<text x="50" y="22" color="13487565">{super_solar_panels_rioutouscraft.gui.storage} %base.storage%/%base.maxStorage%</text>
+	<text x="50" y="22" color="13487565">{super_solar_panels_rioutouscraft.gui.storage} %base.storage%/%base.getMaxStorage()%</text>
 	<text x="50" y="32" color="13487565">%base.getMaxOutput()%</text>
 	<text x="50" y="42" color="13487565">%base.getOutput()%</text>
 	
+    <text x="109" y="50" color="13487565">{super_solar_panels_rioutouscraft.gui.glass}</text>
+    <text x="137" y="50" color="13487565">{super_solar_panels_rioutouscraft.gui.battery}</text>
+    <text x="165" y="50" color="13487565">{super_solar_panels_rioutouscraft.gui.outputModule}</text>
+    <slotgrid x="107" y="59" style="normal" rows="1" name="glass"/>
+    <slotgrid x="135" y="59" style="normal" rows="1" name="battery"/>
+    <slotgrid x="163" y="59" style="normal" rows="1" name="output"/>
+
 	<playerInventory x="17" y="86" spacing="2" style="plain" title="false"/>
 </gui>

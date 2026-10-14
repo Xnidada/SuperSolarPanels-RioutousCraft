@@ -3,6 +3,7 @@ package com.rioutouscraft.ssp.items.modular;
 import com.rioutouscraft.ssp.SuperSolarPanels;
 import ic2.core.block.state.IIdProvider;
 import ic2.core.init.BlocksItems;
+import ic2.core.init.Localization;
 import ic2.core.item.ItemMulti;
 import ic2.core.ref.ItemName;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -28,7 +29,7 @@ public final class ModularPanelBattery extends ItemMulti<ModularPanelBattery.Typ
 
     public static Type getPanelType(ItemStack stack) {
         return stack == null || stack.isEmpty() || !(stack.getItem() instanceof ModularPanelBattery)
-                ? Type.BASIC : ((ModularPanelBattery) stack.getItem()).getPanelType(stack);
+                ? Type.BASIC : Type.getFromID(stack.getMetadata());
     }
 
     @Override
@@ -51,7 +52,7 @@ public final class ModularPanelBattery extends ItemMulti<ModularPanelBattery.Typ
 
     @Override
     public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-        tooltip.add("Capacity: " + getPanelType(stack).capacity + " EU");
+        tooltip.add(Localization.translate(SuperSolarPanels.MODID + ".module.capacity", getPanelType(stack).capacity));
     }
 
     public enum Type implements IIdProvider {

@@ -15,6 +15,7 @@ public final class InvSlotPanelComponent extends InvSlot {
     public InvSlotPanelComponent(IInventorySlotHolder<?> base, String name, Kind kind) {
         super(base, name, Access.IO, 1, InvSide.TOP);
         this.kind = kind;
+        setStackSizeLimit(1);
     }
 
     @Override

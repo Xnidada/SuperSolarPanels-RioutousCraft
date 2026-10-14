@@ -22,16 +22,15 @@ The rebuilt jar is in `build/libs/`. ForgeGradle 2.3 and Java 8 are required for
 
 Original addon: Super Solar Panels 1.3.1 by Denfop and contributors. This repository contains a compatibility-focused source reconstruction for IC2 2.8.222.
 
-## Modular solar panel (phase 1)
+## Existing panel module slots
 
-This rebuild includes a standalone modular solar panel system. It does not depend on IndustrialUpgrade and does not add recipes. The new items are registered under the `super_solar_panels_rioutouscraft` namespace so pack authors can add recipes later.
+Version 1.3.2 adds the modular component slots directly to every existing solar, daylight, moonlight, and rain panel. The standalone modular solar panel block has been removed. The module items remain registered under the `super_solar_panels_rioutouscraft` namespace, and no recipes are added so pack authors can define them later.
 
-- `solar_panel_glass`: day, night, and day/night glass profiles;
-- `solar_panel_battery`: basic, advanced, and quantum storage modules;
-- `solar_panel_output`: basic, advanced, and quantum output modules;
-- `modular_solar_panel`: one glass slot, one battery slot, and one output slot.
+- `solar_panel_glass`: day, night, and day/night generation bonuses;
+- `solar_panel_battery`: basic, advanced, and quantum storage capacity;
+- `solar_panel_output`: basic, advanced, and quantum output limits.
 
-The panel stores its configuration and internal EU buffer in NBT. Existing fixed solar panels are unchanged.
+Each existing panel GUI now exposes three dedicated module slots beside its original charge slots. Modules are saved with the panel, and the original weather/day/night generation rules remain active.
 
 The modular component artwork is adapted from the IndustrialUpgrade reference repository. The copied third-party license text is kept under `third_party/industrialupgrade/LICENSE`; the runtime mod does not depend on IndustrialUpgrade.
 
