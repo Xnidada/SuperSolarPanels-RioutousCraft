@@ -1,10 +1,10 @@
-# SuperSolarPanels-RioutousCraft 1.4.4 变更记录
+# SuperSolarPanels-RioutousCraft 1.4.5 变更记录
 
-本文只比较当前 **SuperSolarPanels-RioutousCraft 1.4.4** 与原版 **Super Solar Panels 1.3.1**。参数使用当前源码默认值；服务器配置可以覆盖这些默认值。
+本文只比较当前 **SuperSolarPanels-RioutousCraft 1.4.5** 与原版 **Super Solar Panels 1.3.1**。参数使用当前源码默认值；服务器配置可以覆盖这些默认值。
 
 ## 版本和兼容目标
 
-| 项目 | 原版 Super Solar Panels 1.3.1 | 当前 RioutousCraft 1.4.4 |
+| 项目 | 原版 Super Solar Panels 1.3.1 | 当前 RioutousCraft 1.4.5 |
 |---|---|---|
 | Minecraft | 1.12.2 | 1.12.2 |
 | IC2 | 旧版 IC2 API | `2.8.222-ex112` |
@@ -105,5 +105,5 @@
 
 ## 当前产物
 
-- `build/libs/SuperSolarPanels-RioutousCraft-1.4.4-RioutousCraft.jar`
+- `build/libs/SuperSolarPanels-RioutousCraft-1.4.5-RioutousCraft.jar`
 - Git commit：由本次变更生成
