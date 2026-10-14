@@ -28,6 +28,8 @@
  */
 package com.rioutouscraft.ssp.items.itembase;
 
+import com.rioutouscraft.ssp.SuperSolarPanels;
+
 import com.google.common.base.CaseFormat;
 import ic2.api.item.ElectricItem;
 import ic2.api.item.IElectricItem;
@@ -67,6 +69,7 @@ IItemHudInfo {
 
     public BaseElectricItem(String name, double maxCharge, double transferLimit, int tier) {
         super(null);
+        this.setCreativeTab(SuperSolarPanels.SSPtab);
         this.maxCharge = maxCharge;
         this.transferLimit = transferLimit;
         this.tier = tier;

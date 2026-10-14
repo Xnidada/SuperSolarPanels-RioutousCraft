@@ -23,6 +23,8 @@
  */
 package com.rioutouscraft.ssp.items.itembase;
 
+import com.rioutouscraft.ssp.SuperSolarPanels;
+
 import com.rioutouscraft.ssp.items.api.IToolClass;
 import com.rioutouscraft.ssp.items.itembase.ItemSSP;
 import ic2.api.item.IBoxable;
@@ -66,7 +68,7 @@ IBoxable {
         super(damage, speed, harvestLevel.toolMaterial, mineableBlocks);
         this.toolClasses = toolClasses;
         this.setMaxStackSize(1);
-        this.setCreativeTab((CreativeTabs)IC2.tabIC2);
+        this.setCreativeTab(SuperSolarPanels.SSPtab);
         for (IToolClass iToolClass : toolClasses) {
             if (iToolClass.getName() == null) continue;
             this.setHarvestLevel(iToolClass.getName(), harvestLevel.level);

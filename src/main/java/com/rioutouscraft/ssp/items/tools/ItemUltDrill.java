@@ -40,6 +40,8 @@
  */
 package com.rioutouscraft.ssp.items.tools;
 
+import com.rioutouscraft.ssp.SuperSolarPanels;
+
 import com.rioutouscraft.ssp.Configs;
 import com.google.common.base.CaseFormat;
 import ic2.core.IC2;
@@ -87,6 +89,7 @@ extends ItemDrill {
 
     public ItemUltDrill() {
         super(null, Configs.operationEnergyCost, HarvestLevel.Iridium, Configs.maxChargedrill, Configs.transferLimitdrill, Configs.tierdrill, DrillMode.NORMAL.drillSpeed);
+        this.setCreativeTab(SuperSolarPanels.SSPtab);
         ((ItemUltDrill)BlocksItems.registerItem((Item)this, (ResourceLocation)new ResourceLocation("super_solar_panels_rioutouscraft", NAME))).setTranslationKey(NAME);
     }
 

@@ -106,6 +106,7 @@ public final class SuperSolarPanels {
         log = event.getModLog();
         Configs.loadConfig(event.getSuggestedConfigurationFile(), event.getSide().isClient());
         machines = TeBlockRegistry.get((ResourceLocation)SSPBlock.IDENTITY);
+        machines.setCreativeTab(SSPtab);
         if (event.getSide().isClient()) {
             SuperSolarPanels.setupRenderingGuf();
         }

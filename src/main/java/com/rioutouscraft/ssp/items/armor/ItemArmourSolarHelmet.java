@@ -49,6 +49,8 @@
  */
 package com.rioutouscraft.ssp.items.armor;
 
+import com.rioutouscraft.ssp.SuperSolarPanels;
+
 import com.rioutouscraft.ssp.Configs;
 import com.rioutouscraft.ssp.tiles.TileEntitySolarPanel;
 import com.rioutouscraft.ssp.tiles.overtimepanel.TileEntityAdvancedSolar;
@@ -120,7 +122,7 @@ IItemHudProvider {
     public ItemArmourSolarHelmet(SolarHelmetTypes type) {
         super(ItemArmor.ArmorMaterial.DIAMOND, -1, EntityEquipmentSlot.HEAD);
         ((ItemArmourSolarHelmet)BlocksItems.registerItem((Item)this, (ResourceLocation)new ResourceLocation("super_solar_panels_rioutouscraft", type.getName()))).setTranslationKey(type.getLocalisedName());
-        this.setCreativeTab((CreativeTabs)IC2.tabIC2);
+        this.setCreativeTab(SuperSolarPanels.SSPtab);
         this.setMaxDamage(27);
         this.type = type;
         if (this.armorType == EntityEquipmentSlot.HEAD) {

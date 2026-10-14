@@ -15,6 +15,8 @@
  */
 package com.rioutouscraft.ssp.items.resource;
 
+import com.rioutouscraft.ssp.SuperSolarPanels;
+
 import ic2.core.block.state.IIdProvider;
 import ic2.core.init.BlocksItems;
 import ic2.core.item.ItemMulti;
@@ -33,6 +35,7 @@ extends ItemMulti {
 
     public CraftingThings() {
         super((ItemName)null, CraftingTypes.class);
+        setCreativeTab(SuperSolarPanels.SSPtab);
         ((CraftingThings)BlocksItems.registerItem((Item)this, (ResourceLocation)new ResourceLocation("super_solar_panels_rioutouscraft", NAME))).setTranslationKey(NAME);
     }
 

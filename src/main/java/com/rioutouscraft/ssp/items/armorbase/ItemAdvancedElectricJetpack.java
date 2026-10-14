@@ -33,6 +33,8 @@
  */
 package com.rioutouscraft.ssp.items.armorbase;
 
+import com.rioutouscraft.ssp.SuperSolarPanels;
+
 import com.rioutouscraft.ssp.Configs;
 import com.rioutouscraft.ssp.keyboard.SSPKeys;
 import com.google.common.base.CaseFormat;
@@ -80,6 +82,7 @@ implements IBoostingJetpack {
 
     protected ItemAdvancedElectricJetpack(String name, double maxCharge, double transferLimit, int tier) {
         super(null, null, EntityEquipmentSlot.CHEST, maxCharge, transferLimit, tier);
+        this.setCreativeTab(SuperSolarPanels.SSPtab);
         this.name = name;
         ((ItemAdvancedElectricJetpack)BlocksItems.registerItem((Item)this, (ResourceLocation)new ResourceLocation("super_solar_panels_rioutouscraft", this.name))).setTranslationKey(name);
         this.setMaxDamage(27);

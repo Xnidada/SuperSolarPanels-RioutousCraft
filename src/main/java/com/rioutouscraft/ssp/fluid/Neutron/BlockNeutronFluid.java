@@ -8,6 +8,8 @@
  */
 package com.rioutouscraft.ssp.fluid.Neutron;
 
+import com.rioutouscraft.ssp.SuperSolarPanels;
+
 import net.minecraft.block.material.Material;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
@@ -16,6 +18,7 @@ public class BlockNeutronFluid
 extends BlockFluidClassic {
     public BlockNeutronFluid(Fluid fluid) {
         super(fluid, Material.WATER);
+        this.setCreativeTab(SuperSolarPanels.SSPtab);
         this.setRegistryName("neutronfluid");
     }
 }

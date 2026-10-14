@@ -26,6 +26,8 @@
  */
 package com.rioutouscraft.ssp.items.itembase;
 
+import com.rioutouscraft.ssp.SuperSolarPanels;
+
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Function;
 import ic2.core.IC2;
@@ -58,7 +60,7 @@ implements IItemModelProvider {
     protected String name;
 
     public ItemSSP(String string) {
-        this.setCreativeTab((CreativeTabs)IC2.tabIC2);
+        this.setCreativeTab(SuperSolarPanels.SSPtab);
     }
 
     @SideOnly(value=Side.CLIENT)

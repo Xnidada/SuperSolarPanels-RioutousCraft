@@ -26,6 +26,8 @@
  */
 package com.rioutouscraft.ssp.items.armorbase;
 
+import com.rioutouscraft.ssp.SuperSolarPanels;
+
 import com.google.common.base.CaseFormat;
 import ic2.api.item.ElectricItem;
 import ic2.core.IC2;
@@ -64,6 +66,7 @@ implements IBoostingJetpack {
 
     protected ItemLeggins(String name, double maxCharge, double transferLimit, int tier) {
         super((ItemName)null, (String)null, EntityEquipmentSlot.LEGS, maxCharge, transferLimit, tier);
+        this.setCreativeTab(SuperSolarPanels.SSPtab);
         this.name = name;
         ((ItemLeggins)BlocksItems.registerItem((Item)this, (ResourceLocation)new ResourceLocation("super_solar_panels_rioutouscraft", this.name))).setTranslationKey(name);
         this.setMaxDamage(27);

@@ -14,6 +14,8 @@
  */
 package com.rioutouscraft.ssp.fluid.Neutron;
 
+import com.rioutouscraft.ssp.SuperSolarPanels;
+
 import com.rioutouscraft.ssp.fluid.Neutron.BlockNeutronFluid;
 import com.rioutouscraft.ssp.fluid.Neutron.FluidRegister;
 import net.minecraft.block.Block;
@@ -40,7 +42,10 @@ public class BlockRegister {
 
     private static void setRegister(Block block) {
         ForgeRegistries.BLOCKS.register(block);
-        ForgeRegistries.ITEMS.register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
+        ItemBlock itemBlock = new ItemBlock(block);
+        itemBlock.setCreativeTab(SuperSolarPanels.SSPtab);
+        itemBlock.setRegistryName(block.getRegistryName());
+        ForgeRegistries.ITEMS.register(itemBlock);
     }
 
     @SideOnly(value=Side.CLIENT)

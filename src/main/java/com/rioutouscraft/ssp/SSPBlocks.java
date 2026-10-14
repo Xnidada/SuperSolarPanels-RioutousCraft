@@ -8,6 +8,8 @@
  */
 package com.rioutouscraft.ssp;
 
+import com.rioutouscraft.ssp.SuperSolarPanels;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -16,6 +18,7 @@ public class SSPBlocks
 extends Block {
     public SSPBlocks(String name) {
         super(Material.ROCK);
+        this.setCreativeTab(SuperSolarPanels.SSPtab);
         this.setRegistryName(name);
         this.setTranslationKey(name);
     }

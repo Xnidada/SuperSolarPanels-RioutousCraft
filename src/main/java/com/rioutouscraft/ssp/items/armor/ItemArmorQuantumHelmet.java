@@ -47,6 +47,8 @@
  */
 package com.rioutouscraft.ssp.items.armor;
 
+import com.rioutouscraft.ssp.SuperSolarPanels;
+
 import com.rioutouscraft.ssp.Configs;
 import com.rioutouscraft.ssp.keyboard.SSPKeys;
 import com.google.common.base.CaseFormat;
@@ -107,7 +109,7 @@ IItemHudProvider {
     public ItemArmorQuantumHelmet(SolarHelmetTypes type) {
         super(ItemArmor.ArmorMaterial.DIAMOND, -1, EntityEquipmentSlot.HEAD);
         ((ItemArmorQuantumHelmet)BlocksItems.registerItem((Item)this, (ResourceLocation)new ResourceLocation("super_solar_panels_rioutouscraft", type.getName()))).setTranslationKey(type.getLocalisedName());
-        this.setCreativeTab((CreativeTabs)IC2.tabIC2);
+        this.setCreativeTab(SuperSolarPanels.SSPtab);
         this.setMaxDamage(27);
         this.type = type;
     }
