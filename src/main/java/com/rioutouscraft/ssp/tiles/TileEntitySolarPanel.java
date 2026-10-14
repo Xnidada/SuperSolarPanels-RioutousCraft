@@ -130,9 +130,11 @@ IGuiValueProvider {
         } else {
             this.storage = Math.max(0.0, nbt.getInteger("storage"));
         }
+        this.clampStorageToCapacity();
     }
 
     public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+        this.clampStorageToCapacity();
         super.writeToNBT(nbt);
         nbt.setDouble("storage", this.storage);
         return nbt;
@@ -140,6 +142,7 @@ IGuiValueProvider {
 
     protected void updateEntityServer() {
         super.updateEntityServer();
+        this.clampStorageToCapacity();
         if (this.ticker++ % this.tickRate() == 0) {
             this.checkTheSky();
         }
@@ -188,6 +191,7 @@ IGuiValueProvider {
     }
 
     public double getOfferedEnergy() {
+        this.clampStorageToCapacity();
         return Math.min(this.storage, this.getOutputLimit());
     }
 
@@ -215,6 +219,7 @@ IGuiValueProvider {
 
     public double getGuiValue(String name) {
         if ("progress".equals(name)) {
+            this.clampStorageToCapacity();
             return this.getMaxStorage() == 0 ? 0.0 : Math.min(1.0, (double) this.storage / this.getMaxStorage());
         }
         throw new IllegalArgumentException("Unexpected GUI value requested: " + name);
@@ -231,6 +236,15 @@ IGuiValueProvider {
             return this.active == GenerationState.RAIN;
         }
         return super.getGuiState(name);
+    }
+
+    private void clampStorageToCapacity() {
+        double capacity = this.getMaxStorage();
+        if (Double.isNaN(this.storage) || this.storage < 0.0) {
+            this.storage = 0.0;
+        } else if (this.storage > capacity) {
+            this.storage = capacity;
+        }
     }
 
     public double getMaxStorage() {

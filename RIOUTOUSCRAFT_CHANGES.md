@@ -1,10 +1,10 @@
-# SuperSolarPanels-RioutousCraft 1.4.5 变更记录
+# SuperSolarPanels-RioutousCraft 1.4.6 变更记录
 
-本文只比较当前 **SuperSolarPanels-RioutousCraft 1.4.5** 与原版 **Super Solar Panels 1.3.1**。参数使用当前源码默认值；服务器配置可以覆盖这些默认值。
+本文只比较当前 **SuperSolarPanels-RioutousCraft 1.4.6** 与原版 **Super Solar Panels 1.3.1**。参数使用当前源码默认值；服务器配置可以覆盖这些默认值。
 
 ## 版本和兼容目标
 
-| 项目 | 原版 Super Solar Panels 1.3.1 | 当前 RioutousCraft 1.4.5 |
+| 项目 | 原版 Super Solar Panels 1.3.1 | 当前 RioutousCraft 1.4.6 |
 |---|---|---|
 | Minecraft | 1.12.2 | 1.12.2 |
 | IC2 | 旧版 IC2 API | `2.8.222-ex112` |
@@ -67,7 +67,7 @@
 | 月光玻璃 | +0% | +35% | 不额外增加 |
 | 降雨玻璃 | 不额外增加 | 不额外增加 | 把雨天基础倍率从 65% 提升到 100% |
 
-日光玻璃和昼夜玻璃在当前版本中已直接删除，不再注册物品、模型、贴图或语言键。月光玻璃使夜间发电量变为原基础夜间发电量的 135%。
+日光玻璃和昼夜玻璃在当前版本中已直接删除，不再注册物品、模型、贴图或语言键。月光玻璃直接复用月光光罩贴图，并使夜间发电量变为原基础夜间发电量的 135%。
 
 ### 储能和输出模块
 
@@ -80,7 +80,7 @@
 | 输出模块 | 高级 | +128 EU/t |
 | 输出模块 | 量子 | +512 EU/t |
 
-这些模块有物品、GUI 槽位、保存和功能实现，但当前不添加合成配方，由整合包作者自行决定合成方式。
+这些模块有物品、GUI 槽位、保存和功能实现，但当前不添加合成配方，由整合包作者自行决定合成方式。储能模块取出后，太阳能内部储电量会自动限制到当前有效容量，避免保留超过面板容量的电量。
 
 ## 天气和发电逻辑
 
@@ -93,7 +93,9 @@
 ## 资源和创造标签
 
 - 所有当前 Mod 注册的物品、方块物品和流体物品都归入“超级太阳能”创造分类。
-- 当前贴图文件名和模型、GUI、盔甲纹理引用统一为小写安全资源路径，避免 OptiFine、StellarCore、MixinBooter 等严格或缓存型资源加载器因大写字母、空格产生贴图失效。
+- 进阶量子胸甲、护腿和靴使用独立的中文翻译键，不再显示内部注册名。
+- 模块物品使用 IC2 2.8.222 安全的显示名称入口，避免 `ItemMulti` 的 `VerifyError`。
+- 当前贴图文件名和模型、GUI、盔甲纹理引用统一为小写安全资源路径，避免严格或缓存型资源加载器因大写字母、空格产生贴图失效。
 - 模块和高阶太阳能的部分视觉资源参考并改编自 IndustrialUpgrade；相关许可文本保存在 `third_party/industrialupgrade/LICENSE`。
 - 运行时不依赖 IndustrialUpgrade。
 
@@ -105,5 +107,5 @@
 
 ## 当前产物
 
-- `build/libs/SuperSolarPanels-RioutousCraft-1.4.5-RioutousCraft.jar`
+- `build/libs/SuperSolarPanels-RioutousCraft-1.4.6-RioutousCraft.jar`
 - Git commit：由本次变更生成

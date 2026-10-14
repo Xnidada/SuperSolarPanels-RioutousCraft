@@ -22,6 +22,8 @@
  */
 package com.rioutouscraft.ssp.items.armor;
 
+import com.rioutouscraft.ssp.SuperSolarPanels;
+
 import com.rioutouscraft.ssp.Configs;
 import com.rioutouscraft.ssp.items.armorbase.ItemBoosts;
 import com.rioutouscraft.ssp.keyboard.SSPKeys;
@@ -51,6 +53,11 @@ extends ItemBoosts {
 
     public ItemArmorQuantumBoosts() {
         super("graviBoosts", Configs.maxCharge3, Configs.transferLimit3, Configs.tier3);
+    }
+
+    @Override
+    public String getTranslationKey() {
+        return SuperSolarPanels.MODID + ".graviBoosts";
     }
 
     @Override

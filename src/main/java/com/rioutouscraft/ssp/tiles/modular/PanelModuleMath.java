@@ -29,18 +29,14 @@ public final class PanelModuleMath {
     }
 
     public static int store(int stored, int generated, int capacity) {
-        // Removing a battery stops generation until the existing buffer drains; it does not delete EU.
-        if (stored >= capacity) return stored;
-        return (int) Math.min(capacity, (long) Math.max(0, stored) + Math.max(0, generated));
+        return (int) Math.min(Math.max(0, capacity), (long) Math.max(0, stored) + Math.max(0, generated));
     }
 
     public static double store(double stored, double generated, double capacity) {
-        if (stored >= capacity) return stored;
-        return Math.min(capacity, Math.max(0.0, stored) + Math.max(0.0, generated));
+        return Math.min(Math.max(0.0, capacity), Math.max(0.0, stored) + Math.max(0.0, generated));
     }
 
     public static long store(long stored, long generated, long capacity) {
-        if (stored >= capacity) return stored;
-        return Math.min(capacity, Math.max(0L, stored) + Math.max(0L, generated));
+        return Math.min(Math.max(0L, capacity), Math.max(0L, stored) + Math.max(0L, generated));
     }
 }

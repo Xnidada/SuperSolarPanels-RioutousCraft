@@ -100,7 +100,7 @@ implements IBoostingJetpack {
     }
 
     public String getTranslationKey() {
-        return "ssp." + super.getTranslationKey().substring(4);
+        return "super_solar_panels_rioutouscraft." + super.getTranslationKey().substring(4);
     }
 
     public EnumRarity getRarity(ItemStack stack) {

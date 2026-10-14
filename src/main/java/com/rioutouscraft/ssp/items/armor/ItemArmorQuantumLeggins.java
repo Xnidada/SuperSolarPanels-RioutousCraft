@@ -25,6 +25,8 @@
  */
 package com.rioutouscraft.ssp.items.armor;
 
+import com.rioutouscraft.ssp.SuperSolarPanels;
+
 import com.rioutouscraft.ssp.Configs;
 import com.rioutouscraft.ssp.items.armorbase.ItemLeggins;
 import com.rioutouscraft.ssp.keyboard.SSPKeys;
@@ -56,6 +58,11 @@ extends ItemLeggins {
 
     public ItemArmorQuantumLeggins() {
         super("graviLeggins", Configs.maxCharge5, Configs.transferLimit5, Configs.tier5);
+    }
+
+    @Override
+    public String getTranslationKey() {
+        return SuperSolarPanels.MODID + ".graviLeggins";
     }
 
     @Override

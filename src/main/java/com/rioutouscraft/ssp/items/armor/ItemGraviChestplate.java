@@ -15,6 +15,8 @@
  */
 package com.rioutouscraft.ssp.items.armor;
 
+import com.rioutouscraft.ssp.SuperSolarPanels;
+
 import com.rioutouscraft.ssp.Configs;
 import com.rioutouscraft.ssp.items.armorbase.ItemAdvancedElectricJetpack;
 import ic2.api.item.ElectricItem;
@@ -35,6 +37,11 @@ extends ItemAdvancedElectricJetpack {
 
     public ItemGraviChestplate() {
         super("graviChestplate", Configs.maxCharge6, Configs.transferLimit6, Configs.tier6);
+    }
+
+    @Override
+    public String getTranslationKey() {
+        return SuperSolarPanels.MODID + ".graviChestplate1";
     }
 
     @Override
