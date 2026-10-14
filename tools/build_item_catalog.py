@@ -247,8 +247,6 @@ def panel_info(name):
 
 
 def block_name(name):
-    if name == "modular_solar_panel":
-        return tr("block." + MODID + ".modular_solar_panel.name", fallback="模块化太阳能板")
     return tr("super_solar_panels_rioutouscraft.machines." + name, fallback=title(name))
 
 
@@ -256,8 +254,6 @@ def block_details(name):
     panel = panel_info(name)
     if panel:
         return panel
-    if name == "modular_solar_panel":
-        return "模块化太阳能", [metric("基础白昼发电", "32 EU/t"), metric("基础夜间发电", "8 EU/t"), metric("基础储能", "50,000 EU"), metric("组件槽", "玻璃 / 电池 / 输出")]
     if name in {"advancedmfsu", "ultimatemfsu", "quantummfsu"}:
         values = {"advancedmfsu": (16384, 100000000, 5), "ultimatemfsu": (65536, 400000000, 6), "quantummfsu": (262144, 1600000000, 7)}[name]
         return "储能设备", [metric("输出", f"{values[0]:,} EU/t"), metric("容量", f"{values[1]:,} EU"), metric("IC2等级", str(values[2]))]
