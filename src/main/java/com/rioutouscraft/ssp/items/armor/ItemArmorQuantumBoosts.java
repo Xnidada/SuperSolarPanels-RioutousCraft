@@ -150,11 +150,9 @@ extends ItemBoosts {
         if (IC2.platform.isSimulating()) {
             boolean jumpKeyDown = SSPKeys.isQuantumBoostJumpKeyDown(player);
             boolean previousJumpKeyDown = nbtData.getBoolean(JUMP_BOOST_KEY_DOWN);
-            if (jumpKeyDown && !previousJumpKeyDown && toggleTimer == 0) {
+            if (jumpKeyDown && !previousJumpKeyDown) {
                 boolean enabled = !isJumpBoostEnabled(stack);
                 setJumpBoostEnabled(stack, enabled);
-                toggleTimer = 10;
-                nbtData.setByte("toggleTimer", toggleTimer);
                 IC2.platform.messagePlayer(player, Localization.translate(SuperSolarPanels.MODID + ".quantum_boost.status." + (enabled ? "enabled" : "disabled")), new Object[0]);
             }
             nbtData.setBoolean(JUMP_BOOST_KEY_DOWN, jumpKeyDown);
