@@ -52,7 +52,7 @@ extends ItemBoosts {
     protected static final int DEFAULT_COLOUR = -1;
     private static final String JUMP_BOOST_ENABLED = "jumpBoostEnabled";
     private static final String JUMP_BOOST_KEY_DOWN = "jumpBoostKeyDown";
-    private float jumpCharge;
+    private static final String JUMP_CHARGE = "jumpCharge";
 
     public ItemArmorQuantumBoosts() {
         super("graviBoosts", Configs.maxCharge3, Configs.transferLimit3, Configs.tier3);
@@ -168,19 +168,21 @@ extends ItemBoosts {
                 nbtData.setBoolean("wasOnGround", player.onGround);
             }
         } else {
+            float jumpCharge = nbtData.getFloat(JUMP_CHARGE);
             if (ElectricItem.manager.canUse(stack, 4000.0) && player.onGround) {
-                this.jumpCharge = 1.0f;
+                jumpCharge = 1.0f;
             }
-            if (player.motionY >= 0.0 && this.jumpCharge > 0.0f && !player.isInWater()) {
-                if (this.jumpCharge == 0.9f) {
+            if (player.motionY >= 0.0 && jumpCharge > 0.0f && !player.isInWater()) {
+                if (jumpCharge == 0.9f) {
                     player.motionX *= 1.0;
                     player.motionZ *= 1.0;
                 }
-                player.motionY += (double)(this.jumpCharge * 0.3f);
-                this.jumpCharge = (float)((double)this.jumpCharge * 0.75);
-            } else if (this.jumpCharge < 1.0f) {
-                this.jumpCharge = 0.0f;
+                player.motionY += (double)(jumpCharge * 0.3f);
+                jumpCharge = (float)((double)jumpCharge * 0.75);
+            } else if (jumpCharge < 1.0f) {
+                jumpCharge = 0.0f;
             }
+            nbtData.setFloat(JUMP_CHARGE, jumpCharge);
         }
         boolean Nightvision = nbtData.getBoolean("Nightvision");
         short hubmode = nbtData.getShort("HudMode");
