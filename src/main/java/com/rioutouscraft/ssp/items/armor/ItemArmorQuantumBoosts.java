@@ -51,7 +51,7 @@ public class ItemArmorQuantumBoosts
 extends ItemBoosts {
     protected static final int DEFAULT_COLOUR = -1;
     private static final String JUMP_BOOST_ENABLED = "jumpBoostEnabled";
-    private static final String FLY_KEY_DOWN = "flyKeyDown";
+    private static final String JUMP_BOOST_KEY_DOWN = "jumpBoostKeyDown";
     private static final String JUMP_CHARGE = "jumpCharge";
 
     public ItemArmorQuantumBoosts() {
@@ -148,21 +148,19 @@ extends ItemBoosts {
         byte toggleTimer = nbtData.getByte("toggleTimer");
         boolean ret = false;
         boolean jumpBoostEnabled = isJumpBoostEnabled(stack);
-        if (IC2.platform.isSimulating()) {
-            boolean flyKeyDown = SSPKeys.isFlyKeyDown(player);
-            boolean previousFlyKeyDown = nbtData.getBoolean(FLY_KEY_DOWN);
-            if (flyKeyDown && !previousFlyKeyDown && toggleTimer == 0) {
-                jumpBoostEnabled = !jumpBoostEnabled;
-                setJumpBoostEnabled(stack, jumpBoostEnabled);
-                if (!jumpBoostEnabled) {
-                    nbtData.setFloat(JUMP_CHARGE, 0.0f);
-                }
-                toggleTimer = 10;
-                nbtData.setByte("toggleTimer", toggleTimer);
+        boolean jumpKeyDown = SSPKeys.isQuantumBoostJumpKeyDown(player);
+        boolean previousJumpKeyDown = nbtData.getBoolean(JUMP_BOOST_KEY_DOWN);
+        if (jumpKeyDown && !previousJumpKeyDown) {
+            jumpBoostEnabled = !jumpBoostEnabled;
+            setJumpBoostEnabled(stack, jumpBoostEnabled);
+            if (!player.onGround) {
+                nbtData.setFloat(JUMP_CHARGE, 0.0f);
+            }
+            if (IC2.platform.isSimulating()) {
                 IC2.platform.messagePlayer(player, Localization.translate(SuperSolarPanels.MODID + ".quantum_boost.status." + (jumpBoostEnabled ? "enabled" : "disabled")), new Object[0]);
             }
-            nbtData.setBoolean(FLY_KEY_DOWN, flyKeyDown);
         }
+        nbtData.setBoolean(JUMP_BOOST_KEY_DOWN, jumpKeyDown);
         if (IC2.platform.isSimulating()) {
             boolean wasOnGround;
             boolean bl = wasOnGround = !nbtData.hasKey("wasOnGround") || nbtData.getBoolean("wasOnGround");
