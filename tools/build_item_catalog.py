@@ -96,8 +96,8 @@ def title(value):
 
 
 ITEM_NAME_MAP = {
-    "spectral_solar_helmet": ("super_solar_panels_rioutouscraft.solar_helmets.spectral", "光谱太阳头盔"),
-    "singular_solar_helmet": ("super_solar_panels_rioutouscraft.solar_helmets.singular", "奇异太阳头盔"),
+    "spectral_solar_helmet": ("super_solar_panels_rioutouscraft.solar_helmets.spectral", "光谱太阳能头盔"),
+    "singular_solar_helmet": ("super_solar_panels_rioutouscraft.solar_helmets.singular", "奇异太阳能头盔"),
     "advanced_solar_helmet": ("super_solar_panels_rioutouscraft.solar_helmets.advanced", "高级太阳能头盔"),
     "hybrid_solar_helmet": ("super_solar_panels_rioutouscraft.solar_helmets.hybrid", "混合太阳能头盔"),
     "ultimate_solar_helmet": ("super_solar_panels_rioutouscraft.solar_helmets.ultimate", "终极混合太阳能头盔"),

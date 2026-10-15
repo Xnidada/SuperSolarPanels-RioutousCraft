@@ -51,7 +51,7 @@ public class ItemArmorQuantumBoosts
 extends ItemBoosts {
     protected static final int DEFAULT_COLOUR = -1;
     private static final String JUMP_BOOST_ENABLED = "jumpBoostEnabled";
-    private static final String JUMP_BOOST_KEY_DOWN = "jumpBoostKeyDown";
+    private static final String FLY_KEY_DOWN = "flyKeyDown";
     private static final String JUMP_CHARGE = "jumpCharge";
 
     public ItemArmorQuantumBoosts() {
@@ -147,15 +147,21 @@ extends ItemBoosts {
         NBTTagCompound nbtData = StackUtil.getOrCreateNbtData((ItemStack)stack);
         byte toggleTimer = nbtData.getByte("toggleTimer");
         boolean ret = false;
+        boolean jumpBoostEnabled = isJumpBoostEnabled(stack);
         if (IC2.platform.isSimulating()) {
-            boolean jumpKeyDown = SSPKeys.isQuantumBoostJumpKeyDown(player);
-            boolean previousJumpKeyDown = nbtData.getBoolean(JUMP_BOOST_KEY_DOWN);
-            if (jumpKeyDown && !previousJumpKeyDown) {
-                boolean enabled = !isJumpBoostEnabled(stack);
-                setJumpBoostEnabled(stack, enabled);
-                IC2.platform.messagePlayer(player, Localization.translate(SuperSolarPanels.MODID + ".quantum_boost.status." + (enabled ? "enabled" : "disabled")), new Object[0]);
+            boolean flyKeyDown = SSPKeys.isFlyKeyDown(player);
+            boolean previousFlyKeyDown = nbtData.getBoolean(FLY_KEY_DOWN);
+            if (flyKeyDown && !previousFlyKeyDown && toggleTimer == 0) {
+                jumpBoostEnabled = !jumpBoostEnabled;
+                setJumpBoostEnabled(stack, jumpBoostEnabled);
+                if (!jumpBoostEnabled) {
+                    nbtData.setFloat(JUMP_CHARGE, 0.0f);
+                }
+                toggleTimer = 10;
+                nbtData.setByte("toggleTimer", toggleTimer);
+                IC2.platform.messagePlayer(player, Localization.translate(SuperSolarPanels.MODID + ".quantum_boost.status." + (jumpBoostEnabled ? "enabled" : "disabled")), new Object[0]);
             }
-            nbtData.setBoolean(JUMP_BOOST_KEY_DOWN, jumpKeyDown);
+            nbtData.setBoolean(FLY_KEY_DOWN, flyKeyDown);
         }
         if (IC2.platform.isSimulating()) {
             boolean wasOnGround;
@@ -168,21 +174,25 @@ extends ItemBoosts {
                 nbtData.setBoolean("wasOnGround", player.onGround);
             }
         } else {
-            float jumpCharge = nbtData.getFloat(JUMP_CHARGE);
-            if (ElectricItem.manager.canUse(stack, 4000.0) && player.onGround) {
-                jumpCharge = 1.0f;
-            }
-            if (player.motionY >= 0.0 && jumpCharge > 0.0f && !player.isInWater()) {
-                if (jumpCharge == 0.9f) {
-                    player.motionX *= 1.0;
-                    player.motionZ *= 1.0;
+            if (!jumpBoostEnabled) {
+                nbtData.setFloat(JUMP_CHARGE, 0.0f);
+            } else {
+                float jumpCharge = nbtData.getFloat(JUMP_CHARGE);
+                if (ElectricItem.manager.canUse(stack, 4000.0) && player.onGround) {
+                    jumpCharge = 1.0f;
                 }
-                player.motionY += (double)(jumpCharge * 0.3f);
-                jumpCharge = (float)((double)jumpCharge * 0.75);
-            } else if (jumpCharge < 1.0f) {
-                jumpCharge = 0.0f;
+                if (player.motionY >= 0.0 && jumpCharge > 0.0f && !player.isInWater()) {
+                    if (jumpCharge == 0.9f) {
+                        player.motionX *= 1.0;
+                        player.motionZ *= 1.0;
+                    }
+                    player.motionY += (double)(jumpCharge * 0.3f);
+                    jumpCharge = (float)((double)jumpCharge * 0.75);
+                } else if (jumpCharge < 1.0f) {
+                    jumpCharge = 0.0f;
+                }
+                nbtData.setFloat(JUMP_CHARGE, jumpCharge);
             }
-            nbtData.setFloat(JUMP_CHARGE, jumpCharge);
         }
         boolean Nightvision = nbtData.getBoolean("Nightvision");
         short hubmode = nbtData.getShort("HudMode");
@@ -212,7 +222,6 @@ extends ItemBoosts {
             toggleTimer = (byte)(toggleTimer - 1);
             nbtTagCompound.setByte("toggleTimer", toggleTimer);
         }
-        boolean jumpBoostEnabled = isJumpBoostEnabled(stack);
         if (!jumpBoostEnabled && IC2.platform.isSimulating()) {
             player.removePotionEffect(MobEffects.JUMP_BOOST);
         }
