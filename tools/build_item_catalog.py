@@ -164,28 +164,30 @@ def item_details(rel):
         }[stem]
     if rel.startswith("solar_panel_battery/"):
         values = {
-            "basic": [metric("额外容量", "10,000 EU"), metric("插槽", "电池组件"), metric("等级", "基础")],
-            "advanced": [metric("额外容量", "50,000 EU"), metric("插槽", "电池组件"), metric("等级", "进阶")],
-            "quantum": [metric("额外容量", "250,000 EU"), metric("插槽", "电池组件"), metric("等级", "量子")],
+            "basic": [metric("额外容量", "320 EU"), metric("插槽", "电池组件"), metric("等级", "高级")],
+            "advanced": [metric("额外容量", "2,000 EU"), metric("插槽", "电池组件"), metric("等级", "混合")],
+            "quantum": [metric("额外容量", "20,000 EU"), metric("插槽", "电池组件"), metric("等级", "终极混合")],
         }
         if stem in values:
             return values[stem]
         if stem.startswith("level_"):
             level = int(stem.split("_")[1])
-            capacities = [1250000, 6250000, 31250000, 156250000, 781250000, 3906250000, 19531250000, 97656250000, 488281250000, 2441406250000, 12207031250000]
-            return [metric("额外容量", f"{capacities[level - 4]:,} EU"), metric("插槽", "电池组件"), metric("等级", f"第{level}级")]
+            capacities = [100000, 500000, 5000000, 100000000, 150000000, 500000000, 650000000, 1000000000, 2500000000, 25000000000, 250000000000]
+            names = ["量子", "光谱", "质子", "奇异", "衍射", "光子", "中子", "重子", "强子", "引力", "夸克"]
+            return [metric("额外容量", f"{capacities[level - 4]:,} EU"), metric("插槽", "电池组件"), metric("等级", names[level - 4])]
     if rel.startswith("solar_panel_output/"):
         values = {
-            "basic": [metric("额外输出", "32 EU/t"), metric("插槽", "输出组件"), metric("等级", "基础")],
-            "advanced": [metric("额外输出", "128 EU/t"), metric("插槽", "输出组件"), metric("等级", "进阶")],
-            "quantum": [metric("额外输出", "512 EU/t"), metric("插槽", "输出组件"), metric("等级", "量子")],
+            "basic": [metric("额外输出", "1 EU/t"), metric("插槽", "输出组件"), metric("等级", "高级")],
+            "advanced": [metric("额外输出", "4 EU/t"), metric("插槽", "输出组件"), metric("等级", "混合")],
+            "quantum": [metric("额外输出", "16 EU/t"), metric("插槽", "输出组件"), metric("等级", "终极混合")],
         }
         if stem in values:
             return values[stem]
         if stem.startswith("level_"):
             level = int(stem.split("_")[1])
-            outputs = [2048, 8192, 32768, 131072, 524288, 2097152, 8388608, 33554432, 134217728, 536870912, 2147483648]
-            return [metric("额外输出", f"{outputs[level - 4]:,} EU/t"), metric("插槽", "输出组件"), metric("等级", f"第{level}级")]
+            outputs = [64, 256, 1024, 4096, 16384, 65536, 262144, 1048576, 4194304, 16777216, 67108864]
+            names = ["量子", "光谱", "质子", "奇异", "衍射", "光子", "中子", "重子", "强子", "引力", "夸克"]
+            return [metric("额外输出", f"{outputs[level - 4]:,} EU/t"), metric("插槽", "输出组件"), metric("等级", names[level - 4])]
     if stem in {"quantumsaber", "spectralsaber"}:
         return {
             "quantumsaber": [metric("电量", "300,000 EU"), metric("传输", "2,000 EU/t"), metric("攻击力", "11 / 29（右键）"), metric("IC2等级", "4")],

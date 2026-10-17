@@ -136,14 +136,16 @@ public final class Configs {
     static final double[] moduleBatteryCapacity = new double[14];
     static final double[] moduleOutput = new double[14];
     static final int[] moduleOutputTier = new int[14];
+    // Defaults are one tenth of the matching solar panel storage values.
     private static final double[] DEFAULT_MODULE_BATTERY_CAPACITY = {
-            10000D, 50000D, 250000D, 1250000D, 6250000D, 31250000D, 156250000D,
-            781250000D, 3906250000D, 19531250000D, 97656250000D, 488281250000D,
-            2441406250000D, 12207031250000D
+            320D, 2000D, 20000D, 100000D, 500000D, 5000000D, 100000000D,
+            150000000D, 500000000D, 650000000D, 1000000000D, 2500000000D,
+            25000000000D, 250000000000D
     };
+    // Defaults are one fifth of the matching solar panel daytime generation.
     private static final double[] DEFAULT_MODULE_OUTPUT = {
-            32D, 128D, 512D, 2048D, 8192D, 32768D, 131072D, 524288D,
-            2097152D, 8388608D, 33554432D, 134217728D, 536870912D, 2147483648D
+            1D, 4D, 16D, 64D, 256D, 1024D, 4096D, 16384D,
+            65536D, 262144D, 1048576D, 4194304D, 16777216D, 67108864D
     };
     static MTRecipe[] MTRecipes;
 

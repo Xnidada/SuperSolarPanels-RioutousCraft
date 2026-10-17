@@ -62,20 +62,20 @@ public final class ModularPanelBattery extends ItemMulti<ModularPanelBattery.Typ
     }
 
     public enum Type implements IIdProvider {
-        BASIC(0, "basic", 10000D),
-        ADVANCED(1, "advanced", 50000D),
-        QUANTUM(2, "quantum", 250000D),
-        LEVEL_4(3, "level_4", 1250000D),
-        LEVEL_5(4, "level_5", 6250000D),
-        LEVEL_6(5, "level_6", 31250000D),
-        LEVEL_7(6, "level_7", 156250000D),
-        LEVEL_8(7, "level_8", 781250000D),
-        LEVEL_9(8, "level_9", 3906250000D),
-        LEVEL_10(9, "level_10", 19531250000D),
-        LEVEL_11(10, "level_11", 97656250000D),
-        LEVEL_12(11, "level_12", 488281250000D),
-        LEVEL_13(12, "level_13", 2441406250000D),
-        LEVEL_14(13, "level_14", 12207031250000D);
+        BASIC(0, "basic", 320D),
+        ADVANCED(1, "advanced", 2000D),
+        QUANTUM(2, "quantum", 20000D),
+        LEVEL_4(3, "level_4", 100000D),
+        LEVEL_5(4, "level_5", 500000D),
+        LEVEL_6(5, "level_6", 5000000D),
+        LEVEL_7(6, "level_7", 100000000D),
+        LEVEL_8(7, "level_8", 150000000D),
+        LEVEL_9(8, "level_9", 500000000D),
+        LEVEL_10(9, "level_10", 650000000D),
+        LEVEL_11(10, "level_11", 1000000000D),
+        LEVEL_12(11, "level_12", 2500000000D),
+        LEVEL_13(12, "level_13", 25000000000D),
+        LEVEL_14(13, "level_14", 250000000000D);
 
         private final int id;
         private final String name;

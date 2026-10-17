@@ -62,20 +62,20 @@ public final class ModularPanelOutput extends ItemMulti<ModularPanelOutput.Type>
     }
 
     public enum Type implements IIdProvider {
-        BASIC(0, "basic", 32D, 2),
-        ADVANCED(1, "advanced", 128D, 3),
-        QUANTUM(2, "quantum", 512D, 4),
-        LEVEL_4(3, "level_4", 2048D, 5),
-        LEVEL_5(4, "level_5", 8192D, 6),
-        LEVEL_6(5, "level_6", 32768D, 7),
-        LEVEL_7(6, "level_7", 131072D, 8),
-        LEVEL_8(7, "level_8", 524288D, 9),
-        LEVEL_9(8, "level_9", 2097152D, 10),
-        LEVEL_10(9, "level_10", 8388608D, 11),
-        LEVEL_11(10, "level_11", 33554432D, 12),
-        LEVEL_12(11, "level_12", 134217728D, 13),
-        LEVEL_13(12, "level_13", 536870912D, 14),
-        LEVEL_14(13, "level_14", 2147483648D, 15);
+        BASIC(0, "basic", 1D, 2),
+        ADVANCED(1, "advanced", 4D, 3),
+        QUANTUM(2, "quantum", 16D, 4),
+        LEVEL_4(3, "level_4", 64D, 5),
+        LEVEL_5(4, "level_5", 256D, 6),
+        LEVEL_6(5, "level_6", 1024D, 7),
+        LEVEL_7(6, "level_7", 4096D, 8),
+        LEVEL_8(7, "level_8", 16384D, 9),
+        LEVEL_9(8, "level_9", 65536D, 10),
+        LEVEL_10(9, "level_10", 262144D, 11),
+        LEVEL_11(10, "level_11", 1048576D, 12),
+        LEVEL_12(11, "level_12", 4194304D, 13),
+        LEVEL_13(12, "level_13", 16777216D, 14),
+        LEVEL_14(13, "level_14", 67108864D, 15);
 
         private final int id;
         private final String name;
