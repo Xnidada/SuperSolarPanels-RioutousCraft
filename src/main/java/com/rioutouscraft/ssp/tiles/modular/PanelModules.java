@@ -47,26 +47,26 @@ public final class PanelModules {
     }
 
     public int capacity(int base) {
-        int extra = batterySlot.isEmpty() ? 0 : ModularPanelBattery.getPanelType(batterySlot.get()).capacity;
-        return PanelModuleMath.capacity(base, extra);
+        double extra = batterySlot.isEmpty() ? 0 : ModularPanelBattery.getPanelType(batterySlot.get()).getCapacity();
+        return (int)Math.min(Integer.MAX_VALUE, PanelModuleMath.capacity(base, extra));
     }
 
     public double capacity(double base) {
-        int extra = batterySlot.isEmpty() ? 0 : ModularPanelBattery.getPanelType(batterySlot.get()).capacity;
+        double extra = batterySlot.isEmpty() ? 0 : ModularPanelBattery.getPanelType(batterySlot.get()).getCapacity();
         return PanelModuleMath.capacity(base, extra);
     }
 
     public double outputLimit(int baseTier) {
         return EnergyNet.instance.getPowerFromTier(baseTier)
-                + (outputSlot.isEmpty() ? 0 : ModularPanelOutput.getPanelType(outputSlot.get()).output);
+                + (outputSlot.isEmpty() ? 0 : ModularPanelOutput.getPanelType(outputSlot.get()).getOutput());
     }
 
     public double outputLimit(double baseOutput, int baseTier) {
-        return baseOutput + (outputSlot.isEmpty() ? 0 : ModularPanelOutput.getPanelType(outputSlot.get()).output);
+        return baseOutput + (outputSlot.isEmpty() ? 0 : ModularPanelOutput.getPanelType(outputSlot.get()).getOutput());
     }
 
     public int sourceTier(int baseTier) {
         if (outputSlot.isEmpty()) return baseTier;
-        return Math.max(baseTier, ModularPanelOutput.getPanelType(outputSlot.get()).tier);
+        return Math.max(baseTier, ModularPanelOutput.getPanelType(outputSlot.get()).getTier());
     }
 }

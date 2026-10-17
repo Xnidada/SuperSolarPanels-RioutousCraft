@@ -76,6 +76,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -95,6 +96,13 @@ public final class SuperSolarPanels {
     public static CommonProxy proxy;
 
     @SubscribeEvent
+    public static void sendServerConfig(PlayerEvent.PlayerLoggedInEvent event) {
+        if (event.player instanceof net.minecraft.entity.player.EntityPlayerMP) {
+            SSPNetwork.sendConfig((net.minecraft.entity.player.EntityPlayerMP)event.player);
+        }
+    }
+
+    @SubscribeEvent
     public static void register(TeBlockFinalCallEvent event) {
         TeBlockRegistry.addAll(SSPBlock.class, (ResourceLocation)SSPBlock.IDENTITY);
         TeBlockRegistry.setDefaultMaterial((ResourceLocation)SSPBlock.IDENTITY, (Material)Material.ROCK);
@@ -105,6 +113,7 @@ public final class SuperSolarPanels {
         proxy.preInit(event);
         log = event.getModLog();
         Configs.loadConfig(event.getSuggestedConfigurationFile(), event.getSide().isClient());
+        SSPNetwork.register();
         machines = TeBlockRegistry.get((ResourceLocation)SSPBlock.IDENTITY);
         machines.setCreativeTab(SSPtab);
         if (event.getSide().isClient()) {

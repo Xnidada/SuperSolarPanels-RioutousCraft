@@ -34,6 +34,7 @@
 package com.rioutouscraft.ssp.tiles;
 
 import com.rioutouscraft.ssp.gui.BackgroundlessDynamicGUI;
+import com.rioutouscraft.ssp.ConfigSync;
 import com.rioutouscraft.ssp.tiles.modular.PanelModules;
 import com.rioutouscraft.ssp.tiles.modular.PanelModuleMath;
 import com.rioutouscraft.ssp.tiles.modular.InvSlotPanelComponent;
@@ -148,15 +149,15 @@ IGuiValueProvider {
         }
         switch (this.active) {
             case DAY: {
-                this.tryGenerateEnergy(this.dayPower, false);
+                this.tryGenerateEnergy(this.configuredDayPower(), false);
                 break;
             }
             case NIGHT: {
-                this.tryGenerateEnergy(this.nightPower, false);
+                this.tryGenerateEnergy(this.configuredNightPower(), false);
                 break;
             }
             case RAIN: {
-                this.tryGenerateEnergy(this.world.isDaytime() ? this.dayPower : this.nightPower, true);
+                this.tryGenerateEnergy(this.world.isDaytime() ? this.configuredDayPower() : this.configuredNightPower(), true);
             }
         }
         if (this.storage > 0) {
@@ -205,10 +206,10 @@ IGuiValueProvider {
     public void addInformation(ItemStack stack, List<String> tooltip, ITooltipFlag advanced) {
         super.addInformation(stack, tooltip, advanced);
         tooltip.add(Localization.translate((String)"ic2.item.tooltip.PowerTier", (Object[])new Object[]{this.tier}));
-        tooltip.add(Localization.translate((String)"super_solar_panels_rioutouscraft.item.dayGeneration", (Object[])new Object[]{formatEnergy(this.dayPower)}));
-        tooltip.add(Localization.translate((String)"super_solar_panels_rioutouscraft.item.nightGeneration", (Object[])new Object[]{formatEnergy(this.nightPower)}));
-        tooltip.add(Localization.translate((String)"super_solar_panels_rioutouscraft.item.maxOutput", (Object[])new Object[]{formatEnergy(this.output)}));
-        tooltip.add(Localization.translate((String)"super_solar_panels_rioutouscraft.item.storage", (Object[])new Object[]{formatEnergy(this.maxStorage)}));
+        tooltip.add(Localization.translate((String)"super_solar_panels_rioutouscraft.item.dayGeneration", (Object[])new Object[]{formatEnergy(ConfigSync.solarDay(this.tier, this.dayPower))}));
+        tooltip.add(Localization.translate((String)"super_solar_panels_rioutouscraft.item.nightGeneration", (Object[])new Object[]{formatEnergy(ConfigSync.solarNight(this.tier, this.nightPower))}));
+        tooltip.add(Localization.translate((String)"super_solar_panels_rioutouscraft.item.maxOutput", (Object[])new Object[]{formatEnergy(ConfigSync.solarOutput(this.tier, this.output))}));
+        tooltip.add(Localization.translate((String)"super_solar_panels_rioutouscraft.item.storage", (Object[])new Object[]{formatEnergy(ConfigSync.solarStorage(this.tier, this.maxStorage))}));
     }
 
     public ContainerBase<? extends TileEntitySolarPanel> getGuiContainer(EntityPlayer player) {
@@ -254,11 +255,11 @@ IGuiValueProvider {
     }
 
     public double getMaxStorage() {
-        return this.modules.capacity(this.maxStorage);
+        return this.modules.capacity(ConfigSync.solarStorage(this.tier, this.maxStorage));
     }
 
     public double getOutputLimit() {
-        return this.modules.outputLimit(this.output, this.tier);
+        return this.modules.outputLimit(ConfigSync.solarOutput(this.tier, this.output), this.tier);
     }
 
     public String getMaxOutput() {
@@ -266,17 +267,19 @@ IGuiValueProvider {
     }
 
     public String getOutput() {
+        double dayPower = this.configuredDayPower();
+        double nightPower = this.configuredNightPower();
         boolean daylight = this.active == GenerationState.DAY
                 || this.active == GenerationState.RAIN && this.world.isDaytime();
         switch (this.active) {
             case DAY: {
-                return String.format(Locale.ROOT, "%s %s %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.generating"), formatEnergy(this.modules.generation(this.dayPower, daylight, false)), Localization.translate((String)"ic2.generic.text.EUt"));
+                return String.format(Locale.ROOT, "%s %s %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.generating"), formatEnergy(this.modules.generation(dayPower, daylight, false)), Localization.translate((String)"ic2.generic.text.EUt"));
             }
             case NIGHT: {
-                return String.format(Locale.ROOT, "%s %s %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.generating"), formatEnergy(this.modules.generation(this.nightPower, daylight, false)), Localization.translate((String)"ic2.generic.text.EUt"));
+                return String.format(Locale.ROOT, "%s %s %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.generating"), formatEnergy(this.modules.generation(nightPower, daylight, false)), Localization.translate((String)"ic2.generic.text.EUt"));
             }
             case RAIN: {
-                return String.format(Locale.ROOT, "%s %s %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.generating"), formatEnergy(this.modules.generation(this.world.isDaytime() ? this.dayPower : this.nightPower, daylight, true)), Localization.translate((String)"ic2.generic.text.EUt"));
+                return String.format(Locale.ROOT, "%s %s %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.generating"), formatEnergy(this.modules.generation(this.world.isDaytime() ? dayPower : nightPower, daylight, true)), Localization.translate((String)"ic2.generic.text.EUt"));
             }
         }
         return String.format(Locale.ROOT, "%s 0 %s", Localization.translate((String)"super_solar_panels_rioutouscraft.gui.generating"), Localization.translate((String)"ic2.generic.text.EUt"));
@@ -289,12 +292,20 @@ IGuiValueProvider {
         return String.format(Locale.ROOT, "%.2f", value).replaceAll("0+$", "").replaceAll("\\.$", "");
     }
 
+    private double configuredDayPower() {
+        return ConfigSync.solarDay(this.tier, this.dayPower);
+    }
+
+    private double configuredNightPower() {
+        return ConfigSync.solarNight(this.tier, this.nightPower);
+    }
+
     public static final class SolarConfig {
         public final double dayPower;
         public final double nightPower;
-        final double storage;
-        final int tier;
-        final double output;
+        public final double storage;
+        public final int tier;
+        public final double output;
 
         public SolarConfig(double dayPower, double nightPower, double storage, int tier, double output) {
             this.dayPower = dayPower;

@@ -19,6 +19,10 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class CommonProxy {
+    public void scheduleClientTask(Runnable task) {
+        task.run();
+    }
+
     public void preInit(FMLPreInitializationEvent event) {
         BlocksRegister.register();
     }

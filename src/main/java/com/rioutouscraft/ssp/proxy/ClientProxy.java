@@ -14,9 +14,15 @@ import com.rioutouscraft.ssp.proxy.CommonProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraft.client.Minecraft;
 
 public class ClientProxy
 extends CommonProxy {
+    @Override
+    public void scheduleClientTask(final Runnable task) {
+        Minecraft.getMinecraft().addScheduledTask(task);
+    }
+
     @Override
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);

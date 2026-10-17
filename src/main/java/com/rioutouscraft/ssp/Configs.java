@@ -133,11 +133,24 @@ public final class Configs {
     public static int quantummfsu;
     public static int quantummfsu1;
     public static int quantummfsu2;
+    static final double[] moduleBatteryCapacity = new double[14];
+    static final double[] moduleOutput = new double[14];
+    static final int[] moduleOutputTier = new int[14];
+    private static final double[] DEFAULT_MODULE_BATTERY_CAPACITY = {
+            10000D, 50000D, 250000D, 1250000D, 6250000D, 31250000D, 156250000D,
+            781250000D, 3906250000D, 19531250000D, 97656250000D, 488281250000D,
+            2441406250000D, 12207031250000D
+    };
+    private static final double[] DEFAULT_MODULE_OUTPUT = {
+            32D, 128D, 512D, 2048D, 8192D, 32768D, 131072D, 524288D,
+            2097152D, 8388608D, 33554432D, 134217728D, 536870912D, 2147483648D
+    };
     static MTRecipe[] MTRecipes;
 
     static void loadConfig(File config, boolean client) {
         SuperSolarPanels.log.info("Loading SSP Config from " + config.getAbsolutePath());
         Configs.loadNormalConfig(config, client);
+        ConfigSync.captureLocal();
         try {
             Configs.loadMolecularTransformerConfig(config.getParentFile(), config.getName());
         }
@@ -164,6 +177,12 @@ public final class Configs {
             TileEntityHadron.settings = new TileEntitySolarPanel.SolarConfig(getDouble(config, "Hadron solar panels", "HadronGenDay", 20971520D), getDouble(config, "Hadron solar panels", "HadronGenNight", 10485760D), getDouble(config, "Hadron solar panels", "HadronStorage", 25000000000D), 12, getDouble(config, "Hadron solar panels", "HadronOutput", 41943040D));
             TileEntityGraviton.settings = new TileEntitySolarPanel.SolarConfig(getDouble(config, "Graviton solar panels", "GravitonGenDay", 83886080D), getDouble(config, "Graviton solar panels", "GravitonGenNight", 41943040D), getDouble(config, "Graviton solar panels", "GravitonStorage", 250000000000D), 13, getDouble(config, "Graviton solar panels", "GravitonOutput", 167772160D));
             TileEntityQuark.settings = new TileEntitySolarPanel.SolarConfig(getDouble(config, "Quark solar panels", "QuarkGenDay", 335544320D), getDouble(config, "Quark solar panels", "QuarkGenNight", 167772160D), getDouble(config, "Quark solar panels", "QuarkStorage", 2500000000000D), 14, getDouble(config, "Quark solar panels", "QuarkOutput", 671088640D));
+            for (int i = 0; i < 14; i++) {
+                int level = i + 1;
+                moduleBatteryCapacity[i] = getDouble(config, "Solar panel battery modules", "Level" + level + "Capacity", DEFAULT_MODULE_BATTERY_CAPACITY[i]);
+                moduleOutput[i] = getDouble(config, "Solar panel output modules", "Level" + level + "Output", DEFAULT_MODULE_OUTPUT[i]);
+                moduleOutputTier[i] = config.get("Solar panel output modules", "Level" + level + "Tier", i + 2).getInt(i + 2);
+            }
             damage1 = config.get("Settings quantum saber", "Damage quantum saber(not right click)+1 ", 11).getInt(11);
             damage2 = config.get("Settings quantum saber", "Damage quantum saber(right click)+1", 29).getInt(29);
             damage3 = config.get("Settings spectral saber", "Damage quantum saber(not right click)+1 ", 14).getInt(14);

@@ -1,6 +1,7 @@
 package com.rioutouscraft.ssp.items.modular;
 
 import com.rioutouscraft.ssp.SuperSolarPanels;
+import com.rioutouscraft.ssp.ConfigSync;
 import ic2.core.block.state.IIdProvider;
 import ic2.core.init.BlocksItems;
 import ic2.core.init.Localization;
@@ -52,23 +53,41 @@ public final class ModularPanelBattery extends ItemMulti<ModularPanelBattery.Typ
 
     @Override
     public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-        tooltip.add(Localization.translate(SuperSolarPanels.MODID + ".module.capacity", getPanelType(stack).capacity));
+        tooltip.add(Localization.translate(SuperSolarPanels.MODID + ".module.capacity", format(getPanelType(stack).getCapacity())));
+    }
+
+    private static String format(double value) {
+        if (value == Math.rint(value)) return String.format(java.util.Locale.ROOT, "%.0f", value);
+        return String.format(java.util.Locale.ROOT, "%.2f", value).replaceAll("0+$", "").replaceAll("\\.$", "");
     }
 
     public enum Type implements IIdProvider {
-        BASIC(0, "basic", 10000),
-        ADVANCED(1, "advanced", 50000),
-        QUANTUM(2, "quantum", 250000);
+        BASIC(0, "basic", 10000D),
+        ADVANCED(1, "advanced", 50000D),
+        QUANTUM(2, "quantum", 250000D),
+        LEVEL_4(3, "level_4", 1250000D),
+        LEVEL_5(4, "level_5", 6250000D),
+        LEVEL_6(5, "level_6", 31250000D),
+        LEVEL_7(6, "level_7", 156250000D),
+        LEVEL_8(7, "level_8", 781250000D),
+        LEVEL_9(8, "level_9", 3906250000D),
+        LEVEL_10(9, "level_10", 19531250000D),
+        LEVEL_11(10, "level_11", 97656250000D),
+        LEVEL_12(11, "level_12", 488281250000D),
+        LEVEL_13(12, "level_13", 2441406250000D),
+        LEVEL_14(13, "level_14", 12207031250000D);
 
         private final int id;
         private final String name;
-        public final int capacity;
+        private final double defaultCapacity;
 
-        Type(int id, String name, int capacity) {
+        Type(int id, String name, double defaultCapacity) {
             this.id = id;
             this.name = name;
-            this.capacity = capacity;
+            this.defaultCapacity = defaultCapacity;
         }
+
+        public double getCapacity() { return ConfigSync.batteryCapacity(id, defaultCapacity); }
 
         public static Type getFromID(int id) {
             Type[] values = values();

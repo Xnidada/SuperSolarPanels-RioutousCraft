@@ -24,6 +24,10 @@ public final class PanelModuleMath {
         return Math.max(0.0, base + extra);
     }
 
+    public static double capacity(double base, double extra) {
+        return Math.max(0.0, base + extra);
+    }
+
     public static long capacity(long base, int extra) {
         return Math.max(0L, base + extra);
     }

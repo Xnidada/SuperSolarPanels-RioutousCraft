@@ -163,17 +163,29 @@ def item_details(rel):
             "rain": [metric("降雨发电倍率", "+35%（雨天基础倍率为65%）"), metric("插槽", "玻璃组件")],
         }[stem]
     if rel.startswith("solar_panel_battery/"):
-        return {
+        values = {
             "basic": [metric("额外容量", "10,000 EU"), metric("插槽", "电池组件"), metric("等级", "基础")],
             "advanced": [metric("额外容量", "50,000 EU"), metric("插槽", "电池组件"), metric("等级", "进阶")],
             "quantum": [metric("额外容量", "250,000 EU"), metric("插槽", "电池组件"), metric("等级", "量子")],
-        }[stem]
+        }
+        if stem in values:
+            return values[stem]
+        if stem.startswith("level_"):
+            level = int(stem.split("_")[1])
+            capacities = [1250000, 6250000, 31250000, 156250000, 781250000, 3906250000, 19531250000, 97656250000, 488281250000, 2441406250000, 12207031250000]
+            return [metric("额外容量", f"{capacities[level - 4]:,} EU"), metric("插槽", "电池组件"), metric("等级", f"第{level}级")]
     if rel.startswith("solar_panel_output/"):
-        return {
+        values = {
             "basic": [metric("额外输出", "32 EU/t"), metric("插槽", "输出组件"), metric("等级", "基础")],
             "advanced": [metric("额外输出", "128 EU/t"), metric("插槽", "输出组件"), metric("等级", "进阶")],
             "quantum": [metric("额外输出", "512 EU/t"), metric("插槽", "输出组件"), metric("等级", "量子")],
-        }[stem]
+        }
+        if stem in values:
+            return values[stem]
+        if stem.startswith("level_"):
+            level = int(stem.split("_")[1])
+            outputs = [2048, 8192, 32768, 131072, 524288, 2097152, 8388608, 33554432, 134217728, 536870912, 2147483648]
+            return [metric("额外输出", f"{outputs[level - 4]:,} EU/t"), metric("插槽", "输出组件"), metric("等级", f"第{level}级")]
     if stem in {"quantumsaber", "spectralsaber"}:
         return {
             "quantumsaber": [metric("电量", "300,000 EU"), metric("传输", "2,000 EU/t"), metric("攻击力", "11 / 29（右键）"), metric("IC2等级", "4")],

@@ -102,7 +102,11 @@ extends ItemMulti {
         nightlinse(49),
         rainlinse(50),
         photoniy_ingot(51),
-        photoniy(52);
+        photoniy(52),
+        barion_core(53),
+        hadron_core(54),
+        graviton_core(55),
+        quark_core(56);
 
         private final String name = this.name().toLowerCase(Locale.ENGLISH);
         private final int ID;
