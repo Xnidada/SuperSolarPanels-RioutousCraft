@@ -278,13 +278,89 @@ def block_details(name):
     return "机器与设备", [metric("硬度", "3.0"), metric("工具", "镐"), metric("说明", "具体行为由对应方块实体决定")]
 
 
-def entry(entry_id, name, category, kind, registry, model, image, details, tags):
+TIER_NAMES = ["高级", "混合", "终极混合", "量子", "光谱", "质子", "奇异", "衍射", "光子", "中子", "重子", "强子", "引力", "夸克"]
+
+
+def panel_description(name):
+    panel = panel_info(name)
+    if not panel:
+        return "该太阳能方块使用统一的模块化太阳能系统。"
+    tier_name = name[:-len("_solar_panel")]
+    day, night, storage, tier, output = PANEL_SPECS[tier_name]
+    display = block_name(name)
+    return (f"{display}是第{tier}级常规太阳能发电机，白昼基础发电为 {day:,} EU/t，夜间基础发电为 {night:,} EU/t，"
+            f"最大输出为 {output:,} EU/t，内部储能为 {storage:,} EU。GUI提供玻璃、储能和输出三个模块槽："
+            "月光玻璃可提高夜间发电，降雨玻璃可提高雨天发电倍率；储能和输出模块分别扩展容量与最大输出。"
+            "没有天空视线时停止发电，雨天默认按基础发电的65%工作。")
+
+
+def item_description(rel):
+    stem = Path(rel).stem
+    name = item_name(rel)
+    if rel.startswith("solar_panel_glass/"):
+        if stem == "night":
+            return f"{name}是太阳能GUI中的玻璃模块。安装后不改变白昼发电，晴朗夜间把基础夜间发电提高到135%；没有天空视线时仍不会发电。"
+        if stem == "rain":
+            return f"{name}是太阳能GUI中的天气模块。安装后把雨天基础发电倍率从65%提高到100%，不会额外改变晴天或夜间的基础倍率。"
+    if rel.startswith("solar_panel_battery/"):
+        index = {"basic": 0, "advanced": 1, "quantum": 2}.get(stem)
+        if index is None and stem.startswith("level_"):
+            index = int(stem.split("_")[1]) - 1
+        capacity = [320, 2000, 20000, 100000, 500000, 5000000, 100000000, 150000000, 500000000, 650000000, 1000000000, 2500000000, 25000000000, 250000000000][index]
+        return (f"{name}安装在太阳能GUI的储能模块槽中，为对应等级面板增加 {capacity:,} EU 容量。默认容量为对应太阳能储能值的十分之一，"
+                "实际数值可以由服务端配置覆盖；模块取出后，面板会把当前电量限制在新的有效容量内。")
+    if rel.startswith("solar_panel_output/"):
+        index = {"basic": 0, "advanced": 1, "quantum": 2}.get(stem)
+        if index is None and stem.startswith("level_"):
+            index = int(stem.split("_")[1]) - 1
+        output = [1, 4, 16, 64, 256, 1024, 4096, 16384, 65536, 262144, 1048576, 4194304, 16777216, 67108864][index]
+        return (f"{name}安装在太阳能GUI的输出模块槽中，为对应等级面板增加 {output:,} EU/t 输出。默认增加值为对应太阳能白昼发电量的五分之一，"
+                "实际数值和输出等级可以由服务端配置覆盖。")
+    if stem in {"spectral_solar_helmet", "singular_solar_helmet"}:
+        if stem == "spectral_solar_helmet":
+            return f"{name}是一件可充电太阳能头盔，最大储电量为10,000 EU，白昼发电5,000 EU/t，夜间不发电。自身充满后才会为其他装备和物品充电，抗伤耗电为2,000 EU/伤害。"
+        return f"{name}是一件可充电太阳能头盔，最大储电量为20,000 EU，白昼发电105,000 EU/t，夜间不发电。自身充满后才会为其他装备和物品充电，抗伤耗电为2,000 EU/伤害。"
+    if stem in {"advanced_solar_helmet", "hybrid_solar_helmet", "ultimate_solar_helmet", "helmet_solar_helmet"}:
+        return f"{name}是可充电量子装备头盔，能够在对应环境下产生或储存 EU，并为身上的其他电力装备提供充电。具体容量、输出和IC2等级以参数表及服务端配置为准。"
+    if stem in {"gravi_chestplate", "gravi_leggins", "gravi_boosts"}:
+        return f"{name}是进阶量子护甲的一部分，使用自身储电量维持特殊效果。强化量子靴的跳跃提升可以使用K键按物品状态切换，状态保存在靴子自身NBT中。"
+    if stem in {"quantumsaber", "spectralsaber", "item_ult_drill"}:
+        return f"{name}是可充电的高阶工具，使用IC2能源系统工作；攻击、挖掘速度、储电和传输参数见下方性能表。"
+    if stem == "spectral_battery":
+        return f"{name}是高容量可充电能源物品，可作为独立储能与充电设备使用。"
+    if "fuel_rod" in stem:
+        return f"{name}是质子燃料反应堆使用的燃料棒或耗尽产物，耐久和燃料单元数量见性能参数。"
+    if stem in {"twelve_heat_storage", "max_heat_storage"}:
+        return f"{name}用于核反应堆热量储存，适合在高热量运行阶段缓冲温度变化。"
+    if stem in {"rotor_carbon1", "rotor_carbon2", "rotor_carbon3"}:
+        return f"{name}是风力发电设备使用的转子，效率、耐久、风强范围和采样半径见性能参数。"
+    if rel.startswith("crafting/"):
+        return f"{name}是超级太阳能系列的材料或核心组件，用于制作太阳能、机器和高阶装备。当前版本不为新模块和四种后期太阳能核心添加默认合成表，配方由整合包作者决定。"
+    return f"{name}是 SuperSolarPanels-RioutousCraft 的物品组件，具体用途和性能以参数表、游戏内提示及对应机器行为为准。"
+
+
+def block_description(name):
+    if name.endswith("_solar_panel"):
+        return panel_description(name)
+    display = block_name(name)
+    if name in {"advancedmfsu", "ultimatemfsu", "quantummfsu"}:
+        return f"{display}是IC2能源网络中的高容量储能设备，可接收并输出 EU；容量、输出上限和IC2等级见参数表。"
+    if name.startswith("transformator"):
+        return f"{display}用于在不同IC2电压等级之间转换电力，输入输出方向由方块朝向决定，使用时应避免超过其等级上限。"
+    if name == "molecular_transformer":
+        return f"{display}按照分子重组配方转换物品。配方从配置文件加载，具体输入、输出和总能耗以当前配置为准。"
+    if name == "nutronfabricator":
+        return f"{display}用于生产液态中子，采用高等级能源进行工作，默认换算参数为1 mB中子流体对应15,625,000 EU。"
+    return f"{display}是 SuperSolarPanels-RioutousCraft 中的机器或设备，具体用途和性能见参数表。"
+
+
+def entry(entry_id, name, category, kind, registry, model, image, details, tags, description=""):
     power = 0
     for detail in details:
         if "EU/t" in detail["value"]:
             numbers = re.sub(r"[^0-9]", "", detail["value"])
             power = max(power, int(numbers or 0))
-    return {"id": entry_id, "name": name, "category": category, "kind": kind, "registry": registry, "model": model, "image": image_data(image), "details": details, "tags": tags, "sortValue": power}
+    return {"id": entry_id, "name": name, "category": category, "kind": kind, "registry": registry, "model": model, "image": image_data(image), "description": description or (name + "的性能与用途见下方参数表。"), "details": details, "tags": tags, "sortValue": power}
 
 
 def block_model_path(name):
@@ -305,7 +381,7 @@ def build_entries():
             continue
         if rel.endswith("fluid.json") or rel in {"iridium_block.json", "iridium_ore.json", "platium_block.json", "platium_ore.json"}:
             continue
-        entries.append(entry("item:" + rel, item_name(rel), item_category(rel), "物品", MODID + ":" + rel[:-5], "item/" + rel, model_texture(model), item_details(rel), [item_category(rel), Path(rel).stem]))
+        entries.append(entry("item:" + rel, item_name(rel), item_category(rel), "物品", MODID + ":" + rel[:-5], "item/" + rel, model_texture(model), item_details(rel), [item_category(rel), Path(rel).stem], item_description(rel)))
 
     java = (ROOT / "src/main/java/com/rioutouscraft/ssp/tiles/SSPBlock.java").read_text(encoding="utf-8")
     section = java.split("public enum SSPBlock implements", 1)[1].split("private final Class", 1)[0]
@@ -313,17 +389,17 @@ def build_entries():
     for name in block_names:
         category, details = block_details(name)
         model = block_model_path(name)
-        entries.append(entry("block:" + name, block_name(name), category, "方块设备", MODID + ":" + name, "block/" + model.name, model_texture(model, True), details, [category, name]))
+        entries.append(entry("block:" + name, block_name(name), category, "方块设备", MODID + ":" + name, "block/" + model.name, model_texture(model, True), details, [category, name], block_description(name)))
 
     for name, fallback in [("iridium_ore", "铱矿"), ("iridium_block", "铱块"), ("platium_ore", "铂矿"), ("platium_block", "铂块")]:
         model = BLOCK_MODELS / (name + ".json")
-        entries.append(entry("block:" + name, tr("tile." + name + ".name", fallback=fallback), "资源与方块", "方块物品", MODID + ":" + name, "block/" + name + ".json", model_texture(model, True), [metric("类型", "可放置方块"), metric("用途", "世界生成 / 建筑材料"), metric("独立性能", "无发电或储能参数")], ["资源与方块", name]))
+        entries.append(entry("block:" + name, tr("tile." + name + ".name", fallback=fallback), "资源与方块", "方块物品", MODID + ":" + name, "block/" + name + ".json", model_texture(model, True), [metric("类型", "可放置方块"), metric("用途", "世界生成 / 建筑材料"), metric("独立性能", "无发电或储能参数")], ["资源与方块", name], f"{fallback}是模组提供的资源或建筑方块，可用于世界生成、建筑和相关材料体系。"))
     return entries
 
 
 CSS = r"""
 :root{--bg:#0a0d14;--panel:#111722;--panel2:#151d2a;--line:#273246;--text:#eaf1ff;--muted:#93a2b8;--cyan:#52d8ff;--gold:#ffcf6b;--shadow:0 20px 60px rgba(0,0,0,.28)}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 10% -10%,#203152 0,transparent 40%),radial-gradient(circle at 90% 0,#2e244a 0,transparent 38%),var(--bg);color:var(--text);font:14px/1.6 Inter,"Segoe UI","Microsoft YaHei",sans-serif;min-height:100vh}button,input,select{font:inherit;color:inherit}.app{max-width:1500px;margin:0 auto;padding:34px 28px 70px}.hero{display:flex;justify-content:space-between;gap:30px;align-items:flex-end;padding:34px 38px 32px;border:1px solid #334258;border-radius:24px;background:linear-gradient(135deg,rgba(34,51,78,.86),rgba(17,23,34,.86));box-shadow:var(--shadow);position:relative;overflow:hidden}.eyebrow{letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);font-size:12px;font-weight:700}.hero h1{font-size:clamp(26px,4vw,48px);line-height:1.1;margin:10px 0 12px;letter-spacing:-.03em}.hero p{margin:0;color:#b6c4d9;max-width:740px}.hero-badge{min-width:180px;padding:16px 18px;border-radius:16px;background:rgba(8,13,22,.68);border:1px solid #405475}.hero-badge strong{display:block;font-size:30px;color:var(--gold);line-height:1}.hero-badge span{color:var(--muted);font-size:12px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin:22px 0}.stat{background:rgba(17,23,34,.76);border:1px solid var(--line);border-radius:16px;padding:16px 18px}.stat b{display:block;font-size:24px;color:var(--cyan)}.stat span{color:var(--muted);font-size:12px}.toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:22px 0 12px}.search{flex:1 1 330px;position:relative}.search input{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:12px 15px 12px 42px;outline:none}.search input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(82,216,255,.12)}.search:before{content:"⌕";position:absolute;left:15px;top:6px;font-size:24px;color:var(--muted)}select{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:12px 38px 12px 14px;outline:none}.filters{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 24px}.filter{cursor:pointer;border:1px solid var(--line);background:rgba(17,23,34,.7);padding:7px 12px;border-radius:99px;color:var(--muted);transition:.18s}.filter:hover,.filter.active{color:#061018;background:var(--cyan);border-color:var(--cyan)}.filter em{font-style:normal;margin-left:5px;opacity:.65}.catalog{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:14px}.card{border:1px solid var(--line);background:linear-gradient(180deg,rgba(21,29,42,.94),rgba(14,19,29,.94));border-radius:17px;padding:14px;min-height:316px;display:flex;flex-direction:column;cursor:pointer;transition:transform .18s,border-color .18s,box-shadow .18s}.card:hover{transform:translateY(-4px);border-color:#4d719c;box-shadow:0 13px 35px rgba(0,0,0,.27)}.card-top{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:10px}.pill{font-size:11px;border:1px solid #35455d;color:var(--muted);border-radius:99px;padding:2px 7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pill.kind{color:var(--gold);border-color:#635432}.icon{height:150px;border:1px solid #2a3950;border-radius:13px;background:repeating-conic-gradient(#172131 0 25%,#131b28 0 50%) 50%/18px 18px;display:grid;place-items:center;overflow:hidden;margin-bottom:12px}.icon img{width:110px;height:110px;image-rendering:pixelated;object-fit:contain;filter:drop-shadow(0 9px 10px rgba(0,0,0,.3))}.placeholder{width:100px;height:100px;border-radius:25px;display:grid;place-items:center;text-align:center;padding:12px;background:linear-gradient(135deg,#23435e,#392b64);color:#d8efff;font-size:12px}.card h2{font-size:16px;line-height:1.35;margin:0 0 4px}.registry{font-size:10px;color:#718096;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.metrics{margin:11px 0 0;padding:0;list-style:none;display:flex;gap:5px;flex-wrap:wrap}.metrics li{font-size:11px;color:#bdc9dc;background:#192333;border:1px solid #2a3b54;padding:2px 6px;border-radius:5px}.empty{text-align:center;padding:70px 20px;color:var(--muted);display:none}.modal-wrap{position:fixed;inset:0;background:rgba(2,5,10,.74);backdrop-filter:blur(8px);display:none;place-items:center;padding:20px;z-index:5}.modal-wrap.open{display:grid}.modal{width:min(760px,100%);max-height:min(820px,95vh);overflow:auto;border:1px solid #405475;border-radius:22px;background:#111824;box-shadow:0 30px 100px rgba(0,0,0,.5);padding:22px}.modal-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.close{border:1px solid var(--line);background:#1a2434;border-radius:9px;width:34px;height:34px;cursor:pointer;font-size:20px}.modal-main{display:grid;grid-template-columns:190px 1fr;gap:22px;margin-top:16px}.modal .icon{height:190px}.modal .icon img{width:140px;height:140px}.modal h2{font-size:26px;line-height:1.2;margin:4px 0 6px}.modal .registry{white-space:normal;overflow-wrap:anywhere}.details{border-top:1px solid var(--line);margin-top:22px;padding-top:16px}.detail-row{display:grid;grid-template-columns:150px 1fr;gap:12px;border-bottom:1px solid #202d40;padding:9px 0}.detail-row:last-child{border-bottom:0}.detail-row b{color:#91a5c1;font-weight:600}.detail-row span{color:#e9f1ff}.footnote{margin-top:18px;font-size:12px;color:#75859d}.footer{margin-top:30px;color:#6f7e94;font-size:12px;text-align:center}@media(max-width:720px){.app{padding:16px 13px 50px}.hero{padding:24px 20px;display:block}.hero-badge{margin-top:20px}.stats{grid-template-columns:repeat(2,1fr)}.modal-main{grid-template-columns:1fr}.modal .icon{height:150px}.detail-row{grid-template-columns:120px 1fr}}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 10% -10%,#203152 0,transparent 40%),radial-gradient(circle at 90% 0,#2e244a 0,transparent 38%),var(--bg);color:var(--text);font:14px/1.6 Inter,"Segoe UI","Microsoft YaHei",sans-serif;min-height:100vh}button,input,select{font:inherit;color:inherit}.app{max-width:1500px;margin:0 auto;padding:34px 28px 70px}.hero{display:flex;justify-content:space-between;gap:30px;align-items:flex-end;padding:34px 38px 32px;border:1px solid #334258;border-radius:24px;background:linear-gradient(135deg,rgba(34,51,78,.86),rgba(17,23,34,.86));box-shadow:var(--shadow);position:relative;overflow:hidden}.eyebrow{letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);font-size:12px;font-weight:700}.hero h1{font-size:clamp(26px,4vw,48px);line-height:1.1;margin:10px 0 12px;letter-spacing:-.03em}.hero p{margin:0;color:#b6c4d9;max-width:740px}.hero-badge{min-width:180px;padding:16px 18px;border-radius:16px;background:rgba(8,13,22,.68);border:1px solid #405475}.hero-badge strong{display:block;font-size:30px;color:var(--gold);line-height:1}.hero-badge span{color:var(--muted);font-size:12px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin:22px 0}.stat{background:rgba(17,23,34,.76);border:1px solid var(--line);border-radius:16px;padding:16px 18px}.stat b{display:block;font-size:24px;color:var(--cyan)}.stat span{color:var(--muted);font-size:12px}.toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:22px 0 12px}.search{flex:1 1 330px;position:relative}.search input{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:12px 15px 12px 42px;outline:none}.search input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(82,216,255,.12)}.search:before{content:"⌕";position:absolute;left:15px;top:6px;font-size:24px;color:var(--muted)}select{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:12px 38px 12px 14px;outline:none}.filters{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 24px}.filter{cursor:pointer;border:1px solid var(--line);background:rgba(17,23,34,.7);padding:7px 12px;border-radius:99px;color:var(--muted);transition:.18s}.filter:hover,.filter.active{color:#061018;background:var(--cyan);border-color:var(--cyan)}.filter em{font-style:normal;margin-left:5px;opacity:.65}.catalog{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:14px}.card{border:1px solid var(--line);background:linear-gradient(180deg,rgba(21,29,42,.94),rgba(14,19,29,.94));border-radius:17px;padding:14px;min-height:316px;display:flex;flex-direction:column;cursor:pointer;transition:transform .18s,border-color .18s,box-shadow .18s}.card:hover{transform:translateY(-4px);border-color:#4d719c;box-shadow:0 13px 35px rgba(0,0,0,.27)}.card-top{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:10px}.pill{font-size:11px;border:1px solid #35455d;color:var(--muted);border-radius:99px;padding:2px 7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pill.kind{color:var(--gold);border-color:#635432}.icon{height:150px;border:1px solid #2a3950;border-radius:13px;background:repeating-conic-gradient(#172131 0 25%,#131b28 0 50%) 50%/18px 18px;display:grid;place-items:center;overflow:hidden;margin-bottom:12px}.icon img{width:110px;height:110px;image-rendering:pixelated;object-fit:contain;filter:drop-shadow(0 9px 10px rgba(0,0,0,.3))}.placeholder{width:100px;height:100px;border-radius:25px;display:grid;place-items:center;text-align:center;padding:12px;background:linear-gradient(135deg,#23435e,#392b64);color:#d8efff;font-size:12px}.card h2{font-size:16px;line-height:1.35;margin:0 0 4px}.description{margin:8px 0 0;color:#c3cee0;font-size:12px;line-height:1.55;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.registry{font-size:10px;color:#718096;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.metrics{margin:11px 0 0;padding:0;list-style:none;display:flex;gap:5px;flex-wrap:wrap}.metrics li{font-size:11px;color:#bdc9dc;background:#192333;border:1px solid #2a3b54;padding:2px 6px;border-radius:5px}.empty{text-align:center;padding:70px 20px;color:var(--muted);display:none}.modal-wrap{position:fixed;inset:0;background:rgba(2,5,10,.74);backdrop-filter:blur(8px);display:none;place-items:center;padding:20px;z-index:5}.modal-wrap.open{display:grid}.modal{width:min(760px,100%);max-height:min(820px,95vh);overflow:auto;border:1px solid #405475;border-radius:22px;background:#111824;box-shadow:0 30px 100px rgba(0,0,0,.5);padding:22px}.modal-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.close{border:1px solid var(--line);background:#1a2434;border-radius:9px;width:34px;height:34px;cursor:pointer;font-size:20px}.modal-main{display:grid;grid-template-columns:190px 1fr;gap:22px;margin-top:16px}.modal .icon{height:190px}.modal .icon img{width:140px;height:140px}.modal h2{font-size:26px;line-height:1.2;margin:4px 0 6px}.modal .registry{white-space:normal;overflow-wrap:anywhere}.modal .description{display:block;overflow:visible;margin-top:12px}.details{border-top:1px solid var(--line);margin-top:22px;padding-top:16px}.detail-row{display:grid;grid-template-columns:150px 1fr;gap:12px;border-bottom:1px solid #202d40;padding:9px 0}.detail-row:last-child{border-bottom:0}.detail-row b{color:#91a5c1;font-weight:600}.detail-row span{color:#e9f1ff}.footnote{margin-top:18px;font-size:12px;color:#75859d}.footer{margin-top:30px;color:#6f7e94;font-size:12px;text-align:center}@media(max-width:720px){.app{padding:16px 13px 50px}.hero{padding:24px 20px;display:block}.hero-badge{margin-top:20px}.stats{grid-template-columns:repeat(2,1fr)}.modal-main{grid-template-columns:1fr}.modal .icon{height:150px}.detail-row{grid-template-columns:120px 1fr}}
 """
 
 
@@ -337,7 +413,7 @@ def build_html(items):
 <header class="hero"><div><div class="eyebrow">Minecraft 1.12.2 · IC2 2.8.222</div><h1>SuperSolarPanels-RioutousCraft<br>物品图鉴</h1><p>按当前源码中的物品模型、注册方块和配置参数生成。支持搜索、分类筛选与详情查看。</p></div><div class="hero-badge"><strong id="heroCount">""" + str(len(items)) + """</strong><span>条目已收录</span></div></header>
 <section class="stats"><div class="stat"><b id="statVisible">""" + str(len(items)) + """</b><span>当前显示</span></div><div class="stat"><b>""" + str(len(categories)) + """</b><span>物品分类</span></div><div class="stat"><b>""" + str(sum(1 for item in items if item["image"])) + """</b><span>已嵌入贴图</span></div><div class="stat"><b>EU/t</b><span>发电与输出参数单位</span></div></section>
 <section class="toolbar"><label class="search"><input id="search" type="search" placeholder="搜索名称、注册名或参数…" autocomplete="off"></label><select id="sort"><option value="default">默认顺序</option><option value="name">名称排序</option><option value="power">输出参数从高到低</option></select></section><nav class="filters" id="filters"></nav><main class="catalog" id="catalog"></main><div class="empty" id="empty">没有找到匹配条目，换一个关键词试试。</div><div class="footer">数据来源：当前 SuperSolarPanels-RioutousCraft 源码与资源文件；页面为本地静态文件，无外部依赖。</div></div>
-<div class="modal-wrap" id="modalWrap"><section class="modal" role="dialog" aria-modal="true"><div class="modal-head"><div><div class="eyebrow" id="modalKind"></div><h2 id="modalTitle"></h2></div><button class="close" id="closeModal" aria-label="关闭">×</button></div><div class="modal-main"><div class="icon" id="modalIcon"></div><div><div class="pill" id="modalCategory"></div><p class="registry" id="modalRegistry"></p><div class="details" id="modalDetails"></div></div></div><div class="footnote" id="modalModel"></div></section></div>
+<div class="modal-wrap" id="modalWrap"><section class="modal" role="dialog" aria-modal="true"><div class="modal-head"><div><div class="eyebrow" id="modalKind"></div><h2 id="modalTitle"></h2></div><button class="close" id="closeModal" aria-label="关闭">×</button></div><div class="modal-main"><div class="icon" id="modalIcon"></div><div><div class="pill" id="modalCategory"></div><p class="registry" id="modalRegistry"></p><p class="description" id="modalDescription"></p><div class="details" id="modalDetails"></div></div></div><div class="footnote" id="modalModel"></div></section></div>
 <script>
 const ITEMS=""" + data + """;
 const CATEGORIES=""" + category_data + """;
@@ -345,11 +421,11 @@ const state={query:"",category:"全部",sort:"default"};
 const $=function(id){return document.getElementById(id)};
 const esc=function(value){return String(value==null?"":value).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})};
 function icon(item){return item.image?"<img src='"+item.image+"' alt='"+esc(item.name)+"'>":"<div class='placeholder'>"+esc(item.name.slice(0,10))+"</div>"}
-function card(item){var preview=item.details.slice(0,3).map(function(d){return "<li>"+esc(d.label)+"："+esc(d.value)+"</li>"}).join("");return "<article class='card' data-id='"+esc(item.id)+"' tabindex='0'><div class='card-top'><span class='pill'>"+esc(item.category)+"</span><span class='pill kind'>"+esc(item.kind)+"</span></div><div class='icon'>"+icon(item)+"</div><h2>"+esc(item.name)+"</h2><div class='registry'>"+esc(item.registry)+"</div><ul class='metrics'>"+preview+"</ul></article>"}
-function filtered(){var list=ITEMS.filter(function(item){var hay=[item.name,item.category,item.registry,item.model].concat(item.tags).concat(item.details.map(function(d){return d.label+" "+d.value})).join(" ").toLowerCase();return (state.category==="全部"||item.category===state.category)&&(!state.query||hay.indexOf(state.query.toLowerCase())>=0)});if(state.sort==="name")list.sort(function(a,b){return a.name.localeCompare(b.name,"zh")});if(state.sort==="power")list.sort(function(a,b){return b.sortValue-a.sortValue});return list}
+function card(item){var preview=item.details.slice(0,3).map(function(d){return "<li>"+esc(d.label)+"："+esc(d.value)+"</li>"}).join("");return "<article class='card' data-id='"+esc(item.id)+"' tabindex='0'><div class='card-top'><span class='pill'>"+esc(item.category)+"</span><span class='pill kind'>"+esc(item.kind)+"</span></div><div class='icon'>"+icon(item)+"</div><h2>"+esc(item.name)+"</h2><div class='registry'>"+esc(item.registry)+"</div><p class='description'>"+esc(item.description)+"</p><ul class='metrics'>"+preview+"</ul></article>"}
+function filtered(){var list=ITEMS.filter(function(item){var hay=[item.name,item.category,item.registry,item.model,item.description].concat(item.tags).concat(item.details.map(function(d){return d.label+" "+d.value})).join(" ").toLowerCase();return (state.category==="全部"||item.category===state.category)&&(!state.query||hay.indexOf(state.query.toLowerCase())>=0)});if(state.sort==="name")list.sort(function(a,b){return a.name.localeCompare(b.name,"zh")});if(state.sort==="power")list.sort(function(a,b){return b.sortValue-a.sortValue});return list}
 function render(){var list=filtered();$("catalog").innerHTML=list.map(card).join("");$("empty").style.display=list.length?"none":"block";$("statVisible").textContent=list.length;document.querySelectorAll(".card").forEach(function(card){card.addEventListener("click",function(){openModal(card.dataset.id)});card.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" ")openModal(card.dataset.id)})})}
 function renderFilters(){var all=["全部"].concat(Object.keys(CATEGORIES));$("filters").innerHTML=all.map(function(category){return "<button class='filter "+(state.category===category?"active":"")+"' data-category='"+esc(category)+"'>"+esc(category)+" <em>"+(category==="全部"?ITEMS.length:CATEGORIES[category])+"</em></button>"}).join("");document.querySelectorAll(".filter").forEach(function(button){button.addEventListener("click",function(){state.category=button.dataset.category;renderFilters();render()})})}
-function openModal(id){var item=ITEMS.find(function(value){return value.id===id});if(!item)return;$("modalKind").textContent=item.kind;$("modalTitle").textContent=item.name;$("modalCategory").textContent=item.category;$("modalRegistry").textContent=item.registry;$("modalModel").textContent="资源模型："+item.model;$("modalIcon").innerHTML=icon(item);$("modalDetails").innerHTML=item.details.map(function(d){return "<div class='detail-row'><b>"+esc(d.label)+"</b><span>"+esc(d.value)+"</span></div>"}).join("");$("modalWrap").classList.add("open")}
+function openModal(id){var item=ITEMS.find(function(value){return value.id===id});if(!item)return;$("modalKind").textContent=item.kind;$("modalTitle").textContent=item.name;$("modalCategory").textContent=item.category;$("modalRegistry").textContent=item.registry;$("modalDescription").textContent=item.description;$("modalModel").textContent="资源模型："+item.model;$("modalIcon").innerHTML=icon(item);$("modalDetails").innerHTML=item.details.map(function(d){return "<div class='detail-row'><b>"+esc(d.label)+"</b><span>"+esc(d.value)+"</span></div>"}).join("");$("modalWrap").classList.add("open")}
 function closeModal(){$("modalWrap").classList.remove("open")}
 $("search").addEventListener("input",function(e){state.query=e.target.value.trim();render()});$("sort").addEventListener("change",function(e){state.sort=e.target.value;render()});$("closeModal").addEventListener("click",closeModal);$("modalWrap").addEventListener("click",function(e){if(e.target.id==="modalWrap")closeModal()});document.addEventListener("keydown",function(e){if(e.key==="Escape")closeModal()});renderFilters();render();
 </script></body></html>"""
