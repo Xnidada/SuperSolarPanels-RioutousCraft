@@ -17,15 +17,15 @@ public interface IMolecularTransformerRecipeManager
 extends IMachineRecipeManager<IMolecularTransformerRecipeManager.Input, ItemStack, ItemStack> {
     public static final IMolecularTransformerRecipeManager RECIPES = new MolecularTransformerRecipeManager();
 
-    public boolean addRecipe(IRecipeInput var1, int var2, ItemStack var3, boolean var4);
+    public boolean addRecipe(IRecipeInput var1, long var2, ItemStack var3, boolean var4);
 
-    public int getTotalEUNeeded(ItemStack var1);
+    public long getTotalEUNeeded(ItemStack var1);
 
     public static final class Input {
         public final IRecipeInput input;
-        public final int totalEU;
+        public final long totalEU;
 
-        public Input(IRecipeInput input, int totalEU) {
+        public Input(IRecipeInput input, long totalEU) {
             this.input = input;
             this.totalEU = totalEU;
         }

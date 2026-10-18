@@ -318,13 +318,13 @@ IGuiValueProvider {
     public static final class MolecularOutput
     implements INetworkCustomEncoder {
         public final ItemStack output;
-        public final int totalEU;
+        public final long totalEU;
 
         public MolecularOutput(MachineRecipeResult<IMolecularTransformerRecipeManager.Input, ItemStack, ItemStack> result) {
             this((ItemStack)result.getOutput(), ((IMolecularTransformerRecipeManager.Input)result.getRecipe().getInput()).totalEU);
         }
 
-        private MolecularOutput(ItemStack output, int totalEU) {
+        private MolecularOutput(ItemStack output, long totalEU) {
             this.output = output;
             this.totalEU = totalEU;
         }
@@ -344,7 +344,7 @@ IGuiValueProvider {
         }
 
         public Object decode(IGrowingBuffer buffer) throws IOException {
-            return new MolecularOutput((ItemStack)DataEncoder.decode((IGrowingBuffer)buffer, (DataEncoder.EncodedType)DataEncoder.EncodedType.ItemStack), (Integer)DataEncoder.decode((IGrowingBuffer)buffer, (DataEncoder.EncodedType)DataEncoder.EncodedType.Integer));
+            return new MolecularOutput((ItemStack)DataEncoder.decode((IGrowingBuffer)buffer, (DataEncoder.EncodedType)DataEncoder.EncodedType.ItemStack), (Long)DataEncoder.decode((IGrowingBuffer)buffer, (DataEncoder.EncodedType)DataEncoder.EncodedType.Long));
         }
     }
 }

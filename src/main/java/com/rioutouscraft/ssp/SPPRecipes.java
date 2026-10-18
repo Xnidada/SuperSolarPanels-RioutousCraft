@@ -128,10 +128,11 @@ final class SPPRecipes {
         SPPRecipes.addShapedRecipe(SSP_Items.CRAFTING.getItemStack(CraftingThings.CraftingTypes.neutroncore), " A ", "ABA", " A ", Character.valueOf('A'), SSP_Items.CRAFTING.getItemStack(CraftingThings.CraftingTypes.neutron), Character.valueOf('B'), SSP_Items.CRAFTING.getItemStack(CraftingThings.CraftingTypes.quantcore2));
         SPPRecipes.addShapedRecipe(SuperSolarPanels.machines.getItemStack((ITeBlock)SSPBlock.neutronium_solar_panel), " B ", "BAB", " B ", Character.valueOf('A'), SSP_Items.CRAFTING.getItemStack(CraftingThings.CraftingTypes.neutroncore), Character.valueOf('B'), SuperSolarPanels.machines.getItemStack((ITeBlock)SSPBlock.photonic_solar_panel));
         SPPRecipes.addShapedRecipe(SuperSolarPanels.machines.getItemStack((ITeBlock)SSPBlock.proton_solar_panel), " B ", "BAB", " B ", Character.valueOf('B'), SuperSolarPanels.machines.getItemStack((ITeBlock)SSPBlock.spectral_solar_panel), Character.valueOf('A'), SSP_Items.CRAFTING.getItemStack(CraftingThings.CraftingTypes.protoncore));
-        SPPRecipes.addShapedRecipe(SuperSolarPanels.machines.getItemStack((ITeBlock)SSPBlock.barion_solar_panel), " B ", "BAB", " B ", Character.valueOf('A'), SSP_Items.CRAFTING.getItemStack(CraftingThings.CraftingTypes.barion_core), Character.valueOf('B'), SuperSolarPanels.machines.getItemStack((ITeBlock)SSPBlock.neutronium_solar_panel));
-        SPPRecipes.addShapedRecipe(SuperSolarPanels.machines.getItemStack((ITeBlock)SSPBlock.hadron_solar_panel), " B ", "BAB", " B ", Character.valueOf('A'), SSP_Items.CRAFTING.getItemStack(CraftingThings.CraftingTypes.hadron_core), Character.valueOf('B'), SuperSolarPanels.machines.getItemStack((ITeBlock)SSPBlock.barion_solar_panel));
-        SPPRecipes.addShapedRecipe(SuperSolarPanels.machines.getItemStack((ITeBlock)SSPBlock.graviton_solar_panel), " B ", "BAB", " B ", Character.valueOf('A'), SSP_Items.CRAFTING.getItemStack(CraftingThings.CraftingTypes.graviton_core), Character.valueOf('B'), SuperSolarPanels.machines.getItemStack((ITeBlock)SSPBlock.hadron_solar_panel));
-        SPPRecipes.addShapedRecipe(SuperSolarPanels.machines.getItemStack((ITeBlock)SSPBlock.quark_solar_panel), " B ", "BAB", " B ", Character.valueOf('A'), SSP_Items.CRAFTING.getItemStack(CraftingThings.CraftingTypes.quark_core), Character.valueOf('B'), SuperSolarPanels.machines.getItemStack((ITeBlock)SSPBlock.graviton_solar_panel));
+        ItemStack spectralBattery = new ItemStack(SSP_Items.ADVANCED_crystal.getInstance());
+        SPPRecipes.addShapedRecipe(SuperSolarPanels.machines.getItemStack((ITeBlock)SSPBlock.barion_solar_panel), "ABA", "BAB", "CBC", Character.valueOf('A'), SSP_Items.CRAFTING.getItemStack(CraftingThings.CraftingTypes.barion_core), Character.valueOf('B'), SuperSolarPanels.machines.getItemStack((ITeBlock)SSPBlock.neutronium_solar_panel), Character.valueOf('C'), spectralBattery);
+        SPPRecipes.addShapedRecipe(SuperSolarPanels.machines.getItemStack((ITeBlock)SSPBlock.hadron_solar_panel), "ABA", "BAB", "CBC", Character.valueOf('A'), SSP_Items.CRAFTING.getItemStack(CraftingThings.CraftingTypes.hadron_core), Character.valueOf('B'), SuperSolarPanels.machines.getItemStack((ITeBlock)SSPBlock.barion_solar_panel), Character.valueOf('C'), spectralBattery);
+        SPPRecipes.addShapedRecipe(SuperSolarPanels.machines.getItemStack((ITeBlock)SSPBlock.graviton_solar_panel), "ABA", "BAB", "CBC", Character.valueOf('A'), SSP_Items.CRAFTING.getItemStack(CraftingThings.CraftingTypes.graviton_core), Character.valueOf('B'), SuperSolarPanels.machines.getItemStack((ITeBlock)SSPBlock.hadron_solar_panel), Character.valueOf('C'), spectralBattery);
+        SPPRecipes.addShapedRecipe(SuperSolarPanels.machines.getItemStack((ITeBlock)SSPBlock.quark_solar_panel), "ABA", "BAB", "CBC", Character.valueOf('A'), SSP_Items.CRAFTING.getItemStack(CraftingThings.CraftingTypes.quark_core), Character.valueOf('B'), SuperSolarPanels.machines.getItemStack((ITeBlock)SSPBlock.graviton_solar_panel), Character.valueOf('C'), spectralBattery);
         SPPRecipes.addShapedRecipe(SuperSolarPanels.machines.getItemStack((ITeBlock)SSPBlock.nutronfabricator), " A ", "BCB", " A ", Character.valueOf('A'), SSP_Items.CRAFTING.getItemStack(CraftingThings.CraftingTypes.enderquantumcomponent), Character.valueOf('C'), IC2Items.getItem((String)"te", (String)"matter_generator"), Character.valueOf('B'), SSP_Items.CRAFTING.getItemStack(CraftingThings.CraftingTypes.QuantumItems5));
         SPPRecipes.addShapedRecipe(SuperSolarPanels.machines.getItemStack((ITeBlock)SSPBlock.transformator), "BCB", Character.valueOf('C'), IC2Items.getItem((String)"te", (String)"ev_transformer"), Character.valueOf('B'), SSP_Items.CRAFTING.getItemStack(CraftingThings.CraftingTypes.quantumitems6));
         SPPRecipes.addShapedRecipe(SuperSolarPanels.machines.getItemStack((ITeBlock)SSPBlock.transformator1), "BCB", Character.valueOf('C'), SuperSolarPanels.machines.getItemStack((ITeBlock)SSPBlock.transformator), Character.valueOf('B'), SSP_Items.CRAFTING.getItemStack(CraftingThings.CraftingTypes.quantumitems6));
@@ -205,11 +206,27 @@ final class SPPRecipes {
                 SuperSolarPanels.log.warn("Skipping line " + recipe.lineNumber + " due to an error parsing", (Throwable)e);
             }
         }
+        SPPRecipes.addPostNeutronCoreRecipes();
         SuperSolarPanels.log.info("Load complete, successfully loaded {} out of {}.", (Object)successes, (Object)Configs.MTRecipes.length);
     }
 
+    private static void addPostNeutronCoreRecipes() {
+        SPPRecipes.addCoreMolecularRecipe(CraftingThings.CraftingTypes.neutroncore, CraftingThings.CraftingTypes.barion_core, 8000000000L);
+        SPPRecipes.addCoreMolecularRecipe(CraftingThings.CraftingTypes.barion_core, CraftingThings.CraftingTypes.hadron_core, 16000000000L);
+        SPPRecipes.addCoreMolecularRecipe(CraftingThings.CraftingTypes.hadron_core, CraftingThings.CraftingTypes.graviton_core, 24000000000L);
+        SPPRecipes.addCoreMolecularRecipe(CraftingThings.CraftingTypes.graviton_core, CraftingThings.CraftingTypes.quark_core, 32000000000L);
+    }
+
+    private static void addCoreMolecularRecipe(CraftingThings.CraftingTypes inputType, CraftingThings.CraftingTypes outputType, long totalEU) {
+        IRecipeInput input = Recipes.inputFactory.forStack(SSP_Items.CRAFTING.getItemStack(inputType), 8);
+        ItemStack output = SSP_Items.CRAFTING.getItemStack(outputType);
+        if (!IMolecularTransformerRecipeManager.RECIPES.addRecipe(input, totalEU, output, false)) {
+            SuperSolarPanels.log.warn("Skipping built-in core molecular recipe because it already exists: {} -> {}", (Object)inputType.getName(), (Object)outputType.getName());
+        }
+    }
+
     private static boolean decodeLine(int number, String[] parts) throws ParseException {
-        int energy;
+        long energy;
         IRecipeInput input = ConfigUtil.asRecipeInputWithAmount((String)parts[0].trim());
         if (input == null) {
             SuperSolarPanels.log.warn("Skipping line {} as the input ({}) cannot be resolved", (Object)number, (Object)parts[0].trim());
@@ -229,7 +246,7 @@ final class SPPRecipes {
             }
         }
         try {
-            energy = Integer.parseInt(parts[2].trim());
+            energy = Long.parseLong(parts[2].trim());
         }
         catch (NumberFormatException e) {
             SuperSolarPanels.log.warn("Skipping line {} as the energy ({}) cannot be resolved to a number", (Object)number, (Object)parts[2].trim());

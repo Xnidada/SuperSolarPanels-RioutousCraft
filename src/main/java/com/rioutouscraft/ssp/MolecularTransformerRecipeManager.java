@@ -36,7 +36,7 @@ implements IMolecularTransformerRecipeManager {
     }
 
     @Override
-    public boolean addRecipe(IRecipeInput input, int totalEU, ItemStack output, boolean replace) {
+    public boolean addRecipe(IRecipeInput input, long totalEU, ItemStack output, boolean replace) {
         return this.addRecipe(new IMolecularTransformerRecipeManager.Input(input, totalEU), output, (NBTTagCompound)null, replace);
     }
 
@@ -76,7 +76,7 @@ implements IMolecularTransformerRecipeManager {
     }
 
     @Override
-    public int getTotalEUNeeded(ItemStack input) {
+    public long getTotalEUNeeded(ItemStack input) {
         IMolecularTransformerRecipeManager.Input recipe = (IMolecularTransformerRecipeManager.Input)this.getRecipe(input).getInput();
         return recipe == null ? -1 : recipe.totalEU;
     }
