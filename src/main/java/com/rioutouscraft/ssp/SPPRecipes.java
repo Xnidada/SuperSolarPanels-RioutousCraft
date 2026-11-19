@@ -171,7 +171,9 @@ final class SPPRecipes {
     }
 
     private static void addcentrifugeRecipe(IRecipeInput input, ItemStack output, ItemStack itemStack) {
-        Recipes.centrifuge.addRecipe(input, null, false, new ItemStack[]{output, itemStack});
+        NBTTagCompound metadata = new NBTTagCompound();
+        metadata.setShort("minHeat", (short)5000);
+        Recipes.centrifuge.addRecipe(input, metadata, false, new ItemStack[]{output, itemStack});
     }
 
     private static void addExtrudingRecipe(IRecipeInput input, ItemStack output) {
